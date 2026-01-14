@@ -1,0 +1,69 @@
+\begin{thebibliography}{}
+
+\bibitem[Attouch, 1996]{attouch1996viscosity}
+Attouch, H. (1996).
+\newblock Viscosity solutions of minimization problems.
+\newblock {\em SIAM Journal on Optimization}, 6(3):769--806.
+
+\bibitem[Bach, 2024]{bach2024learning}
+Bach, F. (2024).
+\newblock Learning theory from first principles.
+\newblock Lecture notes, available online at \url{https://www.di.ens.fr/~fbach/ltfp_book.pdf}.
+\newblock Accessed: Oct. 4, 2024.
+
+\bibitem[Berthier, 2023]{berthier2023incremental}
+Berthier, R. (2023).
+\newblock Incremental learning in diagonal linear networks.
+\newblock {\em Journal of Machine Learning Research}, 24(171):1--26.
+
+\bibitem[Berthier, 2025]{berthier2025diagonal}
+Berthier, R. (2025).
+\newblock Diagonal linear networks and the lasso regularization path.
+\newblock {\em arXiv preprint arXiv:2509.18766}.
+
+\bibitem[Bhatia, 2013]{bhatia2013matrix}
+Bhatia, R. (2013).
+\newblock {\em Matrix analysis}, volume 169.
+\newblock Springer Science \& Business Media.
+
+\bibitem[Defazio et~al., 2014]{defazio2014saga}
+Defazio, A., Bach, F., and Lacoste-Julien, S. (2014).
+\newblock Saga: A fast incremental gradient method with support for non-strongly convex composite objectives.
+\newblock {\em Advances in neural information processing systems}, 27.
+
+\bibitem[Even et~al., 2023]{even2023s}
+Even, M., Pesme, S., Gunasekar, S., and Flammarion, N. (2023).
+\newblock (s) gd over diagonal linear networks: Implicit bias, large stepsizes and edge of stability.
+\newblock {\em Advances in Neural Information Processing Systems}, 36:29406--29448.
+
+\bibitem[Johnson and Zhang, 2013]{johnson2013accelerating}
+Johnson, R. and Zhang, T. (2013).
+\newblock Accelerating stochastic gradient descent using predictive variance reduction.
+\newblock {\em Advances in neural information processing systems}, 26.
+
+\bibitem[Needell et~al., 2014]{needell2014stochastic}
+Needell, D., Ward, R., and Srebro, N. (2014).
+\newblock Stochastic gradient descent, weighted sampling, and the randomized kaczmarz algorithm.
+\newblock {\em Advances in neural information processing systems}, 27.
+
+\bibitem[Poon and Peyr{\'e}, 2023]{poon2023smooth}
+Poon, C. and Peyr{\'e}, G. (2023).
+\newblock Smooth over-parameterized solvers for non-smooth structured optimization.
+\newblock {\em Mathematical programming}, 201(1):897--952.
+
+\bibitem[Roux et~al., 2012]{roux2012stochastic}
+Roux, N., Schmidt, M., and Bach, F. (2012).
+\newblock A stochastic gradient method with an exponential convergence \_rate for finite training sets.
+\newblock {\em Advances in neural information processing systems}, 25.
+
+\bibitem[Schmidt et~al., 2017]{schmidt2017minimizing}
+Schmidt, M., Le~Roux, N., and Bach, F. (2017).
+\newblock Minimizing finite sums with the stochastic average gradient.
+\newblock {\em Mathematical Programming}, 162:83--112.
+
+\bibitem[Tibshirani, 2021]{tibshirani2021equivalences}
+Tibshirani, R.~J. (2021).
+\newblock Equivalences between sparse models and neural networks.
+\newblock {\em Working Notes. URL https://www. stat. cmu. edu/ryantibs/papers/sparsitynn. pdf}.
+
+\end{thebibliography}

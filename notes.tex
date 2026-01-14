@@ -1,0 +1,2176 @@
+\documentclass[11pt,reqno]{article}
+\usepackage[margin=3.8cm]{geometry}
+%\usepackage[francais]{babel}
+
+\usepackage{subcaption}
+\renewcommand\thesubfigure{\arabic{subfigure}}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{dsfont}
+\usepackage{graphicx}
+\usepackage{tikz}
+
+
+\DeclareMathAlphabet{\mathbbb}{U}{bbold}{m}{n}
+
+\usepackage[textwidth=3cm]{todonotes}
+\newcommand{\rb}[1]{\todo[color=cyan, size=\footnotesize]{#1}}
+\definecolor{NavyBlue}{rgb}{0.1,0.1,0.6}
+\newcommand{\raphael}[1]{{\color{NavyBlue} {\bfseries RB}: #1}}
+
+\newcommand{\normSigma}{\Vert \Sigma \Vert_{\cH \rightarrow \cH}}
+\newcommand{\alphalow}{{\underline{\alpha}}}
+\newcommand{\alphahigh}{{\overline{\alpha}}}
+
+\DeclareMathOperator*{\argmin}{argmin}
+\DeclareMathOperator*{\Argmin}{Argmin}
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\ext}{ext}
+\DeclareMathOperator*{\diag}{diag}
+\DeclareMathOperator{\Tr}{Tr}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\Id}{Id}
+\DeclareMathOperator{\esssup}{ess\,sup}
+\DeclareMathOperator{\Span}{Span}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\Ber}{Ber}
+\DeclareMathOperator{\Binom}{Binom}
+\DeclareMathOperator{\Exp}{Exp}
+\DeclareMathOperator{\EQM}{EQM}
+\DeclareMathOperator{\Unif}{Unif}
+\DeclareMathOperator{\Poi}{Poi}
+\DeclareMathOperator{\sign}{sign}
+\DeclareMathOperator{\Fro}{F}
+
+
+
+
+\def\eps{\varepsilon}
+\def\var{{\rm var\,}}
+\newcommand{\diff}{\mathrm{d}}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\T}{\mathbb{T}}
+\newcommand{\X}{\mathbb{X}}
+\renewcommand{\S}{\mathbb{S}}
+
+\renewcommand{\P}{\mathds{P}}
+
+\newcommand{\cK}{\mathcal{K}}
+\newcommand{\cN}{\mathcal{N}}
+\newcommand{\cE}{\mathcal{E}}
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cO}{\mathcal{O}}
+\newcommand{\cW}{\mathcal{W}}
+\newcommand{\cG}{\mathcal{G}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cH}{\mathcal{H}}
+\newcommand{\cV}{\mathcal{V}}
+\newcommand{\cM}{\mathcal{M}}
+\newcommand{\cX}{\mathcal{X}}
+\newcommand{\cY}{\mathcal{Y}}
+\newcommand{\cL}{\mathcal{L}}
+\newcommand{\cS}{\mathcal{S}}
+\newcommand{\cR}{\mathcal{R}}
+\newcommand{\cU}{\mathcal{U}}
+\newcommand{\cQ}{\mathcal{Q}}
+\newcommand{\cD}{\mathcal{D}}
+
+\newcommand{\bu}{\boldsymbol u}
+\newcommand{\bI}{\boldsymbol I}
+\newcommand{\bA}{\boldsymbol A}
+\newcommand{\bC}{\boldsymbol C}
+\newcommand{\bZ}{\boldsymbol Z}
+\newcommand{\bP}{\boldsymbol P}
+\newcommand{\bnu}{\boldsymbol \nu}
+\newcommand{\bK}{\boldsymbol K}
+\newcommand{\bq}{\boldsymbol q}
+\newcommand{\bx}{\boldsymbol x}
+\newcommand{\bX}{\boldsymbol X}
+\newcommand{\bv}{\boldsymbol v}
+\newcommand{\by}{\boldsymbol y}
+\newcommand{\br}{\boldsymbol r}
+\newcommand{\bw}{\boldsymbol w}
+\newcommand{\bvarphi}{\boldsymbol \varphi}
+\newcommand{\bz}{\boldsymbol z}
+\newcommand{\bk}{\boldsymbol k}
+\newcommand{\bmu}{\boldsymbol \mu}
+\newcommand{\btheta}{\boldsymbol \theta}
+\newcommand{\bM}{\boldsymbol M}
+\newcommand{\bzero}{\mathbf{0}}
+
+\renewcommand{\P}{\mathds{P}}
+
+\newcommand{\floor}[1]{\lfloor #1 \rfloor}
+\newcommand{\fractional}[1]{\{#1\}}
+
+\renewcommand{\leq}{\leqslant}
+\renewcommand{\geq}{\geqslant}
+
+\numberwithin{equation}{section}
+
+\theoremstyle{plain}
+\newtheorem{assumption}{Assumption}[section]
+\newtheorem{proposition}[assumption]{Proposition}
+\newtheorem{thm}[assumption]{Theorem}
+\newtheorem{lem}[assumption]{Lemma}
+\newtheorem{coro}[assumption]{Corollary}
+\newtheorem{conjecture}[assumption]{Conjecture}
+
+\theoremstyle{definition}
+\newtheorem{definition}[assumption]{Definition}
+\newtheorem{problem}[assumption]{Problem}
+\newtheorem{property}[assumption]{Property}
+\newtheorem{exemple}[assumption]{Example}
+\newtheorem*{rappel}{Reminder}
+\newtheorem{exercice}[assumption]{Exercise}
+
+\theoremstyle{remark}
+\newtheorem{remark}[assumption]{Remark}
+\newtheorem{question}{Question}[section]
+
+
+
+
+
+
+
+
+
+
+
+\begin{document}
+
+\title{Optimization for Machine Learning}
+
+\author{Raphaël Berthier}
+
+\maketitle
+
+These notes are associated to lectures given at Sorbonne Université. They are evolving and might contain errors. Feel free to use them, report mistakes (\texttt{raphael.berthier@inria.fr}) or contribute (github). Please cite this work when using or adapting it (license CC BY 4.0).
+
+\begin{abstract}
+	This course provides a theoretical introduction to optimization methods tailored for machine learning. As modern learning tasks often involve complex, non-convex cost functions and massive datasets, standard optimization techniques require adaptation. The course explores stochastic and non-convex optimization strategies, focusing on their role in training machine learning models efficiently and ensuring generalization beyond training data. Emphasis is placed on foundational concepts such as overfitting, complexity control, variance reduction, and implicit regularization. While the approach is theoretical and often idealized, the goal is to build core intuitions that inform and improve practical machine learning methods.
+\end{abstract}
+
+\noindent
+
+\tableofcontents
+
+\section*{Acknowledgements}
+
+The author thanks Loucas Pillaud-Vivien for his help in building those lecture notes, and Alejandro Saldarriaga for optimizing the proof of Lemma~\ref{lem:linear}.
+
+\newpage
+
+\section{Introduction}
+
+\paragraph{Optimization in machine learning training.}Many computer science problems are too complex to be solved directly by an algorithm coded by a human being. For instance, recognizing whether there is a bike in an image depends on the pixels of the image in an intricate way that no one is able to express to a computer. However, as humans can easily solve such a task, there must be a successful algorithm.
+
+In such situations, machine learning comes to the rescue. Its strategy is to leave some free parameters in the algorithm. The optimal value of these parameters are unknown to the computer scientist; they are found by the machine itself by fitting a database of solved problem instances. 
+
+This training phase of the machine learning algorithm uses an optimization algorithm, as it seeks the optimal value of free parameters in order to minimize a cost function. This cost function describes the performance of the algorithm in solving the problem instances of the database. 
+
+\paragraph{Peculiarities of optimization in machine learning.}Optimization is a well-established field of applied mathematics, with applications in computer science, engineering, operations research, and economics. It provides numerous numerical methods and theoretical analyses to understand them. The choice of the optimization algorithm should depend on the structure of the optimization problem: the structure of the cost function---notably whether it is convex or not---, the type of queries one can make on the function to be optimized---function, gradient, Hessian values?---, or the computation time of different operations. The optimization problems that appear in machine learning have peculiar structures that call for specific optimization techniques. 
+
+First, the cost function depends on the full training database, which can be enormous in modern machine learning applications. As a consequence, computing a function value, or a function gradient, can take a long time. This motivates a focus on stochastic methods, that compute the function values and gradients on a randomly sampled subpart of the database only, which is resampled at each iteration. 
+
+Second, the computer scientist should focus not only on fitting the training data, but also ensuring that learned algorithms are able to generalize to new problem instances. As a consequence, statistical concerns should be taken into account in the optimization process.
+
+Finally, many machine learning algorithms lead to non-convex optimization problems, for which it is challenging to have any significant theoretical analysis, although great machine learning performance can be routinely observed in these cases. 
+
+As a consequence, the fields of stochastic and non-convex optimization have been greatly stimulated by the development of machine learning methods. Some analyses are able to control the generalization ability of the machine learning method, beyond its performance on the database. 
+
+\paragraph{Goal of this course.} These notes aim at providing an introduction to optimization methods and analyses suited for machine learning problems. Our focus is theoretical. Provided the current limitations of theory in explaining the practice of machine learning methods, we present vanilla and sometimes idealized algorithms and analyses. However, we will see that even simplified analyses build intuitions and central concepts such as overfitting, complexity control, variance reduction, implicit regularization or benign overfitting. These intuitions can guide the improvement of state-of-the-art methods in practical situations. 
+
+Section~\ref{sec:empirical-risk} introduces the stakes of optimization in machine learning. Section~\ref{sec:sgd} introduces stochastic gradient descent in an abstract formalism that enables to unify several algorithms. Section~\ref{sec:analysis} presents the convergence analysis of stochastic gradient descent and discusses some practical consequences. These first three sections form the core of the course. 
+
+We then turn to more specialized topics, chosen biasedly by the author. Section~\ref{sec:importance-sampling} introduces importance sampling through exercises. Section~\ref{sec:variance-reduction} introduces variance reduction. Finally, Section~\ref{sec:neural} discusses some attempts to understand the regularization induced by neural networks and their non-convex optimization. 
+
+\section{Empirical risk minimization and generalization error}
+\label{sec:empirical-risk}
+
+\subsection{Formal expression of a learning problem}
+
+In this course, we restrict our discussion on learning problems to supervised learning problems only. This still covers many practical applications and makes discussions more concrete. 
+
+In a supervised learning problem, we want to predict an output $y \in \cY$ from an input $x \in \cX$. One can think of them as $\cX = \R^d$ and $\cY = \R$. Often, the input and output spaces are not naturally $\cX = \R^d$ and $\cY = \R$. For instance, when $\cX$ is not a vector space, it is classical to choose an embedding of $\cX$ in a (finite-dimensional) vector space and make the prediction of $y$ as a function of the embedding. Further, in binary classification, it is more natural to take $\cY = \{-1,1\}$. However, for convexity concerns, it is preferable to embed $\cY = \{-1,1\} \subset \R$ and to aim at making predictions in $\R$ that have the same sign as the true output, see Remark \ref{rmk:convexification} for more comments or \cite[Section 4]{bach2024learning} for a more detailed discussion. As a consequence, we will often take $\cX = \R^d$ and $\cY = \R$ as a running example. 
+
+Finally, we assume that the data comes from some probability distribution $\cP$ on $\cX \times \cY$.
+
+In order to transform the supervised learning problem into an optimization problem, we need to choose a loss function $\ell:\cY\times\cY \to \R$. This loss function $\ell(y,\widehat{y})$ quantifies the price to pay for predicting $\widehat{y}$ when the true output is $y$. For instance, in regression, a common choice is the squared loss $\ell(y,\widehat{y}) = \frac{1}{2}(y-\widehat{y})^2$, while in binary classification, a common choice is the logistic loss $\ell(y,\widehat{y}) = \log(1+\exp(-y\widehat{y}))$. Once this loss is chosen, we seek a function $\varphi:\cX \to \cY$ that minimizes the so-called \emph{expected risk} or \emph{generalization loss / error}:
+\begin{equation*}
+	\cR(\varphi) = \E[\ell(y,\varphi(x))] \, , \qquad (x,y) \sim \cP \, .
+\end{equation*}	
+Here, we have rephrased our learning problem as the minimization of a function~$\cR(\varphi)$; thus optimization theory starts to play a role. However, we face several difficulties. First, we would like to optimize over the infinite-dimensional space of functions $\cX \to \cY$, which is intractable. We will restrict ourselves to a class of functions $\cF$ that is more manageable, for instance a subset of functions parametrized by a finite-dimensional space. Second, we have no direct access to the distribution $\cP$, which makes the computation of our objective function $\cR(\varphi)$ impossible. Instead, in statistical learning, we seek to learn from $n$ data samples $(x_1, y_1), \dots, (x_n, y_n)$ that are i.i.d.~from $\cP$. 
+
+In order to approximate the expected risk $\cR(\varphi)$, we can use the so-called \emph{empirical risk} or \emph{training loss / error}:
+\begin{equation*}
+	\widehat{\cR}(\varphi) = \frac{1}{n} \sum_{i=1}^n \ell(y_i, \varphi(x_i)) \, .
+\end{equation*}
+Statistical wisdom warns that minimizing the empirical loss $\widehat{\cR}(\varphi)$ instead of the expected loss $\cR(\varphi)$ can lead to overfitting. There exists functions~$\varphi$ that predict well on the training data $(x_1, y_1), \dots, (x_n, y_n)$ but generalize poorly on new data $(x,y) \sim \cP$. Said differently, there exists functions $\varphi$ that minimize the empirical loss $\widehat{\cR}(\varphi)$ but are not close to optimizing the expected loss $\cR(\varphi)$. Such overfitting can be detected by a train / test split of the data or by cross-validation.
+
+In order to reduce a potential overfitting, classical approaches consist in restricting the class of functions over which we minimize the empirical loss, or in adding a regularization term to the empirical loss. Both approaches can be seen as ways to control the complexity of the function $\varphi$ that we learn. The next section quantifies the tradeoff when restricting the class of function.
+
+\begin{remark}
+	\label{rmk:convexification}
+	As a side note, we can mention that the loss function $\ell$ is a choice of the computer scientist. It should reflect the true cost function of the computer scientist if the algorithm makes poor predictions, but it is also chosen to make the resulting optimization problems tractable. For instance, the logistic loss is differentiable and convex in its second arguments, which makes it preferable to the 0-1 loss that is non-differentiable and non-convex, although the 0-1 loss is more faithful to the true cost function of the computer scientist. The quadratic loss might overestimate the cost of outliers, but leads in linear regression to quadratic convex functions that are easy to optimize. 
+\end{remark}
+
+
+\subsection{Decomposition of the error}
+
+\subsubsection{Decomposition between estimation and approximation errors}
+
+Let us denote $\cY^\cX$ the set of functions from $\cX$ to $\cY$ and $\cF$ the class of functions from $\cX \to \cY$ over which we optimize the empirical risk. For instance, we often consider parametrized classes of functions $\varphi(., \theta):\cX\to\cY$, $\theta\in \R^p$, in which case $\cF = \left\{\varphi(., \theta) \, \middle\vert \, \theta\in\R^p\right\}$.
+
+We denote by $\varphi_*(\cY^\cX)$ a minimizer of the expected loss $\cR(\varphi)$ over $\cY^\cX$ and by $\widehat{\varphi}_*(\cF)$ a minimizer of the empirical loss $\widehat{\cR}(\varphi)$ over $\cF$. In this section, we study the suboptimality gap $\cR(\widehat{\varphi}_*(\cF)) - \cR(\varphi_*(\cY^\cX))$ of $\widehat{\varphi}_*(\cF)$. 
+
+Let $\varphi_*(\cF)$ be a minimizer of the expected loss $\cR(\varphi)$ over $\cF$. We can decompose the suboptimality gap as follows:
+\begin{align*}
+	\cR(\widehat{\varphi}_*(\cF)) - \cR(\varphi_*(\cY^\cX)) &= \underbrace{\cR(\widehat{\varphi}_*(\cF)) - \cR(\varphi_*(\cF))}_{\text{estimation error}} + \underbrace{\cR(\varphi_*(\cF)) - \cR(\varphi_*(\cY^\cX))}_{\text{approximation error}} \, .
+\end{align*}
+The second term is called the \emph{approximation error}. It quantifies the price to pay for restricting the class of functions over which we optimize. 
+
+The first term is called the \emph{estimation error}. It measures how suboptimal is the function built from the data in minimizing the expected loss over $\cF$. Typically, we control the estimation error as follows: 
+\begin{align*}
+\cR(\widehat{\varphi}_*(\cF)) - \cR(\varphi_*(\cF)) &= \cR(\widehat{\varphi}_*(\cF)) - \widehat{\cR}(\widehat{\varphi}_*(\cF)) \\
+&\quad+ \widehat{\cR}(\widehat{\varphi}_*(\cF)) - \widehat{\cR}(\varphi_*(\cF)) \\
+&\quad+ \widehat{\cR}(\varphi_*(\cF)) - \cR(\varphi_*(\cF)) \, .
+\end{align*}
+As $\widehat{\varphi}_*(\cF)$ is a minimizer of the empirical loss $\widehat{\cR}(\varphi)$ over $\cF$, we have that $\widehat{\cR}(\widehat{\varphi}_*(\cF)) - \widehat{\cR}(\varphi_*(\cF)) \leq 0$. We thus obtain
+\begin{align}
+	\cR(\widehat{\varphi}_*(\cF)) - \cR(\varphi_*(\cF)) &\leq 2 \sup_{\varphi\in\cF} \left|\widehat{\cR}(\varphi) - {\cR}(\varphi)\right| \, . \label{eq:estimation-error}
+	\end{align}
+	For all $\varphi \in \cF$, by the law of large numbers, we have that
+	\begin{equation*}
+		\widehat{\cR}(\varphi) = \frac{1}{n} \sum_{i=1}^n \ell(y_i, \varphi(x_i)) \xrightarrow[n\to\infty]{} \E[\ell(y,\varphi(x))] =  {\cR}(\varphi) \qquad \text{almost surely} \, .
+	\end{equation*}
+To control the estimation error through Eq.~\eqref{eq:estimation-error}, one needs a uniform law of large numbers over $\cF$. 
+
+	This upper-bound suggests that the estimation error improves as $n\to \infty$, but degrades as $\cF$ increases (for the inclusion). On the contrary, the approximation error does not depend on $n$, but improves as $\cF$ increases. As a consequence, choosing the class of functions $\cF$ is a tradeoff between the approximation error and the estimation error. As more samples are available, one can afford to choose a larger class of functions $\cF$. 
+
+	\subsubsection{Optimization error}
+
+	In the section above, we have discussed the decomposition of the error for the function $\widehat{\varphi}_*(\cF)$ that minimizes the empirical loss $\widehat{\cR}(\varphi)$ over $\cF$. In this course, we study how to minimize this empirical loss. However, the optimization algorithms do not provide an exact minimizer: an optimization error remains. Here, we describe how the error decomposition is perturbed by this optimization error.
+
+	Let $\widehat{\varphi}$ be any function in $\cF$. (We use the notation $\widehat{\varphi}$ to suggest that this function has been computed from the data through an algorithm, typically gradient descent on the empirical risk.) We can still decompose the suboptimality gap into an estimation and an approximation error:
+	\begin{align}
+		\cR(\widehat{\varphi}) - \cR(\varphi_*(\cY^\cX)) &= \underbrace{\cR(\widehat{\varphi}) - \cR(\varphi_*(\cF))}_{\text{estimation error}} + \underbrace{\cR(\varphi_*(\cF)) - \cR(\varphi_*(\cY^\cX))}_{\text{approximation error}} \, .\label{eq:decomposition-1}
+	\end{align}
+	Typically, we control the estimation error as follows:
+	\begin{align}
+		\label{eq:decomposition-2}
+		\begin{split}
+			\cR(\widehat{\varphi}) - \cR(\varphi_*(\cF)) &= \cR(\widehat{\varphi}) - \widehat{\cR}(\widehat{\varphi}) \\
+			&\quad+ \widehat{\cR}(\widehat{\varphi}) - \widehat{\cR}(\varphi_*(\cF)) \\
+			&\quad+ \widehat{\cR}(\varphi_*(\cF)) - \cR(\varphi_*(\cF)) \, .
+		\end{split}
+	\end{align}
+	As $\widehat{\varphi}_*(\cF)$ is a minimizer of the empirical loss $\widehat{\cR}(\varphi)$ over $\cF$, we have that 
+	\begin{equation}
+		\label{eq:decomposition-4}
+		\widehat{\cR}(\widehat{\varphi}) - \widehat{\cR}(\varphi_*(\cF))  \leq \widehat{\cR}(\widehat{\varphi}) - \widehat{\cR}(\widehat{\varphi}_*(\cF)) \, .
+	\end{equation}
+	Thus we obtain 
+	\begin{align}
+		\label{eq:decomposition-3}
+		\cR(\widehat{\varphi}) - \cR(\varphi_*(\cF)) &\leq \underbrace{\widehat{\cR}(\widehat{\varphi}) - \widehat{\cR}(\widehat{\varphi}_*(\cF))}_{\text{optimization error}} + 2 \sup_{\varphi\in\cF} \left|\widehat{\cR}(\varphi) - {\cR}(\varphi)\right| \, . 
+	\end{align}
+	Note that this bound is a straighforward generalization of \eqref{eq:estimation-error}. The result is that the estimation error is controlled by two terms. The first one is an \emph{optimization error}: the suboptimality gap of $\widehat{\varphi}$ in the minimization of $\widehat{\cR}$. The second one is, again, the uniform law of large numbers over $\cF$.
+
+	\subsubsection{Relevance of this decomposition and goal of the course}
+
+A traditional way to show the success of a machine learning algorithm would be to follow the steps above, and to control separately the approximation error $\cR(\varphi_*(\cF)) - \cR(\varphi_*(\cY^\cX))$, the optimization error $\widehat{\cR}(\widehat{\varphi}) - \widehat{\cR}(\widehat{\varphi}_*(\cF))$ in minizing the empirical risk, and the deviation in the uniform law of large numbers $\sup_{\varphi\in\cF} \left|\widehat{\cR}(\varphi) - {\cR}(\varphi)\right|$. The approximation error is controlled by choosing a class of functions $\cF$ that is rich enough, the optimization error is controlled by choosing a good optimization algorithm, while there are classical methods to quantify the uniform law of large numbers, see e.g.~\cite[Section 4.4]{bach2024learning}. 
+
+However, it is important to evaluate how tight this approach is. In the decomposition of Eq.~\eqref{eq:decomposition-1}, the approximation and estimation error are both non-negative quantities: one can not compensate for the other. As a consequence, it is necessary to control both errors in order to control the expected risk. The same can not be said for the decomposition made in Eq.~\eqref{eq:decomposition-2}. The different terms can have different signs, and thus cancel each other (although the sum must be non-negative). The resulting bound~\eqref{eq:decomposition-3}, that does not take into account these cancellations, might be overly pessimistic. Moreover, the bound~\eqref{eq:decomposition-3} also follows from the inequality~\eqref{eq:decomposition-4}, that might also be loose. As a consequence, there are settings where the sketch of proof outlined above fails to provide a meaningful bound, although the machine learning algorithm performs well in practice.
+
+\paragraph{Take-home message for optimizers.}When designing an optimization algorithm for machine learning, we can have two objectives in mind. The first one is simply to reduce the optimization error $\widehat{\cR}(\widehat{\varphi}) - \widehat{\cR}(\widehat{\varphi}_*(\cF))$. When doing so, we leave it to statisticians to choose the class of functions $\cF$ so that the other terms in the decomposition of the expected risk are controlled. The second one is to design algorithms that control the whole estimation error. We will see that, in some situations, an improved estimation error can be obtained when deteriorating the optimization error on the empirical risk. For instance, stopping a (stochastic) gradient descent early, or taking a single pass on the data samples rather than multiple passes, might actually improve the estimation error. 
+
+There are incompressible losses: the optimal expected risk $\cR(\varphi_*(\cY^\cX))$ and the approximation error $\cR(\varphi_*(\cF)) - \cR(\varphi_*(\cY^\cX))$. As a consequence, it is useless to work on reducing the optimization and estimation errors much below these losses. This justifies that in machine learning, we often seek a fast optimization algorithm that provides a satisfactory solution, rather than a slower algorithm that would provide a very accurate solution. 
+
+
+\section{Stochastic gradient descent}
+\label{sec:sgd}
+
+In this section, we motivate multi-pass stochastic gradient descent as a computationally-efficient alternative to gradient descent for the minimization of the empirical risk (Sections \ref{sec:gd}, \ref{sec:sgd-empirical}). We then abstract the stochastic gradient descent algorithm in order to unify several algorithms (Section~\ref{sec:sgd-abstract}). We show that single-pass stochastic gradient descent can be seen as a stochastic gradient descent algorithm on the expected risk (Section \ref{sec:sgd-expected}), and that coordinate gradient descent can be seen as a stochastic gradient descent (Section \ref{sec:cgd}).
+
+In all of this section, we set ourselves in the setting developed in Section~\ref{sec:empirical-risk}. We assume that we are given a parametrized class of functions $\cF = \left\{\varphi(., \theta) \, \middle\vert \, \theta \in \R^p\right\}$. 
+
+\paragraph{Notations.} For a vector $\theta \in \R^p$, we denote $\theta(1), \dots, \theta(p)$ its coordinates. Given a differentiable function $f:\R^p \to \R$, we denote $\partial_1 f, \dots, \partial_p f$ its partial derivatives, $\nabla f = (\partial_1 f, \dots, \partial_p f)$ its gradient and $\nabla^2 f = (\partial_{ij} f)_{1 \leq i,j \leq p}$ its Hessian.
+
+
+\subsection{Gradient descent on the empirical risk}
+\label{sec:gd}
+
+Our first task is to optimize the empirical risk $\widehat{\cR}(\varphi)$ over $\cF$. More precisely, we seek to minimize $f:\R^p \to \R$, defined as 
+\begin{equation*}
+	f(\theta) = \widehat{\cR}(\varphi(.,\theta)) = \frac{1}{n} \sum_{i=1}^n \ell_i(\theta) \, , \qquad \text{where }   \ell_i(\theta) = \ell(y_i, \varphi(x_i, \theta)) \, .
+\end{equation*}
+Typical optimization algorithms for this task take advantage of first-order information, namely that the partial derivatives $\partial_j f(\theta)$ of $f$ and its gradient $\nabla f(\theta)$ can be computed, or of second-order information, namely that the Hessian $\nabla^2 f(\theta)$ of $f$ can be computed. In machine learning, the number of parameters $p$ of the function class is often very large, and the computation of the Hessian $\nabla^2 f(\theta) \in \R^{p \times p}$ is quadratic in $p$; as a consequence, second-order methods can not be used. Instead, first-order methods that require only access to the gradient $\nabla f(\theta) \in \R^p$ are preferred. 
+
+The emblematic first-order method is gradient descent. Choose an initialization $\theta_0 \in \R^p$ and a stepsize sequence $\gamma_k \in \R_+$, $k \in \N$. Then for all $k \in \N$, compute 
+\begin{equation}
+	\label{eq:gd}
+	\theta_{k+1} = \theta_k - \gamma_{k} \nabla f(\theta_k) \, .
+\end{equation}
+Under mild assumptions, if the stepsizes $\gamma_k$ are chosen appropriately, the sequence $\theta_k$ converges to a local minimizer of $f$. 
+
+\subsection{Multi-pass stochastic gradient descent on the empirical risk}
+\label{sec:sgd-empirical}
+
+A major difficulty in running the gradient descent described above is that the computation of the gradient 
+\begin{equation*}
+	\nabla f(\theta) = \frac{1}{n} \sum_{i=1}^n \nabla \ell_i(\theta)
+\end{equation*}
+has a linear complexity in $n$, the number of data samples, as it implies reading all the samples. This can be prohibitive in modern machine learning applications, where $n$ can be in the order of millions or billions. 
+
+In order to mitigate this complexity, the stochastic gradient strategy consists in computing the gradient on a randomly sampled subset $S_{k+1} \subset \{1, \dots, n \}$ of the samples, called a \emph{mini-batch}, which is re-sampled at each iteration $k$. 
+
+More formally, choose an initialization $\theta_0 \in \R^p$, a stepsize sequence $\gamma_k \in \R_+$, $k \in \N$ and a mini-batch size $m$. Then for all $k \in \N$, sample $S_{k+1}$ uniformly among subsets of $\{1, \dots, n\}$ of size $m$ (independently of the past) and compute 
+\begin{equation}
+\label{eq:sgd-empirical-mini-batch}
+	\theta_{k+1} = \theta_k - \frac{\gamma_k}{m} \sum_{i \in S_{k+1}} \nabla \ell_i(\theta_k) \, .
+\end{equation}
+This algorithm is called \emph{multi-pass stochastic gradient descent}, as a sample~$i$ is used several times in the computation of the stochastic gradient, if the number of iterations is large enough. 
+
+The rationale behind stochastic gradient descent is that the information contained in the data samples is largely redundant, and thus that sampling only a few samples at each iteration is enough to make some progress on the learning problem. Even if there are some fluctuations due to the randomness of the sampling, we expect that these fluctuations average out over the iterations, provided that the stepsizes are small enough. This remark suggests that we can consider an extreme case of mini-batches of size $m=1$: for all $k \in \N$, sample $i_{k+1}$ uniformly in $\{1, \dots, n\}$ (independently of the past) and compute
+\begin{equation}
+	\label{eq:sgd-empirical}
+	\theta_{k+1} = \theta_k - \gamma_k \nabla \ell_{i_{k+1}}(\theta_k) \, .
+\end{equation}
+Due to the fluctuations in the gradient, it is not obvious whether a stochastic gradient descent can converge to a local minimizer. In Section~\ref{sec:analysis}, we will see that it is indeed the case if the stepsizes decrease appropriately, and under some mild assumptions.
+
+
+
+\subsection{Abstract stochastic gradient descent}
+\label{sec:sgd-abstract}
+
+In this section, we abstract the notion of stochastic gradient descent. Consider a differentiable function $f:\R^p \to \R$ that we seek to optimize. Assume that we have no direct access to $\nabla f(\theta)$, but instead we can generate samples $\xi$ from a distribution $\cQ$, and compute a quantity $g(\theta, \xi)$, such that $\E[g(\theta, \xi)] = \nabla f(\theta)$. The random variable $g(\theta, \xi)$, $\xi \sim \cQ$ is called an \emph{unbiased stochastic gradient} of $f$ at $\theta$.
+
+In this setting, the stochastic gradient descent algorithm is defined as follows: choose an initialization $\theta_0 \in \R^p$ and a stepsize sequence $\gamma_k \in \R_+$, $k \in \N$. Then for all $k \in \N$, sample $\xi_{k+1}$ from $\cQ$ (independently of the past) and compute
+\begin{equation}
+	\label{eq:sgd-abstract}
+	\theta_{k+1} = \theta_k - \gamma_k g(\theta_k, \xi_{k+1}) \, .
+\end{equation}
+
+\paragraph{Example: multi-pass stochastic gradient descent.} The multi-pass stochastic gradient descent on the empirical risk described in the previous section fits this abstract framework. In this case, the function $f$ is the empirical risk as a function of $\theta$:
+\begin{equation*}
+	f(\theta) = \frac{1}{n} \sum_{i=1}^n \ell_i(\theta) \, .
+\end{equation*}
+Consider first the case of mini-batches of size $m=1$. In this case, we take $\cQ$ to be the uniform distribution on $\{1, \dots, n\}$, $\xi = i$ is the uniformly sampled index of the data sample, and $g(\theta, i) = \nabla \ell_i(\theta)$. It is then indeed true that $\E[g(\theta, \xi)] = \nabla f(\theta)$ and the iteration of Eq.~\eqref{eq:sgd-abstract} gives the iteration of Eq.~\eqref{eq:sgd-empirical}.
+
+Further, consider the case of mini-batches of any size $m \leq n$. In this case, we take $\cQ$ to be the uniform distribution over subsets of $\{1, \dots, n\}$ of size $m$, $\xi = S$ is the uniformly sampled subset of the data samples, and the stochastic gradient $g(\theta, S) = \frac{1}{m} \sum_{i \in S} \nabla \ell_i(\theta)$. Let us check that such a stochastic gradient is unbiased:
+\begin{align*}
+	\E[g(\theta, S)] &= \E\left[\frac{1}{m} \sum_{i \in S} \nabla \ell_i(\theta)\right] = \E\left[\frac{1}{m} \sum_{i=1}^n \mathbbb{1}_{\{i \in S\}} \nabla \ell_i(\theta)\right] \\
+	&= \frac{1}{m} \sum_{i=1}^n \P\left(i \in S\right) \nabla \ell_i(\theta) = \frac{1}{m} \sum_{i=1}^n \frac{m}{n} \nabla \ell_i(\theta) = \frac{1}{n} \sum_{i=1}^n \nabla \ell_i(\theta) \\
+	&= \nabla f(\theta) \, .
+\end{align*}
+With this unbiased stochastic gradient, the iteration of Eq.~\eqref{eq:sgd-abstract} gives the iteration of Eq.~\eqref{eq:sgd-empirical-mini-batch}.
+
+\paragraph{}We now turn to other instantiations of the abstract stochastic gradient descent algorithm.
+
+
+\subsection{Single-pass stochastic gradient descent on the expected risk }
+\label{sec:sgd-expected}
+
+Let us now consider a variant of the multi-pass stochastic gradient descent algorithm~$\eqref{eq:sgd-empirical}$, where when we use a sample $i$ to compute a stochastic gradient descent, we decide not to use it again in the future. We then sample among the remaining data samples at the next iterations. This algorithm is called \emph{single-pass stochastic gradient descent}.
+
+Of course, such an algorithm would be limited to $k = n$ steps. Moreover, as the data $(x_i,z_i)$ are i.i.d., the order in which we use the samples has no influence on the distribution of the iterations $\theta_k$. As a consequence, we can assume that we use the samples in the original order $i=1, \dots, n$. This gives the following algorithm: choose an initialization $\theta_0 \in \R^p$ and a stepsize sequence $\gamma_k \in \R_+$, $k \in \N$. Then for all $k \in \{0, \dots, n-1\}$, compute
+\begin{equation}
+	\label{eq:sgd-expected}
+	\theta_{k+1} = \theta_{k} - \gamma_k \nabla \ell_{k+1}(\theta_{k}) \, .
+\end{equation}
+The interest in this variant is mainly theoretical: it stems from the fact that single-pass stochastic gradient descent can be seen as a stochastic gradient descent algorithm on the expected risk (in the sense of Section \ref{sec:sgd-abstract}).
+
+Indeed, write the expected risk as a function of $\theta$:
+\begin{equation*}
+	f(\theta) = \cR(\varphi(.,\theta)) = \E[\ell(y, \varphi(x, \theta))] \, , \qquad (x,y) \sim \cP \, .
+\end{equation*}
+The gradient of $f$ is then
+\begin{equation*}
+	\nabla f(\theta) = \E[\nabla_\theta \ell(y, \varphi(x, \theta))] \, , \qquad (x,y) \sim \cP \, .
+\end{equation*}
+This suggests to consider the unbiased stochastic gradient
+\begin{equation*}
+	g(\theta, \xi) = \nabla_\theta \ell(y, \varphi(x, \theta)) \, , \qquad \xi = (x,y) \sim \cP = \cQ \, .
+\end{equation*}
+The abstract stochastic gradient descent requires to generate i.i.d.~samples $\xi_k = (x_k,y_k) \sim \cP = \cQ$, $k = 1, 2, \dots$ and computes 
+\begin{equation*}
+	\theta_{k+1} = \theta_{k} - \gamma_k \nabla_\theta \ell(y_{k+1}, \varphi(x_{k+1}, \theta_k)) \, .
+\end{equation*}
+As we have only $n$ such i.i.d.~samples, we can run this algorithm only for $n$ steps. This matches exactly Eq.~\eqref{eq:sgd-expected}.
+
+To sum up,
+\begin{itemize}
+	\item multi-pass stochastic gradient descent optimizes the empirical risk, 
+	\item single-pass stochastic gradient descent optimizes the expected risk. 
+\end{itemize}
+The latter point can seem counter-intuitive, as we do not have a direct access to the expected risk. However, there is no contradiction as we can run only $n$ steps of stochastic gradient descent on the expected risk (where $n$ is the number of data samples), thus the precision we can achieve on the expected risk is limited by the amount of data we have. 
+
+However, single-pass stochastic gradient descent is less prone to overfitting than multi-pass stochastic gradient descent.
+
+
+\begin{remark}[stochastic approximation]
+In Section \ref{sec:sgd}, we have been interested, so far, only in the optimization of functions that can be written as expectations:
+\begin{equation}
+	\label{eq:stochastic-approximation}
+	f(\theta) = \E\left[f(\theta, \xi)\right] \, , \qquad \xi \sim \cQ \, ,
+\end{equation}
+with an obvious abuse of notation. The optimization of such functions is the subject of the field of \emph{stochastic approximation}. 
+
+Multi-pass stochastic gradient descent with batch size $m=1$ corresponds to $\xi = i \sim \Unif(\{1,\dots,n\})$ and $f(\theta, \xi) = \ell_i(\theta)$. Multi-pass stochastic gradient descent with a general batch size $m$ corresponds to $\xi = S$ with uniform distribution over subsets of $\{1, \dots, n\}$ of size $m$ and $f(\theta, \xi) = \frac{1}{m} \sum_{i \in S} \ell_i(\theta)$. Single-pass stochastic gradient descent corresponds to $\xi = (x,y) \sim \cP$ and $f(\theta, \xi) = \ell(y, \varphi(x, \theta))$.
+
+More generally, in the presence of the structure \eqref{eq:stochastic-approximation}, and if we can sample from~$Q$, we can optimize $f$ through a stochastic gradient descent with $g(\theta, \xi) = \nabla_\theta f(\theta, \xi)$. 
+
+In the next section, we provide an example of a stochastic gradient descent that does not follow the structure \eqref{eq:stochastic-approximation}. 
+\end{remark}
+
+
+
+\subsection{Coordinate gradient descent}
+\label{sec:cgd}
+
+In this section, we consider the minimization of any differentiable function $F:\R^p \to \R$---not necessarily a risk in a learning problem. When the number of parameters $p$ is large, running a gradient descent iteration of the form \eqref{eq:gd} can be computationally expensive, as it requires the computation of the full gradient $\nabla F(\theta) \in \R^p$ at each iteration. Instead, the \emph{coordinate gradient descent} algorithm consists in computing only one partial derivative at each iteration, and updating the corresponding coordinate of $\theta$. The updated coordinate is randomly sampled at each iteration, uniformly in $\{1,\dots, p\}$. 
+
+More formally, choose an initialization $\theta_0 \in \R^p$ and a stepsize sequence $\gamma_k \in \R_+$, $k \in \N$. Then for all $k \in \N$, sample $j_{k+1}$ uniformly in $\{1, \dots, p\}$ (independently of the past) and compute $\theta_{k+1}$ such that:
+\begin{align*}
+	\theta_{k+1}(j_{k+1}) &= \theta_k(j_{k+1}) - \gamma_k \partial_{j_{k+1}} F(\theta_k)  \, , \\
+	\theta_{k+1}(j) &= \theta_k(j) \qquad \text{for all } j \neq j_{k+1} \, .
+\end{align*}
+This algorithm is a stochastic gradient descent algorithm in the sense of Section~\ref{sec:sgd-abstract} with $\xi = j \sim \Unif(\{1,\dots,p\})$ and $g(\theta,j) = \partial_j F(\theta) e_j$ (where $e_1, \dots, e_p$ is the canonical basis of $\R^p$). As $\E[g(\theta,\xi)] = \frac{1}{p} \nabla F(\theta)$, the coordinate gradient descent is a stochastic gradient descent algorithm on the function $f(\theta) = \frac{1}{p}F(\theta)$.
+
+
+
+
+\subsection{Exercises}
+
+\begin{exercice}[coordinate stochastic gradient descent]
+	Let $F:\R^p \to \R$ be a differentiable function. We assume that $F$ can be written as a finite sum of function $F(\theta) = \frac{1}{n} \sum_{i=1}^n F_i(\theta)$, where each $F_i$ is differentiable. (For instance, $F(\theta)$ could be the empirical risk of a machine learning algorithm on a dataset of size $n$.) 
+	
+	To minimize $F$, we propose a coordinate stochastic gradient descent algorithm, defined as follows. Choose an initialization $\theta_0 \in \R^p$ and a stepsize $\gamma \in \R_+$. Then for all $k \in \N$, sample $i_{k+1}$ uniformly at random in $\{1, \dots, n\}$ and $j_{k+1}$ uniformly at random in $\{1,\dots, p\}$, independently of each other and of the past. Compute $\theta_{k+1}$ such that 
+	\begin{align*}
+		\theta_{k+1}(j_{k+1}) &= \theta_k(j_{k+1}) - \gamma_k \partial_{j_{k+1}} F_{i_{k+1}}(\theta_k)  \, , \\
+		\theta_{k+1}(j) &= \theta_k(j) \qquad \text{for all } j \neq j_{k+1} \, .
+	\end{align*}
+	\begin{description}
+		\item[1.] Show that $\E \theta_1 = \theta_0 - \frac{\gamma_0}{p} \nabla F(\theta_0)$.
+		\item[2.] Show that the coordinate stochastic gradient descent algorithm is an abstract stochastic gradient descent algorithm in the sense of Section \ref{sec:sgd-abstract}. In particular, show that stochastic gradients are unbiased.
+	\end{description}
+\end{exercice}
+
+\begin{exercice}[gossip problem]
+	\label{exer:gossip}
+	Consider a communication network, that we model as a graph $G = (V,E)$, where $V$ is the set of communication nodes and $E \subset \left\{\{i,j\} \, \middle\vert  \, i \neq j \in V \right\}$ is the set of communication links or edges. The gossip problem is an elementary problem in decentralized distributed computing where each node $v \in V$ is given a value $\theta_0(v)$ and the goal of the network is to compute the average of all these values. However, there is no central node in the network that can collect all of the information and computed the average. Instead, the nodes can only communicate along the edges of the graph when the communication link is activated.
+
+	To solve the gossip problem, we propose the following algorithm. At each iteration $k \in \N$, a communication link $(v_{k+1}, w_{k+1}) \in E$ is activated, uniformly at random. The nodes $v_{k+1}$ and $w_{k+1}$ exchange their values $\theta_k(v_{k+1})$ and $\theta_k(w_{k+1})$ and update them by averaging the two values:
+	\begin{align*}
+		\theta_{k+1}(v_{k+1}) &= \frac{1}{2} \theta_k(v_{k+1}) + \frac{1}{2} \theta_k(w_{k+1}) \, , \\
+		\theta_{k+1}(w_{k+1}) &= \frac{1}{2} \theta_k(v_{k+1}) + \frac{1}{2} \theta_k(w_{k+1}) \, .
+	\end{align*}
+	All other nodes keep their values unchanged: $\theta_{k+1}(z) = \theta_k(z)$ for $z \neq v_{k+1}, w_{k+1}$. 
+	
+	\begin{enumerate}
+		\item Show that the algorithm described above is a stochastic gradient descent algorithm in the sense of Section \ref{sec:sgd-abstract}, on a function $f$ to be determined.
+	\item Describe the set of minimizers of $f$.
+	\end{enumerate}
+\end{exercice}
+
+\section{Analyses for stochastic gradient descent}
+\label{sec:analysis}
+
+This section introduces the analyses for stochastic gradient descent. There exists many analyses of stochastic gradient descents, where the results depend on the assumptions on the function $f$. Our goal here is not to cover all of these analyses, but only a few representative results. The assumptions on the function $f$ that we use are reminded in Section~\ref{sec:function-structures}. 
+
+For the sake of comparison, we then present in Section \ref{sec:analysis-gd} the analysis for gradient descent. We then continue with the analysis of stochastic gradient descent in Section \ref{sec:analysis-sgd}. This gives different results for all of the stochastic gradient descents we have derived in Section \ref{sec:sgd}.
+
+
+\subsection{Function structures}
+\label{sec:function-structures}
+
+In this section, $f$ denotes a function from $\R^p$ to $\R$.
+
+\subsubsection{Convexity}
+
+\begin{definition}
+	The function $f$ is said to be \emph{convex} if for all $\theta, \theta' \in \R^p$ and all $\alpha \in [0,1]$, we have
+	\begin{equation*}
+		f((1-\alpha) \theta + \alpha \theta') \leq (1-\alpha) f(\theta) + \alpha f(\theta') \, .
+	\end{equation*}
+\end{definition}
+
+\begin{proposition}
+	\label{prop:convex-diff}
+	We assume that $f$ is continuously differentiable. The following conditions are equivalent:
+	\begin{enumerate}[label=(\roman*)]
+		\item $f$ is convex,
+		\item for all $\theta, \theta' \in \R^p$,
+		$f(\theta') \geq f(\theta) + \langle \nabla f(\theta),  \theta' - \theta \rangle$,
+		\item for all $\theta, \theta' \in \R^p$, $\langle \nabla f(\theta) - \nabla f(\theta'), \theta - \theta' \rangle \geq 0$.
+	\end{enumerate}
+\end{proposition}
+
+\begin{remark}
+	The condition $(iii)$ is generalization of the condition ``$f'$ is increasing'' for functions of one variable.
+\end{remark}
+
+\begin{proof}
+	\begin{description}
+		\item[$(i) \Rightarrow (ii)$.] Let $\theta, \theta' \in \R^p$. For $\alpha \in [0,1]$, we denote 
+		\begin{equation*}
+			g(\alpha) = (1-\alpha) f(\theta) + \alpha f(\theta') - f((1-\alpha) \theta + \alpha \theta') \, .
+		\end{equation*}
+		By $(i)$, $g \geq 0$. Moreover, $g(0) = 0$. Thus 
+		\begin{equation*}
+			0 \leq g'(0) = f(\theta') - f(\theta) - \langle \nabla f(\theta) , \theta' - \theta \rangle \, .
+		\end{equation*}
+		\item[$(ii) \Rightarrow (i)$.] Let $\theta, \theta' \in \R^p$ and $\alpha \in [0,1]$. By $(ii)$, we have
+		\begin{align*}
+			f(\theta') &\geq f((1-\alpha) \theta + \alpha \theta') + \langle \nabla f((1-\alpha) \theta + \alpha \theta'), (1-\alpha)(\theta'-\theta) \rangle \, , \\
+			f(\theta) &\geq f((1-\alpha) \theta + \alpha \theta') + \langle \nabla f((1-\alpha) \theta + \alpha \theta'), \alpha(\theta - \theta') \rangle \, .
+		\end{align*}
+		We take the linear combination of these two inequalities with respective weights $\alpha$ and $1-\alpha$:
+		\begin{equation*}
+			(1-\alpha) f(\theta) + \alpha f(\theta') \geq f((1-\alpha) \theta + \alpha \theta') \, .
+		\end{equation*}
+		\item[$(ii) \Rightarrow (iii)$.] Let $\theta, \theta' \in \R^p$. From $(ii)$, we have
+		\begin{align*}
+			0 \leq f(\theta') - f(\theta) - \langle \nabla f(\theta), \theta' - \theta \rangle \, , \\
+			0 \leq f(\theta) - f(\theta') - \langle \nabla f(\theta'), \theta - \theta' \rangle \, .
+		\end{align*}
+		Summing these two inequalities gives $(iii)$.
+		\item[$(iii) \Rightarrow (ii)$.] Let $\theta, \theta' \in \R^p$. For $\alpha \in [0,1]$, define 
+		\begin{equation*}
+			h(\alpha) = f((1-\alpha) \theta + \alpha \theta') - f(\theta) - \langle \nabla f(\theta), \alpha(\theta' - \theta) \rangle \, .
+		\end{equation*}
+		By $(iii)$, 
+		\begin{equation*}
+			h'(\alpha) = \langle \nabla f((1-\alpha) \theta + \alpha \theta') - \nabla f(\theta), \theta' - \theta \rangle \geq 0 \, .
+		\end{equation*}
+		Thus 
+		\begin{equation*}
+			f(\theta') - f(\theta) - \langle \nabla f(\theta), \theta' - \theta \rangle = h(1) \geq h(0) = 0 \, .
+		\end{equation*}
+	\end{description}
+\end{proof}
+
+\begin{proposition}
+	\label{prop:convex-2diff}
+	We assume that $f$ is twice continuously differentiable. The following conditions are equivalent:
+	\begin{enumerate}[label=(\roman*)]
+		\item $f$ is convex,
+		\item for all $\theta \in \R^p$, $\nabla^2 f(\theta) \succcurlyeq 0$.
+	\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+	\begin{description}
+		\item[$(i) \Rightarrow (ii)$.] Let $\theta \in \R^p$ and $v \in \R^p$. For $\delta \geq 0$, we define 
+		\begin{equation*}
+			g(\delta) = \langle \nabla f(\theta + \delta v) - \nabla f(\theta), v \rangle \, .
+		\end{equation*}
+		By $(i)$ and Prop.~\ref{prop:convex-diff}, for all $\delta \geq 0$, $g(\delta) \geq 0$. Moreover, $g(0) = 0$. Thus
+		\begin{equation*}
+			0 \leq g'(0) = \langle \nabla^2 f(\theta) v, v \rangle \, .
+		\end{equation*}
+		As this is true for all $v \in \R^p$, we have $\nabla^2 f(\theta) \succcurlyeq 0$.
+		\item[$(ii) \Rightarrow (i)$.] Let $\theta, \theta' \in \R^p$. For $\alpha \in [0,1]$, we define
+		\begin{equation*}
+			h(\alpha) = \langle \nabla f((1-\alpha)\theta + \alpha \theta') - \nabla f(\theta), \theta' - \theta \rangle \, .
+		\end{equation*} 
+		By $(ii)$, 
+		\begin{equation*}
+			h'(\alpha) = \langle \nabla^2 f((1-\alpha) \theta + \alpha \theta') (\theta' - \theta), \theta' - \theta\rangle \geq 0 \, .
+		\end{equation*}
+		Thus 
+		\begin{equation*}
+			\langle \nabla f(\theta') - \nabla f(\theta), \theta' - \theta \rangle = h(1) \geq h(0) = 0 \, .
+		\end{equation*}
+		This allows to conclude using Prop.~\ref{prop:convex-diff}.
+	\end{description}
+\end{proof}
+
+\subsubsection{Strong convexity}
+
+\begin{definition}
+	Let $\mu > 0$. The function $f$ is said to be \emph{$\mu$-strongly convex} if for all $\theta, \theta' \in \R^p$ and all $\alpha \in [0,1]$, 
+	\begin{equation*}
+		f((1-\alpha) \theta + \alpha \theta') \leq (1-\alpha) f(\theta) + \alpha f(\theta') - \frac{\mu}{2} \alpha (1-\alpha) \Vert \theta - \theta' \Vert^2 \, .
+	\end{equation*}
+	Further, the function $f$ is said to be \emph{strongly convex} if it is $\mu$-strongly convex for some $\mu >0$.
+\end{definition}
+
+\begin{proposition}
+	\label{prop:strong-convex-gen}
+	The following conditions are equivalent:
+	\begin{enumerate}[label=(\roman*)]
+		\item $f$ is $\mu$-strongly convex,
+		\item the function $g(\theta ) = f(\theta) - \frac{\mu}{2}\Vert \theta \Vert^2$ is convex.
+	\end{enumerate} 
+\end{proposition}
+
+\begin{proof}
+	\begin{align*}
+		&(1-\alpha) g(\theta) + \alpha g(\theta') -g((1-\alpha) \theta + \alpha \theta') \\
+		&\qquad= (1-\alpha) f(\theta) -(1-\alpha) \frac{\mu}{2} \Vert \theta \Vert^2 + \alpha f(\theta') - \alpha \frac{\mu}{2} \Vert \theta' \Vert^2 \\
+		&\qquad\quad- f((1-\alpha)\theta + \alpha \theta') + \frac{\mu}{2} \Vert (1-\alpha) \theta + \alpha \theta' \Vert^2 \\
+		&\qquad=\left[(1-\alpha) f(\theta) + \alpha f(\theta') - f((1-\alpha)\theta + \alpha \theta') - \alpha(1-\alpha)\frac{\mu}{2} \Vert \theta - \theta' \Vert^2 \right]\\
+		&\qquad\quad+ \frac{\mu}{2} \left[\Vert (1-\alpha) \theta + \alpha \theta' \Vert^2 + \alpha(1-\alpha) \Vert \theta - \theta' \Vert^2 - (1-\alpha) \Vert \theta \Vert^2- \alpha  \Vert \theta' \Vert^2\right]
+	\end{align*}
+	As simple expansion shows that the last bracket is actually equal to $0$. The proposition easily follows.
+\end{proof}
+
+\begin{proposition}
+	\label{prop:strong-convex-diff}
+	We assume that $f$ is continuously differentiable. The following conditions are equivalent:
+	\begin{enumerate}[label=(\roman*)]
+		\item $f$ is $\mu$-strongly convex,
+		\item for all $\theta, \theta' \in \R^p$,
+		$f(\theta') \geq f(\theta) + \langle \nabla f(\theta),  \theta' - \theta \rangle + \frac{\mu}{2}\Vert \theta' - \theta \Vert^2$,
+		\item for all $\theta, \theta' \in \R^p$, $\langle \nabla f(\theta) - \nabla f(\theta'), \theta - \theta' \rangle \geq \mu\Vert \theta' - \theta \Vert^2$.
+	\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+	These results are obtained by combining Prop.~\ref{prop:convex-diff} and Prop.~\ref{prop:strong-convex-gen}.
+\end{proof}
+
+\begin{proposition}[implications of strong convexity]
+	We assume that $f$ is continuously differentiable and $\mu$-strongly convex. Then:
+	\begin{enumerate}[label=(\roman*)]
+		\item $f$ has a unique minimizer $\theta_*$,
+		\item we have the \emph{Polyak-Lojasiewicz condition}: for all $\theta \in \R^p$,
+		\begin{equation*}
+		\frac{1}{2} \Vert \nabla f(\theta) \Vert^2 \geq \mu \left(f(\theta) - f(\theta_*)\right) \, ,
+		\end{equation*}
+		\item for all $\theta, \theta' \in \R^p$, $\Vert \nabla f(\theta) - \nabla f(\theta') \Vert \geq \mu \Vert \theta - \theta' \Vert$.
+	\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+	\begin{enumerate}[label=\itshape(\roman*)]
+		\item We thus prove the existence of a minimizer for the function $f$. Let $\theta \in \R^p$. By Prop.~\ref{prop:strong-convex-diff}$(ii)$, 
+		\begin{align*}
+			f(\theta) &\geq f(0) + \langle \nabla f(0), \theta \rangle + \frac{\mu}{2} \Vert \theta \Vert^2 \\
+			&\geq f(0) - \Vert \nabla f(0) \Vert \Vert \theta \Vert + \frac{\mu}{2} \Vert \theta \Vert^2 \xrightarrow[\Vert \theta \Vert \to \infty]{} + \infty \, .
+		\end{align*}
+		Thus there exists $R>0$ such that for all $\theta \in \R^p$ with $\Vert \theta \Vert \geq R$, $f(\theta) \geq f(0) + 1$. Moreover, as $f$ is continuous on the compact set $\overline{B(0,R)}$, it reaches its minimum on this set. This minimum is a global minimizer of $f$.
+
+		We now show the uniqueness of this global minimizer. Let $\theta_*$, $\theta_*'$ be two global minimizers of $f$. By the definition of strong convexity, we have 
+		\begin{equation*}
+			f\left(\frac{\theta_*+\theta_*'}{2}\right) \leq \frac{f(\theta_*) + f(\theta_*')}{2} - \frac{\mu}{2} \frac{1}{4} \Vert \theta_* - \theta_*' \Vert^2 \, .
+		\end{equation*}
+		Here, by optimality of $\theta_*$ and $\theta_*'$, $f\left(\frac{\theta_*+\theta_*'}{2}\right) \geq f(\theta_*) = f(\theta_*')$. Thus we must have $\Vert \theta_* - \theta_*' \Vert^2 = 0$. This proves the uniqueness. 
+		\item Let $\theta, \theta' \in \R^p$. By Prop.~\ref{prop:strong-convex-diff}$(ii)$,
+		\begin{equation*}
+			f(\theta') \geq f(\theta) + \langle \nabla f(\theta), \theta' - \theta \rangle + \frac{\mu}{2} \Vert \theta' - \theta \Vert^2 \, .
+		\end{equation*}
+		We now minimize in $\theta'$ over both sides of the inequality. The upper bound is minimized in $\theta' = \theta_*$. The lower bound is minimized in $\theta' = \theta - \frac{1}{\mu} \nabla f(\theta)$. This gives 
+		\begin{align*}
+			f(\theta_*) &\geq f(\theta) + \left\langle \nabla f(\theta), -\frac{1}{\mu} \nabla f(\theta) \right\rangle + \frac{\mu}{2} \left\Vert -\frac{1}{\mu} \nabla f(\theta) \right\Vert^2\\
+			&= f(\theta) - \frac{1}{2\mu} \Vert \nabla f(\theta) \Vert^2 \, .
+		\end{align*}
+		This gives the desired inequality.
+		\item Let $\theta, \theta' \in \R^p$. By Prop.~\ref{prop:strong-convex-diff}$(iii)$ and the Cauchy-Schwarz inequality,
+		\begin{equation*}
+			\mu \Vert \theta - \theta' \Vert^2 \leq \langle \nabla f(\theta) - \nabla f(\theta'), \theta - \theta' \rangle \leq \Vert \nabla f(\theta) - \nabla f(\theta') \Vert \Vert \theta - \theta' \Vert \, .
+		\end{equation*}
+		This gives the desired inequality.
+	\end{enumerate}
+\end{proof}
+
+
+
+\begin{proposition}
+	We assume that $f$ is twice continuously differentiable. The following conditions are equivalent:
+	\begin{enumerate}[label=(\roman*)]
+		\item $f$ is $\mu$-strongly convex,
+		\item for all $\theta \in \R^p$, $\nabla^2 f(\theta) \succcurlyeq \mu I_p$.
+	\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+	This result is obtained by combining Prop.~\ref{prop:convex-2diff} and Prop.~\ref{prop:strong-convex-gen}.
+\end{proof}
+
+\subsubsection{Smoothness}
+
+In all of this section, we assume that $f$ is \emph{convex} and \emph{continuously differentiable}.
+
+\begin{definition}
+	Let $L > 0$. The function $f$ is said to be \emph{$L$-smooth} if for all $\theta, \theta' \in \R^p$, for all $\alpha \in [0,1]$, 
+	\begin{equation*}
+		f((1-\alpha) \theta + \alpha \theta') \geq (1-\alpha) f(\theta) + \alpha f(\theta') - \frac{L}{2} \alpha (1-\alpha) \Vert \theta - \theta' \Vert^2 \, .
+	\end{equation*}
+	Further, the function $f$ is said to be \emph{smooth} if it is $L$-smooth for some $L >0$.
+\end{definition}
+
+\begin{proposition}
+	\label{prop:smooth-gen}
+	The following conditions are equivalent:
+	\begin{enumerate}[label=(\roman*)]
+		\item $f$ is $L$-smooth,
+		\item the function $g(\theta) = \frac{L}{2} \Vert \theta \Vert^2 - f(\theta)$ is convex.
+	\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+	The proof is similar to the proof of Prop.~\ref{prop:strong-convex-gen}.
+\end{proof}
+
+\begin{proposition}
+	\label{prop:smooth-diff}
+	The following conditions are equivalent:
+	\begin{enumerate}[label=(\roman*)]
+		\item $f$ is $L$-smooth,
+		\item for all $\theta, \theta' \in \R^p$, $f(\theta') \leq f(\theta) + \langle \nabla f(\theta), \theta' - \theta\rangle + \frac{L}{2} \Vert \theta' - \theta \Vert^2$,
+		\item for all $\theta, \theta' \in \R^p$, $\langle \nabla f(\theta') - \nabla f(\theta), \theta' - \theta \rangle \leq L \Vert \theta' - \theta \Vert^2$
+		\item $\nabla f$ is co-coercive: for all $\theta, \theta' \in \R^p$,
+		\begin{equation*}
+			\Vert \nabla f(\theta') - \nabla f(\theta) \Vert^2 \leq L \langle \theta'-\theta, \nabla f(\theta') - \nabla f(\theta) \rangle \, ,
+		\end{equation*}
+		\item $\nabla f$ is $L$-Lipschitz: for all $\theta, \theta' \in \R^p$, $\Vert \nabla f(\theta') - \nabla f(\theta) \Vert \leq L \Vert \theta' - \theta \Vert$.
+	\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+	\begin{description}
+		\item[$(i) \Leftrightarrow (ii) \Leftrightarrow (iii)$] These equivalences can be proven by combining Prop.~\ref{prop:convex-diff} and Prop.~\ref{prop:smooth-gen}. 
+		\item[$(ii)\Rightarrow(iv)$] Let $\theta, \theta', \theta'' \in \R^p$. By $(ii)$, 
+		\begin{equation*}
+			f(\theta + \theta'') \leq f(\theta) + \langle \nabla f(\theta), \theta'' \rangle + \frac{L}{2} \Vert \theta'' \Vert^2 \, .
+		\end{equation*}
+		Moreover, by convexity of $f$ and Prop.~\ref{prop:convex-diff}$(ii)$, 
+		\begin{equation*}
+			f(\theta + \theta'') \geq f(\theta') + \langle \nabla f(\theta'), \theta + \theta'' - \theta' \rangle \, .
+		\end{equation*}
+		Combining these two inequalities gives
+		\begin{equation*}
+			\langle \nabla f(\theta') - \nabla f(\theta), \theta'' \rangle - \frac{L}{2} \Vert \theta'' \Vert^2 \leq f(\theta) - f(\theta') + \langle \nabla f(\theta'), \theta' - \theta \rangle \, .
+		\end{equation*}
+		We now maximize over $\theta''$. The maximum is obtained for
+		\begin{equation*}
+			\theta'' = \frac{1}{L}\left(\nabla f(\theta') - \nabla f(\theta)\right) \, .
+		\end{equation*}
+		We obtain 
+		\begin{equation*}
+			\frac{1}{2L} \Vert \nabla f(\theta') - \nabla f(\theta) \Vert^2 \leq f(\theta) - f(\theta') + \langle \nabla f(\theta'), \theta' - \theta \rangle \, .
+		\end{equation*}
+		Of course, the same inequality holds with $\theta$ and $\theta'$ exchanged:
+		\begin{equation*}
+			\frac{1}{2L} \Vert \nabla f(\theta') - \nabla f(\theta) \Vert^2 \leq f(\theta') - f(\theta) + \langle \nabla f(\theta), \theta - \theta' \rangle \, .
+		\end{equation*}
+		Adding these two inequalities gives the desired result.
+		\item[$(iv) \Rightarrow (v)$] This easily follows by applying the Cauchy-Schwarz inequality to the right-hand side of $(iv)$.
+		\item[$(v) \Rightarrow (iii)$] This easily follows by combining the Cauchy-Schwarz inequality with $(v)$.
+	\end{description}
+\end{proof}
+
+\begin{proposition}
+	We assume that $f$ is twice continuously differentiable. The following conditions are equivalent:
+	\begin{enumerate}[label=(\roman*)]
+		\item $f$ is $L$-smooth,
+		\item for all $\theta \in \R^p$, $\nabla^2 f(\theta) \preccurlyeq L I_p$.
+	\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+	This result is obtained by combining Prop.~\ref{prop:convex-2diff} and Prop.~\ref{prop:smooth-gen}.
+\end{proof}
+
+
+
+
+
+
+
+
+
+
+\subsection{Analysis of gradient descent}
+\label{sec:analysis-gd}
+
+In this section, we assume that $f$ is differentiable, $\mu$-strongly convex and $L$-smooth for some $\mu, L > 0$. We denote $\theta_*$ the unique minimizer of $f$. These assumptions are not always satisfied for the empirical and expected risks of machine learning problems; however they are still useful as a first setting of analysis in order to grasp the qualitative behavior of stochastic gradient descents.
+
+To start with, we analyze the gradient descent algorithm introduced in Section~\ref{sec:gd}, that we recall here for convenience: choose an initialization $\theta_0 \in \R^p$ and a stepsize sequence $\gamma_k \in \R_+$, $k \in \N$. Then for all $k \in \N$, compute 
+\begin{equation*}
+	\theta_{k+1} = \theta_k - \gamma_{k} \nabla f(\theta_k) \, .
+\end{equation*}
+
+\begin{thm}
+	\label{thm:gd}
+	Assume $\gamma_k = \gamma$ is constant and $\gamma \leq \frac{1}{L}$. Then \begin{equation*}
+		\Vert \theta_k - \theta_* \Vert^2 \leq (1-\gamma \mu)^k \Vert \theta_0 - \theta_* \Vert^2 \, .
+	\end{equation*}
+	In particular, for $\gamma = \frac{1}{L}$, 
+	\begin{equation*}
+		\Vert \theta_k - \theta_* \Vert^2 \leq \left(1 - \frac{\mu}{L}\right)^k \Vert \theta_0 - \theta_* \Vert^2 \, .
+	\end{equation*}
+	The convergence is said to be \emph{linear}, as the bound is exponential in $k$. The condition number ${L}/{\mu}$ describes the typical time of convergence. 
+\end{thm}
+
+\begin{proof}
+	\begin{align*}
+		\Vert \theta_{k+1} - \theta_* \Vert^2 &= \Vert \theta_k - \theta_* - \gamma \nabla f(\theta_k) \Vert^2 \\
+		&= \Vert \theta_k - \theta_* \Vert^2 - 2 \gamma \langle \nabla f(\theta_k), \theta_k - \theta_* \rangle + \gamma^2 \Vert \nabla f(\theta_k) \Vert^2 \, .
+	\end{align*}
+	By co-coercivity of $\nabla f$ (Prop.~\ref{prop:smooth-diff}$(iv)$),
+	\begin{align*}
+		\Vert \nabla f(\theta_k) \Vert^2 &= \Vert \nabla f(\theta_k) - \nabla f(\theta_*) \Vert^2 \\
+		&\leq L \langle \theta_k - \theta_*, \nabla f(\theta_k) - \nabla f(\theta_*) \rangle\\
+		&= L \langle \theta_k - \theta_*, \nabla f(\theta_k) \rangle \, .
+	\end{align*}
+	This gives 
+	\begin{align*}
+		\Vert \theta_{k+1} - \theta_* \Vert^2 
+		&\leq \Vert \theta_k - \theta_* \Vert^2 +\gamma (-2+\gamma L) \langle \nabla f(\theta_k), \theta_k - \theta_* \rangle \, .
+	\end{align*}
+	By assumption, we have that $-2+\gamma L \leq -2 + \frac{L}{L} = -1$ and by the strong convexity of $f$ (Prop.~\ref{prop:strong-convex-diff}$(iii)$), 
+	\begin{align*}
+		\langle \nabla f(\theta_k), \theta_k - \theta_* \rangle &= \langle \nabla f(\theta_k) - \nabla f(\theta_*), \theta_k - \theta_* \rangle \geq \mu \Vert \theta_k - \theta_* \Vert^2 \, .
+	\end{align*}
+	This gives 
+	\begin{equation*}
+		\Vert \theta_{k+1} - \theta_* \Vert^2 \leq \Vert \theta_k - \theta_* \Vert^2 - \gamma \mu \Vert \theta_k - \theta_* \Vert^2 = (1-\gamma \mu) \Vert \theta_k - \theta_* \Vert^2 \, ,
+	\end{equation*}
+	and concludes the proof. 
+\end{proof}
+
+\begin{remark}
+	Note that the above result on the distance $\Vert \theta_k - \theta_* \Vert$ to the optimum can be translated into a result on the suboptimality gap $f(\theta_k) - f(\theta_*)$. Indeed, as $f$ is $L$-smooth, 
+	\begin{equation*}
+		f(\theta_k) - f(\theta_*) \leq \langle \nabla f(\theta_*), \theta_k - \theta_* \rangle + \frac{L}{2} \Vert \theta_k - \theta_* \Vert^2 \leq \frac{L}{2} (1-\gamma \mu)^k \Vert \theta_0 - \theta_* \Vert^2 \, .
+	\end{equation*}
+\end{remark}
+
+Recall that in machine learning applications---for instance when optimizing an empirical risk---we only seek a limited precision in the optimization as incompressible estimation and approximation errors remain in the generalization error. As a consequence, we sometimes present the above result differently, in order to discuss the number of iterations needed to reach a certain precision.
+
+\begin{coro}
+	\label{coro:gd}
+	Fix $\varepsilon > 0$. Using a fixed stepsize $\gamma = 1/L$, and 
+	\begin{equation*}
+		k \geq \left(\log \frac{\Vert \theta_0 - \theta_* \Vert}{\varepsilon}\right) \frac{L}{\mu} 
+	\end{equation*}
+	iterations, we have $\Vert \theta_k - \theta_0 \Vert \leq \varepsilon$.
+\end{coro}
+
+\begin{proof}
+	\begin{equation*}
+		\Vert \theta_k - \theta_* \Vert^2 \leq \left(1 - \frac{\mu}{L}\right)^k \Vert \theta_0 - \theta_* \Vert^2 \leq e^{-k \mu/L} \Vert \theta_0 - \theta_* \Vert^2 \, , 
+	\end{equation*}
+	and 
+	\begin{align*}
+		&e^{-k \mu/L} \Vert \theta_0 - \theta_* \Vert^2 \leq \varepsilon &&\Longleftrightarrow &k \geq \left(\log \frac{\Vert \theta_0 - \theta_* \Vert}{\varepsilon}\right) \frac{L}{\mu} \, .
+	\end{align*}
+\end{proof}
+
+
+
+\subsection{Analysis of abstract stochastic gradient descent}
+\label{sec:analysis-sgd}
+
+We now analyze the abstract stochastic gradient descent in the setting introduced in Section \ref{sec:sgd-abstract}, that we recall here for convenience. In this setting, we can generate samples $\xi$ from some distribution $\cQ$ and compute unbiased stochastic gradients $g(\theta, \xi)$ of $f$ at $\theta$, in the sense that $\E g(\theta, \xi) = \nabla f(\theta)$. We then choose an initialization $\theta_0 \in \R^p$ and a stepsize sequence $\gamma_k \in \R_+$, $k \in \N$. Then for all $k \in \N$, we sample $\xi_{k+1}$ from $\cQ$ and compute 
+\begin{equation*}
+	\theta_{k+1} = \theta_k - \gamma_k g(\theta_k, \xi_{k+1}) \, .
+\end{equation*}
+
+To prove a theorem on stochastic gradient descent, we make two assumptions.
+
+\begin{assumption}
+	\label{assu:strong-convexity}
+The function $f$ is $\mu$-strongly convex. 
+\end{assumption}
+
+In particular, $f$ has a unique minimum $\theta_*$. Moreover, we will denote $\sigma^2 = \E\Vert g(\theta_*, \xi)\Vert^2$ the expected square norm of the stochastic gradient at the optimum.
+
+\begin{assumption}
+	\label{assu:cocoercivity-grad-sto}
+	There exists $M>0$ such that for all $\theta, \theta' \in \R^p$,
+	\begin{equation*}
+		\E\Vert g(\theta, \xi) - g(\theta', \xi)\Vert^2  \leq M \langle \theta - \theta' , \nabla f(\theta) - \nabla f(\theta') \rangle \, .
+	\end{equation*}
+\end{assumption}
+
+This assumption can be interpreted as follows. We could imagine that we would need to assume that the stochastic gradients are gradients of convex $M$-smooth functions, i.e., that they are co-coercive:
+\begin{equation*}
+	\Vert g(\theta, \xi) - g(\theta', \xi) \Vert^2 \leq M \langle \theta - \theta', \nabla g(\theta, \xi) - \nabla g(\theta', \xi) \rangle \quad \text{for $Q$-almost all $\xi$}\, .
+\end{equation*}
+In fact, we do not assume this but only the ``expected'' version of this inequality, where we take expectations on both sides.
+
+Note that Assumption \ref{assu:cocoercivity-grad-sto} implies that $f$ is $M$-smooth. Indeed, by Jensen's inequality, 
+\begin{align*}
+	\Vert \nabla f(\theta) - \nabla f(\theta') \Vert^2 &= \Vert \E\left[g(\theta, \xi) - g(\theta', \xi)\right] \Vert^2 \leq \E\Vert g(\theta, \xi) - g(\theta', \xi)\Vert^2 \\
+	&\leq M \langle \theta - \theta' , \nabla f(\theta) - \nabla f(\theta') \rangle \, .
+\end{align*}
+
+Before proving a result under these assumptions, we show how Assumption~\ref{assu:cocoercivity-grad-sto} can be checked in the cases introduced in Section \ref{sec:sgd}.
+
+\paragraph{Stochastic approximation setting.} We set ourselves in the setting where $f(\theta) = \E f(\theta, \xi)$ for some $\xi \sim Q$ and that $g(\theta, \xi) = \nabla f(\theta, \xi)$. Assume that for all $\xi$, $f(.,\xi)$ is convex, $L(\xi)$-smooth. Then Assumption \ref{assu:cocoercivity-grad-sto} is satisfied with $M = \Vert L \Vert_{L^\infty(\cQ)}$.
+
+Indeed, as $f(.,\xi)$ is $L(\xi)$-smooth, we have that for all $\theta, \theta' \in \R^p$,
+\begin{equation*}
+	\Vert g(\theta, \xi) - g(\theta', \xi) \Vert^2 \leq L(\xi) \langle \theta - \theta', g(\theta, \xi) - g(\theta', \xi) \rangle \, .
+\end{equation*}
+Taking expectation on both sides gives 
+\begin{align*}
+	\E \Vert g(\theta, \xi) - g(\theta', \xi) \Vert^2 &\leq \E\left[L(\xi) \langle \theta - \theta', g(\theta, \xi) - g(\theta', \xi) \rangle\right] \\
+	&\leq \Vert L \Vert_{L^\infty(\cQ)} \langle \theta - \theta', \E g(\theta, \xi) - \E g(\theta', \xi) \rangle \\
+	&= \Vert L \Vert_{L^\infty(\cQ)} \langle \theta - \theta', \nabla f(\theta) - \nabla f(\theta') \rangle \, .
+\end{align*}
+
+\paragraph{Coordinate gradient descent.} We assume that the function $F:\R^p \to \R$ on which we perform a coordinate gradient descent is $\mu$-strongly convex and $L$-smooth. Recall that coordinate gradient descent corresponds to $\xi = j \sim \Unif(\{1, \dots, p\})$, $g(\theta,j) = \partial_j F(\theta) e_j$ and $f(\theta) = \frac{1}{p} F(\theta)$. Then Assumption~\ref{assu:cocoercivity-grad-sto} is satisfied with $M = L$.
+
+Indeed, 
+\begin{align*}
+	\E \Vert g(\theta, j) - g(\theta', j) \Vert^2 &= \E \left\Vert \partial_j F(\theta) e_j - \partial_j F(\theta') e_j \right\Vert^2 \\
+	&= \E (\partial_j F(\theta) - \partial_j F(\theta'))^2 \\
+	&= \frac{1}{p} \Vert \nabla F(\theta) - \nabla F(\theta') \Vert^2 \\
+	&\leq \frac{L}{p} \langle \theta - \theta', \nabla F(\theta) - \nabla F(\theta') \rangle \\
+	&= L \langle \theta - \theta', \nabla f(\theta) - \nabla f(\theta') \rangle \, .
+\end{align*}
+
+Now that our assumptions are motivated, we now state our general theorem.
+
+\begin{thm}
+	\label{thm:sgd}
+	Make Assumptions \ref{assu:strong-convexity} and \ref{assu:cocoercivity-grad-sto}. Assume that $\gamma_k = \gamma$ is constant and $\gamma \leq \frac{1}{2M}$. Then 
+	\begin{equation}
+		\label{eq:sgd-bound}
+		\E \Vert \theta_k - \theta_* \Vert^2 \leq \left(1 - \gamma \mu\right)^k \Vert \theta_0 - \theta_* \Vert^2 + \frac{2\gamma \sigma^2}{\mu} \, .
+	\end{equation}
+\end{thm}
+
+	This theorem generalizes Theorem \ref{thm:gd} to the stochastic setting. As the optimization procedure is random, we now bound the square distance to the optimum \emph{in expectation}. The bound is the same as in the deterministic case, with an additional term $\frac{2\gamma \sigma^2}{\mu}$ due to the stochasticity of the gradients. It is a measure of the noise in the optimization process. This term is due to the fact that, even if we have reached the optimum $\theta_k = \theta_*$, if $\sigma^2 = \E \Vert g(\theta_*, \xi) \Vert^2 >0$, a stochastic gradient might make the trajectory move away from the optimum. As a consequence, there is only a limited precision as $k \to \infty$:
+	\begin{equation*}
+		\limsup_{k \to \infty} \E \Vert \theta_k - \theta_* \Vert^2 \leq \frac{2\gamma \sigma^2}{\mu} \, .
+	\end{equation*}
+	This precision might actually be sufficient in machine learning if approximation and estimation errors dominate. As a consequence, using a fixed-step size stochastic gradient descent might be a good strategy in practice.
+
+	More precisely, the asymptotic performance of $\frac{2\gamma \sigma^2}{\mu}$ is proportional to the (square) magnitude $\sigma^2 = \E \Vert g(\theta_*, \xi) \Vert^2 $ of the stochastic gradients at optimum. This shows that the more ``stochastic'' the gradient descent, the larger the asymptotic performance. However, this term is also proportional to the stepsize $\gamma$, more precisely to the ratio $\gamma / \mu$. This shows that one can limit the effect of noise by using smaller stepsizes. This effect is intuitive: taking small stepsizes enables to take advantage of the averaging of the stochastic gradients along the trajectory, and thus reduce the effect of stochasticity. However, reducing the stepsize degrades the first term of~\eqref{eq:sgd-bound}; as a consequence, there is a tradeoff between fast initial decay of the distance to the optimum and the precision of the final estimate.
+
+Before we start the proof, let us introduce a convenient notation. Let $\cF_k$ denote the sigma-algebra generated by the first $k$ samples $\xi_1, \dots, \xi_k$. Then the conditional expectation $\E[\, \cdot \, | \cF_k]$ can be understood as the expectation over $\xi_{k+1}, \xi_{k+2}, \dots$, where $\xi_1, \dots, \xi_k$ are considered as deterministic.
+
+\begin{proof}
+	\begin{align*}
+		\Vert \theta_{k+1} - \theta_* \Vert^2 &= \Vert \theta_k - \theta_* - \gamma g(\theta_k, \xi_{k+1}) \Vert^2 \\
+		&= \Vert \theta_k - \theta_* \Vert^2 - 2 \gamma \langle  g(\theta_k, \xi_{k+1}), \theta_k - \theta_* \rangle + \gamma^2 \Vert g(\theta_k, \xi_{k+1}) \Vert^2 \\
+		&\leq \Vert \theta_k - \theta_* \Vert^2 - 2 \gamma \langle  g(\theta_k, \xi_{k+1}), \theta_k - \theta_* \rangle \\
+		&\qquad+ 2\gamma^2 \Vert g(\theta_k, \xi_{k+1}) - g(\theta_*, \xi_{k+1}) \Vert^2 + 2\gamma^2 \Vert g(\theta_*, \xi_{k+1}) \Vert^2\, .
+	\end{align*}
+As $\theta_k$ is $\cF_k$-measurable---it is a function of $\xi_1, \dots, \xi_k$ only---, it can be considered as a constant for $\E[\, \cdot \, | \cF_k]$. We thus have
+\begin{align*}
+	\E \left[\Vert \theta_{k+1} - \theta_* \Vert^2 \, \middle\vert \, \cF_k\right] 
+	&= \Vert \theta_k - \theta_* \Vert^2 - 2 \gamma \left\langle \E [g(\theta_k, \xi_{k+1}) \, \vert \, \cF_k ], \theta_k - \theta_* \right\rangle \\
+	&\qquad+ 2\gamma^2\E \left[ \Vert g(\theta_k, \xi_{k+1}) - g(\theta_*, \xi_{k+1}) \Vert^2 \, \vert \, \cF_k  \right] \\
+	&\qquad+ 2\gamma^2\E \left[ \Vert g(\theta_*, \xi_{k+1}) \Vert^2 \, \vert \, \cF_k  \right] \, .
+\end{align*}
+As the stochastic gradient are unbiased, $\E [g(\theta_k, \xi_{k+1}) \, \vert \, \cF_k ] = \nabla f(\theta_k)$. Moreover, by Assumption \ref{assu:cocoercivity-grad-sto},
+\begin{align*}
+	\E \left[ \Vert g(\theta_k, \xi_{k+1}) - g(\theta_*, \xi_{k+1}) \Vert^2 \, \vert \, \cF_k  \right] &\leq M \langle \theta_k - \theta_*, \nabla f(\theta_k) - \nabla f(\theta_*) \rangle\\
+	&= M \langle \theta_k - \theta_*, \nabla f(\theta_k)  \rangle \, .
+\end{align*}
+Finally, we have that $\E \left[ \Vert g(\theta_*, \xi_{k+1}) \Vert^2 \, \vert \, \cF_k  \right] = \sigma^2$. This gives
+\begin{align*}
+	\E \left[\Vert \theta_{k+1} - \theta_* \Vert^2 \, \middle\vert \, \cF_k\right] 
+	&\leq \Vert \theta_k - \theta_* \Vert^2 - 2 \gamma \langle  \nabla f(\theta_k), \theta_k - \theta_* \rangle \\
+	&\qquad+ 2\gamma^2 M \langle \theta_k - \theta_*, \nabla f(\theta_k)  \rangle + 2\gamma^2 \sigma^2 \\
+	&= \Vert \theta_k - \theta_* \Vert^2 + 2\gamma (-1+ \gamma M) \langle \nabla f(\theta_k), \theta_k - \theta_* \rangle \\
+	&\qquad+ 2\gamma^2 \sigma^2 \, .
+\end{align*}
+By assumption, we have that $-1+\gamma M \leq -1 + \frac{M}{2M} = -\frac{1}{2}$ and by the strong convexity of $f$ (Prop.~\ref{prop:strong-convex-diff}$(iii)$), 
+\begin{align*}
+	\E \left[\Vert \theta_{k+1} - \theta_* \Vert^2 \, \middle\vert \, \cF_k\right] 
+	&\leq \Vert \theta_k - \theta_* \Vert^2 -\gamma \mu \Vert \theta_k - \theta_* \Vert^2 + 2\gamma^2 \sigma^2 \\
+	&= (1-\gamma\mu ) \Vert \theta_k - \theta_* \Vert^2  + 2\gamma^2 \sigma^2 \, .
+\end{align*}
+In particular, taking expectations, we have 
+\begin{align*}
+	\E \Vert \theta_{k+1} - \theta_* \Vert^2  &\leq (1-\gamma\mu ) \E \Vert \theta_k - \theta_* \Vert^2  + 2\gamma^2 \sigma^2 \, .
+\end{align*}
+To conclude, we seek a constant $N$ such that $N = (1-\gamma\mu ) N + 2\gamma^2 \sigma^2$. This gives $N = \frac{2\gamma \sigma^2}{\mu}$. We then have 
+\begin{align*}
+	\E \Vert \theta_{k+1} - \theta_* \Vert^2  - N &\leq (1-\gamma\mu ) \left(\E \Vert \theta_k - \theta_* \Vert^2  - N \right) \, , 
+\end{align*}
+and thus, by induction, 
+\begin{align*}
+	\E \Vert \theta_{k} - \theta_* \Vert^2  &\leq (1-\gamma\mu )^k \left(\Vert \theta_0 - \theta_* \Vert^2 - N \right) + N \\
+	&\leq (1-\gamma\mu )^k \Vert \theta_0 - \theta_* \Vert^2  + N \, .
+\end{align*}
+\end{proof}
+
+In the following corollary, we describe how to choose the stepsize $\gamma$ and the number of iterations $k$ in order to achieve a given error $\varepsilon$.
+
+\begin{coro}
+	\label{coro:sgd}
+	Make Assumptions \ref{assu:strong-convexity} and \ref{assu:cocoercivity-grad-sto}. Fix $\varepsilon > 0$. Using a fixed stepsize 
+	\begin{equation*}
+		\gamma = \frac{1}{2M + \frac{4\sigma^2}{\varepsilon\mu}} 
+	\end{equation*}
+	and 
+	\begin{equation*}
+		k \geq 2 \left(\log \frac{2 \Vert \theta_0 - \theta_* \Vert^2}{\varepsilon}\right) \left(\frac{M}{\mu} + \frac{2\sigma^2}{\mu^2 \varepsilon}\right)
+	\end{equation*}
+	iterations, we have that 
+	\begin{equation*}
+		\E \Vert \theta_k - \theta_* \Vert^2 \leq \varepsilon \, .
+	\end{equation*}
+\end{coro}
+
+Compare to Corollary \ref{coro:gd}: in the stochastic setting, when $\sigma^2 > 0$, the stepsize must be adapted to the noise level. The number of iterations needed to reach en error $\varepsilon$ depends on condition number $M/\mu$, which replaces the role of the condition number $L/\mu$ in the deterministic case. However, an additional term of the form $\sigma^2/(\mu^2 \varepsilon)$ appears and plays a role when seeking a small error $\varepsilon$. 
+
+\begin{proof}
+	Note that $\gamma \leq 1/(2M)$ and thus we can apply Theorem~\ref{thm:sgd}. This gives 
+	\begin{equation}
+		\label{eq:aux1}
+		\E \Vert \theta_k - \theta_* \Vert^2 \leq \left(1 - \gamma \mu\right)^k \Vert \theta_0 - \theta_* \Vert^2 + \frac{2\gamma \sigma^2}{\mu} \, .
+	\end{equation}
+	As 
+	\begin{equation*}
+		\gamma = \frac{1}{2M + \frac{4\sigma^2}{\varepsilon\mu}} \leq \frac{1}{ \frac{4\sigma^2}{\varepsilon\mu}} = \frac{\varepsilon \mu}{4\sigma^2} \, ,
+	\end{equation*}
+the second term of Eq.~\eqref{eq:aux1} can be bounded by 
+\begin{equation*}
+	\frac{2\gamma \sigma^2}{\mu} \leq \frac{\varepsilon}{2} \, .
+\end{equation*}
+We now bound the first term of Eq.~\eqref{eq:aux1}. We have
+\begin{align*}
+	&\left(1 - \gamma \mu\right)^k \Vert \theta_0 - \theta_* \Vert^2 \leq e^{-k \gamma \mu} \Vert \theta_0 - \theta_* \Vert^2 \leq \frac{\varepsilon}{2}\\
+	&\qquad \Longleftrightarrow k \geq \frac{1}{\gamma \mu} \log \frac{2 \Vert \theta_0 - \theta_* \Vert^2}{\varepsilon} = 2 \left(\log \frac{2 \Vert \theta_0 - \theta_* \Vert^2}{\varepsilon}\right) \left(\frac{M}{\mu} + \frac{2\sigma^2}{\varepsilon\mu^2}\right) \, .
+\end{align*}
+\end{proof}
+
+With a fixed stepsize, the asymptotic performance of stochastic gradient descent is limited by the noise level (when $\sigma^2 > 0$). This limiting performance can be improved by reducing the stepsize, but this degrades the initial decay of the distance to the optimum. This suggests a policy which is widely used in practice: start with a large stepsize to quickly improve the error, and reduce the stepsize when the error starts to plateau. Here, we propose an analysis of stochastic gradient descent with decaying stepsizes.
+
+\begin{thm}
+	\label{thm:sgd-decay}
+	Make Assumptions \ref{assu:strong-convexity} and \ref{assu:cocoercivity-grad-sto}. Take
+	\begin{equation*}
+		\gamma_k = \frac{\beta}{k_0 + k} 
+	\end{equation*}
+	where $\beta > \frac{1}{\mu}$ and $k_0$ is chosen such that $\gamma_0 = \frac{\beta}{k_0} \leq \frac{1}{2M}$. Then 
+	\begin{align*}
+		\E \Vert \theta_k - \theta_* \Vert^2 \leq \frac{\nu}{k_0 + k} \, ,
+	\end{align*}
+	where $\nu = \max\left(k_0 \Vert \theta_0 - \theta_* \Vert^2, \frac{2\sigma^2\beta^2}{\beta\mu-1}\right)$.
+\end{thm}
+With an appropriate choice of stepsizes, one can obtain that the expected square distance to optimum decays as $1/k$. As we had a linear convergence in the deterministic case, we observe that the noise severely degrades the convergence rate. Actually, this rate is optimal in the sense that it is the best one can achieve in the presence of noise.
+
+\begin{proof}
+	We make a proof by induction. The initialization $k=0$ is trivial. Assume that the result holds for some $k \in \N$. Then following the steps of the proof of Theorem~\ref{thm:sgd}, we have
+	\begin{align*}
+		\E \Vert \theta_{k+1} - \theta_* \Vert^2  &\leq (1-\gamma_k\mu ) \E \Vert \theta_k - \theta_* \Vert^2  + 2\gamma_k^2 \sigma^2 \, .
+	\end{align*}
+	The only difference here is that the stepsize is variable, and thus it is less straightforward to combine these inequalities for different $k$. Using the induction hypothesis, we have
+	\begin{align*}
+		\E \Vert \theta_{k+1} - \theta_* \Vert^2  &\leq \left(1-\frac{\beta\mu}{k_0+k} \right) \frac{\nu}{k_0+k}  + 2\sigma^2\frac{\beta^2}{(k_0+k)^2} \\
+		&= \frac{(k_0+k-\beta\mu)\nu + 2\sigma^2 \beta^2}{(k_0+k)^2} \\
+		&= \frac{(k_0+k-1)\nu}{(k_0+k)^2} + \nu \frac{(1-\beta\mu)\nu+2\sigma^2\beta^2}{(k_0+k)^2} \, .
+	\end{align*}
+	By definition of $\nu$, we have that $(1-\beta\mu)\nu+2\sigma^2\beta^2 \leq 0$. Further, $\frac{(k_0+k-1)}{(k_0+k)^2} \leq \frac{1}{k_0+k+1}$, and thus
+	\begin{equation*}
+		\E \Vert \theta_{k+1} - \theta_* \Vert^2 \leq \frac{\nu}{k_0+k+1} \, .
+	\end{equation*}
+This proves the induction step.
+\end{proof}
+
+
+
+
+
+
+
+\subsection{Application for multi-pass stochastic gradient descent on the empirical risk}
+\label{sec:analysis-sgd-empirical}
+
+In this section, we analyse the multi-pass stochastic gradient descent introduced in Section~\ref{sec:sgd-empirical}. We recall that 
+\begin{equation*}
+	f(\theta) = \frac{1}{n} \sum_{i=1}^n \ell_i(\theta) \, ,
+\end{equation*}
+where $\ell_i(\theta) = \ell(y_i, \varphi(x_i, \theta))$ is the loss associated to the $i$-th sample. 
+
+\paragraph{Batch-size $m=1$.}
+We recall that in this case, the stochastic gradient descent \eqref{eq:sgd-empirical} corresponds to the abstract stochastic gradient descent with $\xi = i \sim \Unif(\{1, \dots, n\})$ and $g(\theta, i) = \nabla \ell_i(\theta)$. If the function $\ell_i(\theta)$ is convex, $L_i$-smooth, then Assumption~\ref{assu:cocoercivity-grad-sto} is satisfied with $M = \max(L_1, \dots, L_n)$. Assume further that the function $f$ is $\mu$-strongly convex---this needs to be proved by independent arguments---, then we obtain that for SGD with a fixed stepsize $\gamma \leq 1/(2\max(L_1, \dots, L_n))$, we have 
+\begin{equation*}
+	\E \Vert \theta_k - \theta_* \Vert^2 \leq \left(1 - \gamma \mu\right)^k \Vert \theta_0 - \theta_* \Vert^2 + \frac{2\gamma \sigma^2}{\mu} \, .
+\end{equation*}
+Here $\sigma^2 = \frac{1}{n}\sum_{i=1}^{n} \Vert \nabla \ell_i(\theta_*) \Vert^2$. 
+
+If $\sigma^2 = 0$, then for all $i$, $\nabla \ell_i(\theta_*) = 0$. This is the so-called \emph{interpolation regime} where the global minimizer $\theta_*$ is actually a critical point for each one of the $\ell_i$. This happens, for instance, when interpolating perfectly the data under the square loss. In this case, the stochastic gradient descent converges converges linearly to the optimum.
+
+Outside of the interpolation regime, $\sigma^2 > 0$ and thus we only have convergence to a limited precision when using a fixed stepsize. Using variable stepsizes can allow to obtain any precision, although at the slower error rate $O(1/k)$. As the statistical learning task may be limited by the approximation and estimation errors, a limited precision in minimizing the optimization error can be sufficient for practical purposes. However, for the minimization of the empirical risk, we will show that a variation of the stochastic gradient descent can achieve linear convergence even outside of the interpolation regime, see Section~\ref{sec:variance-reduction}.
+
+
+\paragraph{General batch-size $m \geq 1$.} We now analyze the effect of using larger batch-sizes. We recall that in this case, the stochastic gradient descent~\eqref{eq:sgd-empirical-mini-batch} corresponds to the abstract stochastic gradient descent with $\xi = S$ a uniformly random subset of size $m$ of $\{1,\dots,n\}$ and $g(\theta,S) = \frac{1}{m} \sum_{i\in S} \nabla \ell_i(\theta)$. 
+
+The effect of using a larger batch-size can be measured in the variance~$\sigma^2$ of the stochastic gradients at optimum. Let us thus denote 
+\begin{equation*}
+	\sigma^2_m = \E \Vert g(\theta_*, S) \Vert^2 = \E \left\Vert  \frac{1}{m} \sum_{i\in S} \nabla \ell_i(\theta_*) \right\Vert^2 \, .
+\end{equation*}
+We would like to compare this quantity for a general $m$ to the same quantity for $m=1$: $\sigma_1^2 = \frac{1}{n}\sum_{i=1}^{n} \Vert \nabla \ell_i(\theta_*) \Vert^2$. We compute 
+\begin{align*}
+	\sigma^2_m &= \frac{1}{m^2} \E \left\Vert \sum_{i=1}^{n} \mathbbb{1}_{\{i \in S\}} \nabla\ell_i(\theta_*) \right\Vert^2 \\
+	&= \frac{1}{m^2} \sum_{i,j=1}^{n} \P(i\in S, j \in S) \langle \nabla\ell_i(\theta_*), \nabla\ell_j(\theta_*) \rangle \\
+	&= \frac{1}{m^2} \left[\sum_{i=1}^{n} \P(i\in S) \Vert \nabla \ell_i(\theta_*) \Vert^2 + \sum_{i \neq j=1}^{n} \P(i\in S, j \in S) \langle \nabla\ell_i(\theta_*), \nabla\ell_j(\theta_*) \rangle\right]
+\end{align*}
+We have $\P(i\in S) = \frac{m}{n}$ and for $i \neq j$, 
+\begin{equation*}
+	\P(i\in S, j \in S) = \frac{{n-2 \choose m-2}}{{n \choose m}} = \frac{m(m-1)}{n(n-1)} \, .
+\end{equation*}
+This gives
+\begin{align*}
+	\sigma^2_m &= \frac{1}{mn} \left[\sum_{i=1}^{n} \Vert \nabla \ell_i(\theta_*) \Vert^2 + \frac{m-1}{n-1}\sum_{i \neq j=1}^{n}  \langle \nabla\ell_i(\theta_*), \nabla\ell_j(\theta_*) \rangle\right] \, .
+\end{align*}
+Further, 
+\begin{align*}
+	\sum_{i \neq j=1}^{n}  \langle \nabla\ell_i(\theta_*), \nabla\ell_j(\theta_*) \rangle &= \sum_{i, j=1}^{n}  \langle \nabla\ell_i(\theta_*), \nabla\ell_j(\theta_*) \rangle - \sum_{i=1}^{n} \Vert \nabla \ell_i(\theta_*) \Vert^2 \\
+	&= \left\Vert \sum_{i=1}^{n} \nabla\ell_i(\theta_*) \right\Vert^2 - \sum_{i=1}^{n} \Vert \nabla \ell_i(\theta_*) \Vert^2 \\
+	&= - \sum_{i=1}^{n} \Vert \nabla \ell_i(\theta_*) \Vert^2 \, .
+\end{align*}
+We thus obtain 
+\begin{equation*}
+	\sigma^2_m = \frac{1}{m} \left(1-\frac{m-1}{n-1}\right)\sigma_1^2 \, .
+\end{equation*}
+In the small batch-size regime $m \ll n$, we have $\sigma^2_m \approx \frac{\sigma^2_1}{m}$: by averaging $m$ stochastic gradients, the variance of stochastic gradients is divided by $m$. This variance reduction helps to obtain a better asymptotic performance, without reducing the stepsize~$\gamma$. In the large batch-size regime $m = \Theta(n)$, then there is an extra variance reduction due to the fact that the sampling becomes exhaustive, down to the limiting case $\sigma^2_n = 0$. This recovers the linear convergence rate of the deterministic gradient descent.
+
+Is using larger batch-sizes $m>1$ worth it? The answer is not clear-cut. On the one hand, using larger batch-sizes reduces the variance of the stochastic gradients, which helps to obtain a better asymptotic performance. On the other hand, using larger batch-sizes increases the computational cost of each iteration, as it requires to compute the gradients of $m$ samples. Recall Corollary~\ref{coro:sgd}. Stochastic gradient descent with one sample requires 
+\begin{equation*}
+	k \geq 2 \left(\log \frac{2 \Vert \theta_0 - \theta_* \Vert^2}{\varepsilon}\right) \left(\frac{M}{\mu} + \frac{2\sigma^2_1}{\mu^2 \varepsilon}\right)
+\end{equation*}
+iterations to reach an error $\varepsilon$. Meanwhile, stochastic gradient descent with $m$ samples requires
+\begin{align}
+	\label{eq:train-minibatch-precision}
+	\begin{split}
+	k &\geq 2 \left(\log \frac{2 \Vert \theta_0 - \theta_* \Vert^2}{\varepsilon}\right) \left(\frac{M}{\mu} + \frac{2\sigma^2_m}{\mu^2 \varepsilon}\right) \\
+	&\approx 2\left(\log \frac{2 \Vert \theta_0 - \theta_* \Vert^2}{\varepsilon}\right) \left(\frac{M}{\mu} + \frac{2\sigma^2_1}{m\mu^2 \varepsilon}\right)
+	\end{split}
+\end{align}
+For large $\varepsilon$, the first terms dominate and thus the iteration complexity is the same in both cases. As a consequence, it is recommended to use batch-sizes as small as possible to reduce the per-iteration computational cost. For small $\varepsilon$, the second terms dominate, thus using a batch-size of $m$ allows to divide the iteration complexity by~$m$. As a first approximation, the per-iteration complexity of using batch-sizes $m$ is $m$ times larger than using batch-sizes~$1$. As a consequence, the tradeoff is not obvious. However, in practice, we can take advantage of parallel computing to reduce the compute time of a stochastic gradient with batch-size $m$ below the compute time of $m$ stochastic gradients with batch-size $1$. Batch-sizes of size $m = 32, 64,128$ are often used in practice. 
+
+\begin{remark}
+	In the discussion above, we have used that Assumption~\ref{assu:cocoercivity-grad-sto} is satisfied with $M = L_{\max} := \max(L_1, \dots, L_n)$. However, if $f$ is $L$-smooth for some constant $L < L_{\max}$, then the bound on $M$ can be improved. See Exercise~\ref{exer:improved-smoothness-batches} for details.
+\end{remark}
+
+\subsection{Application for single-pass stochastic gradient descent on the expected risk}
+
+In Section \ref{sec:sgd-expected}, we have seen that the single-pass stochastic gradient descent 
+\begin{equation*}
+	\theta_{k+1} = \theta_{k} - \gamma_k \nabla \ell_{k+1}(\theta_{k}) \, , \qquad k = 0, \dots, n-1\, .
+\end{equation*}
+can be interpreted as a stochastic gradient descent directly on the generalization error
+\begin{equation*}
+	f(\theta) = \E \left[\ell(y,\varphi(x, \theta)) \right]\, , \qquad (x,y) \sim Q \, .
+\end{equation*}
+If we assume that the stochastic function $\theta \mapsto \ell(y,\varphi(x,\theta))$, $(x,y)\sim Q$ is almost surely convex, $M$-smooth, then we can control directly the generalization error. For a fixed-stepsize $\gamma_k = \gamma \leq 1/(2M)$,
+\begin{equation*}
+	\E f(\theta_k) - f(\theta_*) \leq \frac{M}{2} \E \Vert \theta_k - \theta_* \Vert^2 \leq \frac{M}{2} \left( (1 - \gamma \mu)^k \Vert \theta_0 - \theta_* \Vert^2 + \frac{2\gamma \sigma^2}{\mu} \right) \, .
+\end{equation*}
+Further, for a variable stepsize $\gamma_k = \Theta(1/k)$ as prescribed in Theorem~\ref{thm:sgd-decay}, we have 
+\begin{equation*}
+	\E f(\theta_k) - f(\theta_*) = O\left(\frac{1}{k}\right) \, .
+\end{equation*}
+In particular, after using all of the $n$ samples 
+\begin{equation*}
+	\E f(\theta_n) - f(\theta_*) = O\left(\frac{1}{n}\right) \, .
+\end{equation*}
+This result controls the full estimation error, and not only the optimization error. While the rate $O(1/n)$ seems slow from the perspective of the optimization error---we could wish for a linear convergence of the optimization error---, in fact the rate $O(1/n)$ is optimal for the estimation error (see Exercise~\ref{exer:sgd-optimality}). As a consequence, a single pass on the data samples is sufficient to get optimal statistical rates. 
+
+
+
+\subsection{Application for coordinate gradient descent}
+\label{sec:application-cgd}
+
+Consider a $\mu$-strongly convex and $L$-smooth function $F:\R^p \to \R$ on which we perform a coordinate gradient descent: for all $k \in \N$, sample $j_{k+1}$ uniformly in $\{1, \dots, p\}$ (independently of the past) and compute $\theta_{k+1}$ such that:
+\begin{align*}
+	\theta_{k+1}(j_{k+1}) &= \theta_k(j_{k+1}) - \gamma_k \partial_{j_{k+1}} F(\theta_k)  \, , \\
+	\theta_{k+1}(j) &= \theta_k(j) \qquad \text{for all } j \neq j_{k+1} \, .
+\end{align*}
+As we have seen in Section~\ref{sec:cgd}, coordinate gradient descent corresponds to $\xi = j \sim \Unif(\{1, \dots, p\})$, $g(\theta,j) = \partial_j F(\theta) e_j$ and $f(\theta) = \frac{1}{p} F(\theta)$. Assumption~\ref{assu:strong-convexity} is satified, with the subtlety that $f$ is $(\mu/p)$-strongly convex, and Assumption~\ref{assu:cocoercivity-grad-sto} is satisfied with $M = L$. Note further that 
+\begin{equation*}
+	\sigma^2 = \frac{1}{p} \sum_{j=1}^{p} \Vert \partial_j F(\theta_*) e_j \Vert^2 = \frac{1}{p} \sum_{j=1}^{p} (\partial_j F(\theta_*))^2 = 0 \, .
+\end{equation*}
+Thus Theorem~\ref{thm:sgd} gives that for a fixed step-size policy $\gamma_k = \gamma \leq 1/(2L)$,
+\begin{equation*}
+	\E \Vert \theta_k - \theta_* \Vert^2 \leq \left(1 - \gamma \frac{\mu}{p}\right)^k \Vert \theta_0 - \theta_* \Vert^2 \, .
+\end{equation*}
+As there is no variance in the stochastic gradients at optimum, the stochastic gradient descent converges to the optimum, at a linear rate. There is no interest to reduce stepsizes in this case, and thus one can use $\gamma = 1/(2L)$, for which 
+\begin{equation*}
+	\E \Vert \theta_k - \theta_* \Vert^2 \leq \left(1 - \frac{\mu}{2Lp}\right)^k \Vert \theta_0 - \theta_* \Vert^2 \, .
+\end{equation*}
+By Corollary~\ref{coro:sgd}, the iteration complexity to reach an error $\varepsilon$ is 
+\begin{equation*}
+	k \geq 2 \left(\log \frac{2 \Vert \theta_0 - \theta_* \Vert^2}{\varepsilon}\right) \frac{L}{\mu} p \, .
+\end{equation*}
+Compare with the iteration complexity of plain gradient descent, given in Corollary~\ref{coro:gd}: up to constants, the iteration complexity of coordinate gradient descent is $p$ times larger than the iteration complexity of plain gradient descent. This is coherent as the per-iteration complexity of coordinate gradient descent is $p$ times smaller than the per-iteration complexity of plain gradient descent.
+
+As a consequence, the comparison of the number of computation of partial derivatives does not give a clear choice between coordinate gradient descent and plain gradient descent. As for the choice of batch-sizes, the organization of the computations needs to be taken into account in order to make the comparison. The use of factorized and parallel computations advocates for plain gradient descent, while the potential saturation of the computer memory advocates for coordinate gradient descent. As for batch computations, the optimal tradeoff can be to use block coordinate gradient descent methods, that update only a randomly sampled subset of the coordinates at each iteration. 
+
+\subsection{Exercises}
+
+\begin{exercice}
+	\label{exer:improved-smoothness-batches}
+We set ourselves in the setting on Section~\ref{sec:analysis-sgd-empirical}. The objective function $f(\theta) = \frac{1}{n} \sum_{i=1}^n \ell_i(\theta)$ is a finite sum of $L_{\max}$-smooth and convex functions $\ell_i$. We assume that $f$ is $\mu$-strongly convex and $L$-smooth. Note that one can always assume that $L \leq L_{\max}$.
+
+Set $m$ the batch-size of the stochastic gradient descent and let $g(\theta, S) = \frac{1}{m} \sum_{i\in S} \nabla \ell_i(\theta)$ denote the associated stochastic gradient, where $S$ is a uniformly random subset of size $m$ of $\{1,\dots,n\}$.
+
+\begin{description}
+	\item[1.] Show that for all $\theta, \theta' \in \R^p$,
+	\begin{align*}
+		&\E \left[\Vert g(\theta, S) - g(\theta', S) \Vert^2 \right] \\
+		&\qquad\leq \frac{1}{mn} \sum_{i=1}^{n} \Vert \nabla f_i(\theta) - \nabla f_i(\theta') \Vert^2 \\
+		&\qquad\qquad+ \frac{m-1}{mn(n-1)} \sum_{i \neq j = 1}^n \langle \nabla \ell_i(\theta) - \nabla \ell_i(\theta'), \nabla \ell_j(\theta) - \nabla \ell_j(\theta') \rangle \, .
+	\end{align*}
+	\item[2.] Show that for all $\theta, \theta' \in \R^p$,
+	\begin{align*}
+		&\E \left[\Vert g(\theta, S) - g(\theta', S) \Vert^2 \right] \\
+		&\qquad\leq \left[\frac{1}{m}\left(1-\frac{m-1}{n-1}\right) L_{\max} +  \frac{(m-1)n}{m(n-1)} L \right] \left\langle \theta - \theta', \nabla f(\theta) - \nabla f(\theta') \right\rangle \, .
+	\end{align*} 
+	\item[3.] Using this result, improve the complexity bound of Eq.~\eqref{eq:train-minibatch-precision}. What is the consequence of this improved bound on the discussion of the choice of the batch-size?
+\end{description}
+\end{exercice}
+
+\emph{Section~\ref{sec:analysis-sgd} analyses the performance of stochastic gradient descent by discussing the behavior of upper bounds on some precision criteria, such as the expected squared distance to optimum or the suboptimality gap. However, it could be argued that these bounds are not tight, and thus that they do not reflect the actual performance of stochastic gradient descent. A more complete analysis would require to prove lower bounds on the same precision criteria; ideally, these lower bounds would match the upper bounds up to multiplicative constants. While upper bounds are often proved for all problem instances, lower bounds are often proved only for some specific problem instances. }
+
+\begin{exercice}
+	Consider coordinate gradient descent on a $\mu$-strongly convex and $L$-smooth function $F:\R^p \to \R$, with stepsize $\gamma = 1/(2L)$. Recall from Sec.~\ref{sec:application-cgd} that 
+	\begin{equation*}
+	\E \Vert \theta_k - \theta_* \Vert^2 \leq \left(1 - \frac{\mu}{2Lp}\right)^k \Vert \theta_0 - \theta_* \Vert^2 \, .
+\end{equation*}
+We seek to prove a corresponding lower bound. Consider the function $F:\R^p \to \R$ defined as 
+\begin{equation*}
+	F(\theta) = \frac{\mu}{2} \theta(1)^2 + \frac{L}{2} \sum_{j=2}^p \theta(j)^2 \, .
+\end{equation*}
+\begin{description}
+	\item[1.] Show that $F$ is $L$-smooth and $\mu$-strongly convex. Compute its unique minimizer~$\theta_*$.
+\end{description}
+We initialize coordinate gradient descent at $\theta_0 = (1,0,\dots,0)$. 
+\begin{description}
+	\item[2.] Show that for $k \geq 0$, for all $j =2, \dots, p$, $\theta_k(j) = 0$.
+	\item[3.] Show that for $k \geq 0$, $\E \left[\theta_k(1)^2\right] = \left(1 - \frac{\mu}{2Lp}\right)^k$.
+	\item[4.] Conclude that for all $k \geq 0$,
+	\begin{equation*}
+		\E \Vert \theta_k - \theta_* \Vert^2 = \left(1 - \frac{\mu}{2Lp}\right)^k \Vert \theta_0 - \theta_* \Vert^2 \, .
+	\end{equation*}
+\end{description}
+\end{exercice}
+
+\emph{Beyond proving that some upper bound on the performance of an algorithm is tight, it is stronger to prove lower bounds that are valid for all algorithms (in a certain class). If such a general lower bound matches the upper bound of a specific algorithm, then this algorithm is said to be optimal.}
+
+\begin{exercice}[tightness and statistical optimality]
+	\label{exer:sgd-optimality}
+The goal of this exercise is to explore whether the bounds proven in this section are tight and statistically optimal. 
+
+Let $\xi$ be a random variable with some distribution $\cQ$ with a finite second moment and define $f:\R \to \R$, 
+\begin{equation*}
+	f(\theta) = \frac{1}{2} \E \left(\xi - \theta\right)^2 \, .
+\end{equation*}
+\begin{description}
+	\item[1.] Compute the unique minimizer $\theta_*$ of $f$ and $f(\theta_*)$. 
+	\item[2.] Express a stochastic gradient descent on $f$ that does not have a direct access to~$\cQ$ but only to i.i.d.~samples $\xi_1, \xi_2, \dots \sim \cQ$. 
+	\item[3.] We consider the stochastic gradient descent with constant stepsize $\gamma$. 
+	\begin{description}
+		\item[(a)] Using Theorem \ref{thm:sgd}, bound $\E(\theta_k-\theta_*)^2$. 
+		\item[(b)] Compute $\E(\theta_k-\theta_*)^2$ exactly and compare with the bound obtained in the previous question.
+	\end{description}   
+	\item[4.] We consider the stochastic gradient descent with variable stepsize $\gamma_k = \beta/(k_0+k)$.
+	\begin{description}
+		\item[(a)] Using Theorem \ref{thm:sgd-decay}, bound $\E(\theta_k-\theta_*)^2$.
+		\item[(b)] Assume $\beta = 1$ and $k_0 = 1$. Express $\theta_k$ as a function of $\xi_1, \dots, \xi_k$. Compute $\E(\theta_k-\theta_*)^2$. 
+		
+		\emph{The empirical average is an optimal (minimax) estimator of the mean; stochastic gradient descent is said to be statistically optimal on this problem as its performance differs only by a multiplicative constant.}
+		
+		\emph{This exercise motivates the use of decaying stepsizes $\gamma = \Theta(1/k)$ and that it is hopeless to obtain a better rate than $\Theta(1/k)$ in our general setting.}
+	\end{description} 
+\end{description}
+\end{exercice}
+
+\section{Exercise/practical session: importance sampling}
+\label{sec:importance-sampling}
+
+This section studies how biasing the sampling distribution of stochastic gradient descent, if done appropriately, improves its convergence rate. This section is largely inspired from the article of \cite{needell2014stochastic}.
+
+\subsection{Stochastic gradient descent for finite sums}
+
+This section introduces the concept of importance sampling for the optimization of finite sums. Let $f:\R^p \to \R$ be decomposed as $f(\theta) = \frac{1}{n} \sum_{i=1}^{n} f_i(\theta)$. We assume that $f$ is $\mu$-strongly convex and that each $f_i$ is continuously differentiable and $L_i$-smooth. As usual, we denote $\theta_*$ the global minimizer of $f$ and $\sigma^2 = \frac{1}{n } \sum_{i=1}^{n } \Vert \nabla f_i(\theta_*) \Vert^2$. 
+
+\begin{description}
+	\item[1.] We consider stochastic gradient descent: choose $\theta_0 \in \R^p$ and for all $k\in \N$, sample $i_{k+1} \sim \Unif(\{1,\dots, n\})$ independently of the past and compute 
+	\begin{equation*}
+		\theta_{k+1} = \theta_k - \gamma \nabla f_{i_{k+1}}(\theta_k) \, . 
+	\end{equation*}
+	Show that, for some appropriate choice of the stepsize $\gamma$ to be determined, $k \geq 2\left(\log \frac{2\Vert \theta_0 - \theta_* \Vert^2}{\varepsilon}\right) \left(\max_j \frac{L_j}{\mu} + \frac{\sigma^2}{\mu^2 \varepsilon}\right)$ iterations are sufficient to obtain $\E\Vert \theta_k - \theta_* \Vert^2 \leq \varepsilon$.
+\end{description}
+One can improve the dependence in $\max_j \frac{L_j}{\mu}$ by using importance sampling. Let $\pi = (\pi_1, \dots, \pi_n)$ denote a probability distribution on $\{1, \dots, n\}$. Choose $\theta_0 \in \R^p$ and for all $k \in \N$, sample $i_{k+1} \sim \pi$ independently of the past and compute
+\begin{equation*}
+	\theta_{k+1} = \theta_k - \gamma_{i_{k+1}} \nabla f_{i_{k+1}}(\theta_k) \, .
+\end{equation*}
+In the above algorithm, the stepsizes $\gamma_1, \dots, \gamma_n$ depend on the sampled function index. Finally, denote $\overline{L} = \frac{1}{n} \sum_{i=1}^{n} L_i$. 
+
+\begin{description}
+	\item[2.] Show that, if $\gamma_j \propto \pi_j^{-1}$, the above iteration is a stochastic gradient descent in the sense of Sec.~\ref{sec:sgd-abstract}. In particular, show that stochastic gradients are unbiased.
+	
+
+	\item[3.] In this question, we take $\gamma_i = \frac{\gamma}{n\pi_i}$ and $\pi_i = \frac{L_i}{n\overline{L}}$. Show that, for some appropriate choice of the stepsize $\gamma$ to be determined, $k \geq 2\left(\log \frac{2\Vert \theta_0 - \theta_* \Vert^2}{\varepsilon}\right) \left(\frac{\overline{L}}{\mu} + \frac{\overline{L}}{\min_i L_i}\frac{\sigma^2}{\mu^2 \varepsilon}\right)$ iterations are sufficient to obtain $\E\Vert \theta_k - \theta_* \Vert^2 \leq \varepsilon$.
+\end{description}
+In the iteration complexity, we have improved the dependence of the first term from the worst condition number $\max_i \frac{L_i}{\mu}$ to the average condition number $\frac{\overline{L}}{\mu}$. This can bring a potentially large improvement, especially when $\varepsilon$ is large. However, the second term was worsened by a factor $\frac{\overline{L}}{\min_i L_i}$. This can be harmful when $\varepsilon$ is small or $\sigma^2$ is large. 
+
+\begin{description}
+	\item[4.] In this question, we modify $\pi$ to $\pi_i = \frac{1}{2n} \left(1 + \frac{L_i}{\overline{L}}\right)$ (partial biasing). Show that, for some appropriate choice of the stepsize $\gamma$ to be determined, 
+	$k \geq 4\left(\log \frac{2\Vert \theta_0 - \theta_* \Vert^2}{\varepsilon}\right) \left(\frac{\overline{L}}{\mu} + \frac{\sigma^2}{\mu^2 \varepsilon}\right)$ iterations are sufficient to obtain $\E\Vert \theta_k - \theta_* \Vert^2 \leq \varepsilon$.
+\end{description}
+Partially biasing the sampling allows to enjoy the best of both worlds. 
+
+\subsection{Simulations: the least-squares case}
+
+Consider the minimization of a least-squares function of the form 
+\begin{equation*}
+	f(\theta) = \frac{1}{2n} \sum_{i=1}^{n} \left(\langle x_i, \theta \rangle - y_i\right)^2 = \frac{1}{n }\sum_{i=1}^{n} f_i(\theta)\, , \qquad f_i(\theta) = \frac{1}{2 } \left(\langle x_i, \theta\rangle - y_i\right)^2 \, ,
+\end{equation*}
+where $(x_1,y_1), \dots, (x_n, y_n)$ are given input-output pairs.
+
+\begin{description}
+	\item[5.] We denote $X \in \R^{n \times p}$ the design matrix whose rows are $x_1, \dots, x_n$. Under which condition on $X$ is $f$ strongly convex? If this condition holds, what is the associated strong convexity parameter?
+	\item[6.] Give the minimal value $L_i$ such that $f_i$ is $L_i$-smooth.  
+	\item[7.] We now run simulations with $n = 10^3$ and $p = 10$, in the two following cases:
+	\begin{description}
+		\item[(a)] $x_1, \dots, x_n \sim_{\text{i.i.d.}} \cN(0, I_p)$, $\theta_0 \sim \cN(0,I_p)$, $\varepsilon_1, \dots, \varepsilon_n \sim_{i.i.d.} \cN(0,0.1^2)$ are all independent, and $y_i = \langle x_i, \theta_0 \rangle + \varepsilon_i$,
+		\item[(b)] $x_1, \dots, x_{n-1} \sim_{\text{i.i.d.}} \cN(0, I_p)$, $x_{n} \sim_{\text{i.i.d.}} \cN(0, 10^2I_p)$, $\theta_0 \sim \cN(0,I_p)$, $\varepsilon_1, \dots, \varepsilon_n \sim_{i.i.d.} \cN(0,0.1^2)$ are all independent, and $y_i = \langle x_i, \theta_0 \rangle + \varepsilon_i$, 
+		%\item[(c)] $x_1, \dots, x_{n-1} \sim_{\text{i.i.d.}} \cN(0, I_p)$, $x_{n} \sim_{\text{i.i.d.}} \cN(0, 10^2I_p)$, $\theta_0 \sim \cN(0,I_p)$, $\varepsilon_1, \dots, \varepsilon_n \sim_{i.i.d.} \cN(0,20^2)$ are all independent, and $y_i = \langle x_i, \theta_0 \rangle + \varepsilon_i$.
+	\end{description} 
+	For each one of these cases, generate a function $f$ according to the specified distribution and compare the performance of plain, weighted and partially weighted stochastic gradient descent by plotting the logarithm of the distance to optimum as a function of $k$. For each algorithm, choose $\gamma$ either (1) as large as possible, so that the algorithm remains stable or (2) so that it is the same for all algorithms. (This gives a total of $2 \times 2 = 4$ plots with three algorithms on each plot).
+\end{description}
+
+\begin{figure}
+	\begin{subfigure}{0.49\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{importance_large_ss.pdf}
+		\caption{Large stepsizes}
+	\end{subfigure}
+	\begin{subfigure}{0.49\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{importance_equal_ss.pdf}
+		\caption{Equal stepsizes}
+	\end{subfigure}
+	\caption{Simulations of question 8. We observe that in case (a) (upper plots), as all functions have smoothness constants with the same order of magnitude, all algorithms behave similarly. In case (b), as one function has a much larger smoothness constant, differences appear. In the left plot, we observe that the two biased algorithms allow to take much larger stepsizes and thus obtain a much better initial decrease of the distance to the optimum. This is due to an improvement in the conditioning $M/\mu$ of the problem. However, they stabilize at a much larger error. This is due, of course, to the fact that the stepsize is larger. However, as the right plot shows, even with equal stepsizes, the biased algorithm stabilizes at larger errors (and in this case, the initial decrease is the same). This effect is mitigated in the case of the partially biased algorithm.}
+\end{figure}
+
+
+
+\section{Variance reduction by gradient aggregation}
+\label{sec:variance-reduction}
+
+In this section, we study the optimization of a function $f:\R^p\to \R$ which is a finite sum, i.e., 
+\begin{equation*}
+	f(\theta) = \frac{1}{n} \sum_{i=1}^{n} f_i(\theta) \, ,
+\end{equation*}
+where $f_i:\R^p \to \R$ are continuously differentiable functions.
+We assume that $f$ is $\mu$-strongly convex and each $f_i$ is $L$-smooth. 
+
+Under these assumptions, the analyses of Section \ref{sec:analysis} show that gradient descent with a constant stepsize converges at a linear rate. Further, stochastic gradient descent with a fixed stepsize converges only to a limited precision; and with a suitable variable stepsize it converges at a rate $O(1/k)$. 
+
+In this section, we show that the convergence rate of stochastic methods can be improved to a linear rate by using a \emph{variance reduction} technique called \emph{gradient aggregation}. Such an improvement is possible thanks to the finite sum strcutre; in general, the convergence rate of $O(1/k)$ for stochastic methods in optimal (see Exercise~\ref{exer:sgd-optimality}).
+
+The precise gradient aggregation method considered in this section is called SAGA (Stochastic Average Gradient Aggregation) \cite{defazio2014saga}. There exists several variants such as SVRG \cite{johnson2013accelerating} and SAG \cite{roux2012stochastic,schmidt2017minimizing}. It is an iteration over $n+1$ variables $\theta, z_1, \dots, z_n \in \R^p$. Choose some initial values $\theta_0, z_1^{(0)}, \dots, z_n^{(0)} \in \R^p$. For all $k \in \N$, sample $i_k \sim \Unif(\{1, \dots, n\})$ independently of the past and compute
+\begin{align*}
+\theta_{k+1} &= \theta_k - \gamma \left[\nabla f_{i_{k+1}}(\theta_k) +\frac{1}{n} \sum_{i=1}^{n} z_i^{(k)} - z^{(k)}_{i_{k+1}}\right] \, ,  \\
+z^{(k+1)}_{i_{k+1}} &= \nabla f_{i_{k+1}}(\theta_k) \, , \\
+z^{(k+1)}_i &= z^{(k)}_i \, , \qquad i \neq i_{k+1} \, .
+\end{align*}
+In words, the variables $z_1, \dots, z_n$ record our last evaluations of the gradients of the functions $f_1, \dots, f_n$. We use these recordings to reduce the variance of the stochastic gradient $\nabla f_{i_{k+1}}(\theta_k)$. 
+
+As usual, we denote $\cF_k$ the $\sigma$-algebra generated by the first $k$ samples $i_1, \dots, i_k$. Then $\theta_k$ and $z_1^{(k)}, \dots, z_n^{(k)}$ are $\cF_k$-measurable. The stochastic gradient $\nabla f_{i_{k+1}}(\theta_k)$ is unbiased, in the sense that $\E\left[\nabla f_{i_{k+1}}(\theta_k)\middle\vert \cF_k\right] = \nabla f(\theta_k)$. Moreover, note that 
+\begin{equation*}
+	\E\left[ \frac{1}{n} \sum_{i=1}^{n} z_i^{(k)} - z^{(k)}_{i_{k+1}} \, \middle\vert \, \cF_k \right] = \frac{1}{n} \sum_{i=1}^{n} z_i^{(k)} - \E\left[  z^{(k)}_{i_{k+1}} \, \middle\vert \, \cF_k \right] = 0 \, .
+\end{equation*} 
+As a consequence, the term $\frac{1}{n} \sum_{i=1}^{n} z_i^{(k)} - z^{(k)}_{i_{k+1}}$ does not add any bias to the stochastic gradient. Moreover, if the running iterate $\theta_k$ has not evolved too much, we expect $\nabla f_{i_{k+1}}(\theta_k)$ and $z^{(k)}_{i_{k+1}}$ to be positively correlated (conditionally on $\cF_k$). As a consequence, the (conditional) variance of the stochastic gradient should be reduced by this additional term. Indeed, even with a fixed stepsize, the SAGA algorithm converges at a linear rate, as proved by the following theorem.
+
+\begin{thm}
+	Recall that $f$ is $\mu$-strongly convex and each $f_i$ is $L$-smooth. Further, assume that $\gamma \leq \frac{1}{4L}$. Then 
+	\begin{align*}
+		\E \Vert \theta_k - \theta_* \Vert^2 \leq \left(1 - \min\left(\frac{\gamma \mu}{2},\frac{1}{3n}\right)\right)^k \left(\Vert \theta_0 - \theta_* \Vert^2 + 3 \gamma^2 \sum_{i=1}^{n} \Vert \nabla f_i(\theta_*)-z_i^{(0)}\Vert^2\right) \, . 
+	\end{align*}
+	In particular, for $\gamma = \frac{1}{4L}$, we have
+	\begin{align*}
+		\E \Vert \theta_k - \theta_* \Vert^2 \leq \left(1 - \min\left(\frac{\mu}{8L},\frac{1}{3n}\right)\right)^k \left(\Vert \theta_0 - \theta_* \Vert^2 + \frac{3}{16L^2} \sum_{i=1}^{n} \Vert \nabla f_i(\theta_*)-z_i^{(0)}\Vert^2\right) \, . 
+	\end{align*}
+\end{thm}
+
+As a consequence, the number of stochastic gradient iterations to have $\E \Vert \theta_k - \theta_* \Vert^2 \leq \varepsilon$ is $k = O\left(\max\left(\frac{L}{\mu}, n\right)\log \frac{1}{\varepsilon}\right)$ (omitting logarithmic terms in $L$ and in the initialization). For comparison, in the same setting, (full batch) gradient descent requires $k = O\left(\frac{L}{\mu}\log \frac{1}{\varepsilon}\right)$ iterations, but each iteration requires the computation of the gradient of each of the $n$ functions $f_1, \dots, f_n$. Thus the complexity, in terms of the number of gradient evaluation of the individual functions, is $O\left(n \frac{L}{\mu}\log \frac{1}{\varepsilon}\right)$. SAGA reduces the factor $n \frac{L}{\mu}$ in this complexity by the maximum of $n$ and $\frac{L}{\mu}$. When the condition number is large, this can bring a significant improvement. 
+
+This improvement in the iteration complexity is obtained at the cost of greater memory requirements. Indeed, the SAGA algorithm requires to store the $n$ vectors $z_1, \dots, z_n \in \R^d$. This can be a significant drawback when $n$ is large. In some situations, these storage requirements can be mitigated. For instance, in the least-squares linear regression setting, $f_i(\theta) = \frac{1}{2}\left(y_i - x_i^\top \theta\right)$ and thus $\nabla f_i(\theta) = - (y_i - x_i^\top \theta) x_i$. As a consequence, it is sufficient to store the scalar quantities $y_i - x_i^\top \theta$ instead of the full vectors $\nabla f_i(\theta)$.
+
+\begin{proof}
+	The initial steps of the proof ressemble the proof of Theorem \ref{thm:sgd}. 
+	\begin{align*}
+		&\Vert \theta_{k+1} - \theta_* \Vert^2 \leq \Vert \theta_k - \theta_* \Vert^2 - 2\gamma \left\langle \nabla f_{i_{k+1}}(\theta_k) + \frac{1}{n} \sum_{i=1}^{n} z_i^{(k)} - z^{(k)}_{i_{k+1}}, \theta_k - \theta_* \right\rangle \\
+		&\quad+ 2\gamma^2 \left(\left\Vert \nabla f_{i_{k+1}}(\theta_k) - \nabla f_{i_{k+1}}(\theta_*)\right\Vert^2 + \left\Vert \nabla f_{i_{k+1}}(\theta_*) + \frac{1}{n} \sum_{i=1}^{n} z_i^{(k)} - z^{(k)}_{i_{k+1}}\right\Vert^2\right) \\
+		&\quad\leq \Vert \theta_k - \theta_* \Vert^2 - 2\gamma \left\langle \nabla f_{i_{k+1}}(\theta_k) + \frac{1}{n} \sum_{i=1}^{n} z_i^{(k)} - z^{(k)}_{i_{k+1}}, \theta_k - \theta_* \right\rangle \\
+		&\quad+ 2\gamma^2 \left(L\left\langle \theta_k - \theta_*, \nabla f_{i_{k+1}}(\theta_k)\right\rangle + \left\Vert \nabla f_{i_{k+1}}(\theta_*) + \frac{1}{n} \sum_{i=1}^{n} z_i^{(k)} - z^{(k)}_{i_{k+1}}\right\Vert^2\right) \, .
+	\end{align*}
+We now take the conditional expectation with respect to $\cF_k$. As we have seen, the additional term $\frac{1}{n} \sum_{i=1}^{n} z_i^{(k)} - z^{(k)}_{i_{k+1}}$ does not add any bias to the stochastic gradient. 
+\begin{align*}
+	\E\left[\Vert \theta_{k+1} - \theta_* \Vert^2 \middle\vert \cF_k\right] &\leq \Vert \theta_k - \theta_* \Vert^2 - 2\gamma(1-L\gamma) \langle \nabla f(\theta_k), \theta_k - \theta_* \rangle \\
+	&\qquad+ 2\gamma^2 \E \left[\left\Vert \nabla f_{i_{k+1}}(\theta_*) + \frac{1}{n} \sum_{i=1}^{n} z_i^{(k)} - z^{(k)}_{i_{k+1}}\right\Vert^2 \, \middle\vert \, \cF_k\right] \, . 
+\end{align*}
+Note that $\frac{1}{n} \sum_{i=1}^{n} z_i^{(k)}$ the conditional expectation of $-\nabla f_{i_{k+1}}(\theta_*) + z^{(k)}_{i_{k+1}}$ with respect to $\cF_k$. As a consequence, $\E \left[\left\Vert \nabla f_{i_{k+1}}(\theta_*) + \frac{1}{n} \sum_{i=1}^{n} z_i^{(k)} - z^{(k)}_{i_{k+1}}\right\Vert^2 \, \middle\vert \, \cF_k\right]$ can be interpreted as a variance term, that we can bound by the second moment. Thus 
+\begin{align*}
+	\E \left[\left\Vert \nabla f_{i_{k+1}}(\theta_*) + \frac{1}{n} \sum_{i=1}^{n} z_i^{(k)} - z^{(k)}_{i_{k+1}}\right\Vert^2 \, \middle\vert \, \cF_k\right] &\leq \E \left[\left\Vert \nabla f_{i_{k+1}}(\theta_*) - z^{(k)}_{i_{k+1}}\right\Vert^2 \, \middle\vert \, \cF_k\right] \\
+	&= \frac{1}{n} \sum_{i=1}^{n} \left\Vert \nabla f_i(\theta_*) - z_i^{(k)} \right\Vert^2 =: A_k \, .
+\end{align*}
+Then 
+\begin{align}
+	\label{eq:aux2}
+	\E\left[\Vert \theta_{k+1} - \theta_* \Vert^2 \middle\vert \cF_k\right] &\leq \Vert \theta_k - \theta_* \Vert^2 - 2\gamma(1-L\gamma) \langle \nabla f(\theta_k), \theta_k - \theta_* \rangle + 2\gamma^2 A_k \, .
+\end{align}
+The random term $A_k$ replaces the term $\sigma^2$ in the previous analyses. We now need to study how this quantity evolves (and decreases in expectation) in order to prove the variance reduction. Between the iterations $k$ and $k+1$, only the term $z_{i_{k+1}}^{(k+1)}$ is updated among the $z_i^{(k)}$. Thus 
+\begin{align*}
+	A_{k+1}-A_k = \frac{1}{n} \left(\left\Vert \nabla f_{i_{k+1}}(\theta_*) - z^{(k+1)}_{i_{k+1}}\right\Vert^2 - \left\Vert \nabla f_{i_{k+1}}(\theta_*) - z^{(k)}_{i_{k+1}}\right\Vert^2\right)
+\end{align*}
+where 
+\begin{align*}
+	\left\Vert \nabla f_{i_{k+1}}(\theta_*) - z^{(k+1)}_{i_{k+1}}\right\Vert^2 &= \left\Vert \nabla f_{i_{k+1}}(\theta_*) - \nabla f_{i_{k+1}}(\theta_k)\right\Vert^2 \\
+	&\leq L \left\langle \theta_k - \theta_*, \nabla f_{i_{k+1}}(\theta_k) - \nabla f_{i_{k+1}}(\theta_*) \right\rangle \, .
+\end{align*}
+Thus 
+\begin{align}
+	\label{eq:aux3}
+	\E [A_{k+1} \, \vert\,  \cF_k] - A_k \leq \frac{L}{n} \left\langle \theta_k - \theta_*, \nabla f(\theta_k) \right\rangle - \frac{A_k}{n} \, .
+\end{align}
+The inequality \eqref{eq:aux3} needs to be combined with inequality \eqref{eq:aux2} to obtain the decrease of both quantities. Consider the Lyapunov function $\Phi_k = \E \varphi_k$, where 
+\begin{align*}
+	\varphi_k = \Vert \theta_k - \theta_* \Vert^2 + 3n \gamma^2 A_k \, .
+\end{align*}
+By combining \eqref{eq:aux2} and \eqref{eq:aux3}, 
+\begin{align*}
+	\E \left[\varphi_{k+1}\middle\vert  \cF_k\right] - \varphi_k &\leq \left(- 2\gamma(1-L\gamma) + 3n\gamma^2 \frac{L}{n}\right) \left\langle \theta_k - \theta_*, \nabla f(\theta_k) \right\rangle + (2\gamma^2 - 3\gamma^2) A_k \\
+	&\leq \gamma(-2+5L\gamma) \left\langle \theta_k - \theta_*, \nabla f(\theta_k) \right\rangle - \gamma^2 A_k \, . 
+\end{align*}
+As $\gamma \leq \frac{1}{4L}$, $\gamma(-2+5L\gamma) \leq -\frac{\gamma}{2}$. Moreover, by strong convexity of the function $f$, $\left\langle \theta_k - \theta_*, \nabla f(\theta_k) \right\rangle \geq \mu \Vert \theta_k - \theta_* \Vert^2$. Thus 
+\begin{align*}
+	\E \left[\varphi_{k+1}\middle\vert  \cF_k\right] - \varphi_k &\leq - \frac{\gamma\mu}{2} \Vert \theta_k - \theta_* \Vert^2 - \gamma^2 A_k  \leq -\min\left(\frac{\gamma\mu}{2}, \frac{1}{3n}\right)\varphi_k \, .
+\end{align*}
+Thus 
+\begin{align*}
+	\E \Vert \theta_k - \theta_* \Vert^2 &\leq \Phi_k \\ 
+	&\leq \left(1-\min\left(\frac{\gamma\mu}{2}, \frac{1}{3n}\right)\right)^k \Phi_0 \\
+	&= \left(1-\min\left(\frac{\gamma\mu}{2}, \frac{1}{3n}\right)\right)^k \left(\Vert \theta_0 - \theta_* \Vert^2 + 3\gamma^2 \sum_{i=1}^{n} \Vert \nabla f_i(\theta_*) - z_i^{(0)}\Vert^2\right) \, .
+\end{align*}
+\end{proof}
+Note that we do not only prove that $\theta_k$ converges to $\theta_*$, but also that $z_i^{(k)}$ converges to $\nabla f_i(\theta_*)$ at a linear rate. 
+
+\section{Neural networks and sparse regularization}
+\label{sec:neural}
+
+Neural networks are regression functions of the form 
+\begin{equation*}
+	\varphi(x,\theta) = \theta_L^\top \sigma\left(\Theta_{L-1}\sigma \left( \dots \sigma \left(\Theta_1 x \right) \dots \right)\right) \, ,
+\end{equation*}
+where $L$ is the number of layers in the neural network, and $\sigma$ is a component-wise non-linearity. 
+\begin{center}
+	\includegraphics[width=0.7\linewidth]{nn.pdf}
+\end{center}
+Neural networks induce non-convex optimization problems, but in practice yield to excellent prediction functions when trained with stochastic gradient descent (or other classical optimizers like Adam), even in overparametrized regimes where the risk of overfitting should be large. In this section, we present some ongoing research attempts to explain the generalization ability of neural networks.
+
+\subsection{Neural networks with weight decay}
+
+The presentation of this section is borrowed from \cite{tibshirani2021equivalences}.
+
+\subsubsection{Diagonal linear networks}
+\label{sec:equivalences-dln}
+
+Consider the lasso problem 
+\begin{align}
+	\label{eq:lasso}
+	\begin{split}
+	\underset{\beta \in \R^d}{\min.} \Bigg\{&\frac{1}{2} \sum_{i=1}^{n} \left(y_i - \beta^\top x_i \right)^2 + \lambda \Vert \beta \Vert_1 \\
+	&\quad= \frac{1}{2} \sum_{i=1}^{n} \left(y_i - \sum_{j=1}^{d}\beta(j) x_i(j) \right)^2 + \lambda \sum_{j=1}^{d} \vert \beta(j) \vert \Bigg\}
+	\end{split}
+\end{align}
+Note the following elementary remark.
+\begin{lem}
+	\label{lem:dln}
+	For $\beta \in \R$, \begin{align*}
+		\min_{u,v\in \R, \, uv = \beta} \frac{1}{2}(u^2 + v^2) = \vert \beta \vert \, .
+	\end{align*} 
+\end{lem}
+\begin{proof}
+	Consider $u,v\in \R$ such that $uv = \beta$. The arithmetic mean - geometric mean inequality implies that $\frac{1}{2}(u^2 + v^2) \geq \sqrt{u^2v^2} = \vert uv \vert = \vert \beta \vert$. Moreover, the inequality is reached when $u = \sqrt{\vert \beta \vert}$ and $u = \sign(\beta)\sqrt{\vert \beta \vert}$.
+\end{proof}
+As a consequence, the lasso problem \eqref{eq:lasso} is equivalent to the minimization problem
+\begin{align}
+	\label{eq:dln}
+	\begin{split}
+	\underset{u,v \in \R^d}{\min.} \Bigg\{&\frac{1}{2} \sum_{i=1}^{n} \left(y_i - (u \circ v)^\top x_i \right)^2 + \frac{\lambda}{2} \left(\Vert u \Vert_2^2 + \Vert v \Vert_2^2\right) \\
+	&\quad= \frac{1}{2} \sum_{i=1}^{n} \left(y_i - \sum_{j=1}^{d}v(j)u(j) x_i(j) \right)^2 +\frac{\lambda}{2} \sum_{j=1}^{d} \left(u(j)^2 + v(j)^2\right) \Bigg\}
+	\end{split}
+\end{align}
+where $u \circ v$ denotes the component-wise product of $u$ and $v$. 
+
+Here, the equivalence between the optimization problems \eqref{eq:lasso} and \eqref{eq:dln} can be interpreted in several ways:
+\begin{itemize}
+	\item The two problems have the same minimal value.
+	\item A minimizer $u,v \in \R^d$ of \eqref{eq:dln} can be transformed into a minimizer $\beta = u \circ v$ of \eqref{eq:lasso}.
+	\item Conversely, a minimizer $\beta \in \R^d$ of \eqref{eq:lasso} can be transformed into a minimizer $u,v \in \R^d$ of \eqref{eq:dln} by taking $u(j) = \sqrt{\vert \beta(j) \vert}$ and $v(j) = \sign(\beta(j))\sqrt{\vert \beta(j) \vert}$.
+\end{itemize}
+The prediction function $\varphi(x,\theta) = (v\circ u)^\top x =  \sum_{j=1}^{d}v(j)u(j) x(j)$, where $\theta = (u,v) \in \R^d \times \R^d$, can be interpreted as a simple neural network, with $L=2$ layers, a linear activation function $\sigma(x) = x$ and a diagonal connection structure. 
+\begin{center}
+	\includegraphics[width=0.7\linewidth]{dln.pdf}
+\end{center}
+Such a neural network is called a \emph{diagonal linear network}. In \eqref{eq:dln}, this network is trained with weight decay, i.e.~with an $\ell^2$ regularization term on the network weights. 
+
+We have shown here that the optimization problem associated to the optimization of a diagonal linear network with weight decay is equivalent to a lasso optimization problem. Extrapolating largely this result, we deduce the following heuristic:
+\begin{quote}
+	\centering
+	\textbf{Product parametrizations induce sparsity. }
+\end{quote} 
+
+\subsubsection{Deeper diagonal linear networks}
+
+We now study the effect of depth of diagonal linear networks. Consider prediction functions of the form 
+\begin{align*}
+	\varphi(x,\theta) &= (w^{(L)} \circ \dots \circ w^{(1)})^\top x = \sum_{j=1}^{d} w^{(L)}(j) \cdots  w^{(1)}(j) x(j) \, , \\
+	\theta &= (w^{(1)}, \dots, w^{(L)}) \in \R^d \times \dots \times \R^d \, .
+\end{align*}
+These prediction functions can be interpreted as diagonal linear networks of depth~$L$.
+\begin{center}
+	\includegraphics[width=\linewidth]{dln-deep.pdf}
+\end{center}
+We consider the optimization problem associated with training the neural network with weight decay
+\begin{align}
+	\label{eq:deep-dln}
+	\begin{split}
+	\underset{w^{(1)}, \dots, w^{(L)} \in \R^d}{\min.} \Bigg\{&\frac{1}{2} \sum_{i=1}^{n} \left(y_i - (w^{(1)} \circ \cdots \circ w^{(L)})^\top x_i \right)^2 \\
+	&\qquad\qquad+ \frac{\lambda}{2} \left(\Vert w^{(1)} \Vert_2^2 + \dots + \Vert  w^{(L)} \Vert_2^2\right) \\
+	&= \frac{1}{2} \sum_{i=1}^{n} \left(y_i - \sum_{j=1}^{d}w^{(1)}(j) \cdots w^{(L)}(j) x_i(j) \right)^2 \\
+	&\qquad\qquad+\frac{\lambda}{2} \sum_{j=1}^{d} \left(w^{(1)}(j)^2  + \dots + w^{(L)}(j)^2\right) \Bigg\}
+	\end{split}
+\end{align}
+We make a remark analog to the one of Lemma \ref{lem:dln}.
+\begin{lem}
+	\label{lem:deep-dln}
+For $\beta \in \R$, 
+\begin{align*}
+	\min_{w^{(1)}, \dots, w^{(L)} \in \R, \, w^{(1)} \cdots w^{(L)} = \beta} \frac{1}{2} \left((w^{(1)})^2 + \dots + (w^{(L)})^2\right) = \frac{L}{2} \vert \beta \vert^{2/L} \, .
+\end{align*}
+\end{lem}
+
+\begin{proof}
+	Consider $w^{(1)}, \dots, w^{(L)} \in \R$ such that $w^{(1)} \cdots w^{(L)} = \beta$. Again, the proof stems from the arithmetic mean - geometric mean inequality: 
+	\begin{align*}
+		\frac{1}{2} \left((w^{(1)})^2 + \dots + (w^{(L)})^2\right) &= \frac{L}{2} \frac{(w^{(1)})^2 + \dots + (w^{(L)})^2}{L} \\
+		&\geq \frac{L}{2} \left((w^{(1)})^2 \cdots  (w^{(L)})^2\right)^{1/L} = \frac{L}{2} \vert  \beta \vert^{2/L} \, .
+	\end{align*}
+	Moreover, the equality is obtained when $w^{(1)} = \dots = w^{(L-1)} = \vert \beta \vert^{1/L}$ and $w^{(L)} = \sign(\beta)\vert \beta \vert^{1/L}$.
+\end{proof}
+This lemma shows that the optimization problem \eqref{eq:deep-dln} is equivalent to the optimization problem 
+\begin{align*}
+	\begin{split}
+	\underset{\beta \in \R^d}{\min.} \Bigg\{&\frac{1}{2} \sum_{i=1}^{n} \left(y_i - \beta^\top x_i \right)^2 + \frac{\lambda L}{2}\sum_{j=1}^{d} \vert \beta(j) \vert^{2/L} \Bigg\}
+	\end{split}
+\end{align*}
+This corresponds to a sparse regularization problem with an $\ell^p$ regularization where $p = 2/L$. When $L>2$, $p <1$ and we have a non-convex sparse regularization. When $L \to \infty$, we obtain an $\ell^0$ regularization. This suggests the following heuristic:
+\begin{quote}
+	\centering
+	\textbf{Deeper networks induce more sparsity. }
+\end{quote}
+
+\subsubsection{Linear networks}
+\label{sec:linear-networks}
+
+We now consider the case of $L=2$ layers, linear activation $\sigma(x)=x$ but with non-diagonal connection matrices. To make an easier analogy with the previous sections, we consider regression problems from $\cX = \R^d$ to $\cY = \R^d$. We thus have $n$ input-output pairs $(x_1, y_1), \dots, (x_n, y_n) \in \R^d \times \R^d$. 
+
+The linear networks that we consider are regression functions of the form
+\begin{align*}
+	&\varphi(x, \theta) = VU x \, , &&\theta = (U,V) \in \R^{d \times d} \times \R^{d \times d} \, .
+\end{align*}
+\begin{center}
+	\includegraphics[width=0.7\linewidth]{linear.pdf}
+\end{center}
+We consider the optimization problem associated with training the neural network with weight decay
+\begin{align}
+	\label{eq:linear}
+	\underset{U,V \in \R^{d \times d}}{\min.} \left\{\frac{1}{2} \sum_{i=1}^{n} \Vert y_i - VU x_i \Vert^2 + \frac{\lambda}{2} \left(\Vert U \Vert_{\Fro}^2 + \Vert V \Vert_{\Fro}^2\right) \right\} \, ,
+\end{align}
+where $\Vert . \Vert_{\Fro}$ denotes the Frobenius norm of a matrix. 
+
+\begin{lem}
+	\label{lem:linear}
+	For $B \in \R^{d \times d}$,
+	\begin{align*}
+		\min_{U,V \in \R^{d \times d}, \, VU = B} \frac{1}{2} \left(\Vert U \Vert_{\Fro}^2 + \Vert V \Vert_{\Fro}^2\right) = \Vert B \Vert_{*} \, ,
+	\end{align*}
+	where $\Vert . \Vert_{*}$ denotes the nuclear norm of a matrix (the sum of its singular values).
+\end{lem}
+
+\begin{proof}
+	Consider the singular value decomposition $B = EDF^\top$. Here, $E$ and $F$ are orthogonal matrices and $D$ is a diagonal matrix with non-negative diagonal entries that are the singular values of $B$. Then, by the Cauchy-Schwarz inequality,
+	\begin{align*}
+		\Vert B \Vert_{*} = \Tr D = \Tr(E^\top B F) =\Tr(E^\top VU F) \leq \Vert E^\top V \Vert_{\Fro} \Vert U F \Vert_{\Fro} \, .
+	\end{align*}
+	As the Frobenius norm is orthogonally invariant, we have $\Vert E^\top V \Vert_{\Fro} = \Vert V \Vert_{\Fro}$ and $\Vert U F \Vert_{\Fro} = \Vert U \Vert_{\Fro}$. Thus 
+	\begin{align*}
+		\Vert B \Vert_{*} \leq \Vert V \Vert_{\Fro} \Vert U \Vert_{\Fro} \leq \frac{1}{2} \left(\Vert U \Vert_{\Fro}^2 + \Vert V \Vert_{\Fro}^2\right) \, . 
+	\end{align*}
+	To prove that the inequality can be reached, consider $V = ED^{1/2}$ and $U = D^{1/2}F^\top$. In this case, $E^\top V = UF = D^{1/2}$ thus the Cauchy-Schwarz inequality is tight and both $U$ and $V$ have the same Frobenius norm. 
+\end{proof}
+
+\begin{remark}
+	\label{rmk:bhatia}
+The proof of the lower bound can also be made using a matrix version of the arithmetic mean - geometric mean inequality, thus mimicking more literally the proof of Lemmas \ref{lem:dln} and \ref{lem:deep-dln}. From \cite[Corollary IX.4.4]{bhatia2013matrix}, for any matrices $U,V \in \R^{d \times d}$ and any orthogonally invariant norm $\Vert . \Vert$, we have 
+	\begin{align*}
+		\Vert VU \Vert \leq \frac{1}{2} \Vert V^\top V + U U^\top \Vert \, .
+	\end{align*}
+	Consider $U,V \in \R^{d \times d}$ such that $VU = B$. As the nuclear norm is orthogonally invariant, we have
+	\begin{align*}
+		\Vert B \Vert_{*} = \Vert VU \Vert_{*} \leq \frac{1}{2} \Vert V^\top V + U U^\top \Vert_{*} \leq \frac{1}{2} \left(\Vert V^\top V \Vert_* + \Vert UU^\top  \Vert_*\right) \, .
+	\end{align*}
+	The nuclear norm of $V^\top V$ is the sum of its eigenvalues, which are the square of the singular values of $V$. As a consequence, $\Vert V^\top V \Vert_* = \Vert V \Vert_{\Fro}^2$. The same holds for $U U^\top$. Thus
+	\begin{align*}
+		\Vert B \Vert_{*} \leq \frac{1}{2} \left(\Vert V \Vert_{\Fro}^2 + \Vert U \Vert_{\Fro}^2\right) \, .
+	\end{align*}
+\end{remark}
+
+This lemma shows that the optimization problem \eqref{eq:linear} is equivalent to the optimization problem
+\begin{align*}
+	\underset{B\in \R^{d\times d}}{\min.} \left\{\frac{1}{2} \sum_{i=1}^{n} \Vert y_i - B x_i \Vert^2 + \lambda \Vert B \Vert_* \right\} \, . 
+\end{align*}
+The penalization by the spectral norm is classical for optimization problems over matrices to induce low-rank solutions. This suggests the following heuristic:
+\begin{quote}
+	\centering\textbf{
+	In the case of product of matrices, the induced sparsity is low-rank.}
+\end{quote}
+
+\subsubsection{Group diagonal linear networks}
+
+We now return to regression problems from $\cX = \R^d$ to $\cY = \R$. We still consider linear activations $\sigma(x)=x$ but a more complicated connection structure. 
+\begin{center}
+	\includegraphics[width=0.7\linewidth]{group.pdf}
+\end{center}
+We choose a partition of the input coordinates $\{1, \dots, d\} = G_1 \cup \dots \cup G_m$ and consider regression functions of the form
+\begin{align*}
+	&\varphi(x,\theta) = \sum_{k=1}^{m} v(k) (u^{(k)})^\top x_{G_k} \, , &&\theta = (u^{(1)}, \dots, u^{(m)}, v) \in \R^{\vert G_1 \vert} \times \dots \times \R^{\vert G_m \vert} \times \R^m \, .
+\end{align*}
+We consider the optimization problem associated with training the neural network with weight decay
+\begin{align}
+	\label{eq:group}
+	\begin{split}
+		\underset{u^{(1)} \in \R^{\vert G_1 \vert}, \, \dots, \, u^{(m)} \in \R^{\vert G_m \vert}, \, v \in \R^m}{\min.} \Bigg\{ &\frac{1}{2} \sum_{i=1}^{n} \left(y_i - \sum_{k=1}^{m}v(k) (u^{(k)})^\top x_{G_k}\right)^2 \\
+		&\qquad\qquad+ \frac{\lambda}{2} \left(\sum_{k=1}^{m} \Vert u^{(k)} \Vert^2_2 + \Vert v \Vert_2^2 \right)\Bigg\} \, . 
+	\end{split}
+\end{align}
+\begin{lem}
+	For $k \in \{1, \dots, m\}$ and $\beta \in \R^{\vert G_k \vert}$, 
+	\begin{equation*}
+		\min_{u^{(k)} \in \R^{\vert G_k \vert}, \, v \in \R, \, v u^{(k)} = \beta} \frac{1}{2} \left(\Vert u^{(k)} \Vert_2^2 + v^2\right) = \Vert \beta \Vert_2 \, .
+	\end{equation*}
+\end{lem}
+
+\begin{proof}
+	Left as an exercise. 
+\end{proof}
+
+This lemma shows that the optimization problem \eqref{eq:group} is equivalent to the optimization problem
+\begin{align}
+	\label{eq:group-lasso}
+	\underset{\beta \in \R^d}{\min.} \left\{\frac{1}{2} \sum_{i=1}^{n} \left(y_i - \beta^\top x\right)^2 + \lambda \Vert \beta \Vert_G \right\} \, ,
+\end{align}
+where the group $\ell_1$-norm $\Vert \beta \Vert_G$ is defined as 
+\begin{align*}
+	\Vert \beta \Vert_G = \sum_{k=1}^{m} \Vert \beta_{G_k} \Vert_2 \, .
+\end{align*}
+The group $\ell_1$-norm is a classical regularization term to induce group-sparsity in regression problems. 
+
+\subsubsection{ReLU neural networks}
+
+We now consider 2-layer neural networks with ReLU activation $\sigma(x) = \max(x,0)$. 
+\begin{center}
+	\includegraphics[width=0.7\linewidth]{relu-nn.pdf}
+\end{center}
+We consider regression functions of the form
+\begin{align*}
+	&\varphi(x,\theta) = \sum_{k=1}^{m} v(k) \sigma(u_k^\top x) \, , &&\theta = (u_1, \dots, u_m, v) \in \R^d \times \dots \times \R^d \times \R^m \, .
+\end{align*}
+We consider the optimization problem associated with training the neural network with weight decay
+\begin{align}
+	\label{eq:relu}
+	\begin{split}
+		\underset{u_1, \dots, u_m \in \R^d, \, v \in \R^m}{\min.} \Bigg\{ &\frac{1}{2} \sum_{i=1}^{n} \left(y_i - \sum_{k=1}^{m}v(k) \sigma(u_k^\top x_i)\right)^2 + \frac{\lambda}{2} \left(\sum_{k=1}^{m} \Vert u_k \Vert_2^2 + \Vert v \Vert_2^2 \right)\Bigg\} \, . 
+	\end{split}
+\end{align}
+Here, as $\sigma$ is positively homogeneous, 
+\begin{align*}
+	v(k) \sigma(u_k^\top x) = \sign(v(k)) \sigma(\vert v(k) \vert u_{k}^\top x) \, . 
+\end{align*}
+This raises the question of computing the following.
+\begin{lem}
+	For $\beta \in \R^d$, 
+	\begin{equation*}
+		\underset{u \in \R^d, \, \mu \in \R_{\geq 0}, \, \mu u = \beta}{\min.} \frac{1}{2} \left(\Vert u \Vert^2 + \mu^2\right) = \Vert \beta \Vert_2 \, . 
+	\end{equation*}
+\end{lem}
+This lemma shows that the optimization problem \eqref{eq:relu} is equivalent to the optimization problem
+\begin{align*}
+	\underset{\beta_1, \dots, \beta_m \in \R^d, \, s_1, \dots, s_m \in \{-1,+1\}}{\min.} \left\{\frac{1}{2} \sum_{i=1}^{n} \left(y_i - \sum_{k=1}^{m} s_k \sigma(\beta_k^\top x_i)\right)^2 + \lambda \sum_{k=1}^{m} \Vert \beta_k \Vert_2 \right\} \, .
+\end{align*}
+It is thus expected that at the optimum, many $\beta_k$ will be zero, in which case the associated function $s_k \sigma(\beta_k^\top x_i)$ will be zero. This motivates the following heuristic:
+\begin{quote}
+	\centering\textbf{
+	ReLU neural networks induce sparsity in the number of neurons used in the representation.}
+\end{quote}	
+
+\begin{remark}[variation norm]
+	On the space of neural networks 
+	\begin{align*}
+		\cF = \left\{\sum_{k=1}^{m} s_k \sigma(\beta_k^\top x) \, \middle\vert \, m \in \N, s_1, \dots , s_m \in \{-1, +1\}, \beta_1, \dots, \beta_m \in \R^d \right\} \, , 
+	\end{align*}
+	we can define the variation norm as follows: for $f \in \cF$, 
+	\begin{align*}
+		\gamma_1(f) = \min\Bigg\{ \sum_{k=1}^{m} \Vert \beta_k \Vert_2 \, &\Bigg\vert \, m \in \N, s_1, \dots , s_m \in \{-1, +1\}, \beta_1, \dots, \beta_m \in \R^d \\
+		&\qquad\qquad\qquad\qquad\qquad\text{ with }f(x) = \sum_{k=1}^{m} s_k \sigma(\beta_k^\top x)\Bigg\} \, ,
+	\end{align*}
+	see \cite[Section 9.3]{bach2024learning} for more details. (The proof that $\gamma_1(f)$ is indeed a norm is left as an exercise.) The equivalence shown above suggests that the variation norm describes the induced sparsity of neural networks. 
+\end{remark}
+
+\begin{remark}
+	The equivalence between optimization problems shown above should be taken with caution. Many of these optimization problems are non-convex, thus local descent methods are not guaranteed to converge to a global optimum. It is possible that local descent methods behave differently from one parametrization to the other, even if the two optimization problems are equivalent. For instance, local descent methods might find a global minimum in one parametrization but not in the other.
+	
+	However, the heuristics derived in this section still provide some good intuition on the sparsity of neural networks when trained with local descent methods. Some more rigorous (but limited) arguments are presented in the next sections.
+
+	Finally, note that the equivalences shown in this section can be thought as alternate ways to implement sparse minimization problems. For instance, one can optimize a diagonal linear networks with weight decay (Eq.~\eqref{eq:dln}) instead of the lasso objective (Eq.~\eqref{eq:lasso}), or the linear network of Eq.~\eqref{eq:group} instead of the group lasso objective in Eq.~\eqref{eq:group-lasso}. In doing so, one trades a convex but non-smooth optimization problem for a non-convex but smooth problem; this comes with potential computational advantages \cite{poon2023smooth}.
+\end{remark}
+
+\subsection{Implicit regularization}
+
+The previous section shows that explicit $\ell^2$ regularization on the coefficients of the neural networks (weight decay) induces a sparse prior. In this section, we show that a sparse prior can actually be observed without any explicit regularization. This \emph{implicit} regularization comes only from the training dynamics and a suitable initialization. 
+
+Consider a least-squares regression problem 
+\begin{align*}
+	\underset{\beta \in \R^d}{\min.} \left\{ f(\beta) = \frac{1}{2} \sum_{i=1}^{n} \left(y_i - \beta^\top x_i\right)^2 \right\} \, .
+\end{align*}
+Using the design matrix 
+\begin{align*}
+	X = \begin{pmatrix}
+		x_1^\top \\ \hline 
+		\vdots \\ \hline
+		x_n^\top
+	\end{pmatrix} \in \R^{n \times d} \, ,
+\end{align*}
+the objective can be rewritten as
+\begin{align*}
+	f(\beta) = \frac{1}{2} \Vert y - X\beta \Vert^2 = \frac{\Vert y \Vert^2}{2} - y^\top X \beta + \frac{1}{2} \beta^\top X^\top X \beta \, .
+\end{align*}
+The objective $f$ is quadratic with Hessian $X^\top X \in \R^{d\times d}$. We are interested in the case where $X^\top X$ is not full rank, which occurs in the overparametrized regime where $d > n$. In this case, there are several minimizers of $f$; we denote $\Argmin f$ the affine space of minimizers. The goal of this section is to understand which minimizer is selected, depending on the optimization algorithm. We will see that in many cases, an implicit regularization selects a regularized minimizer. 
+
+In all of this section, we analyze algorithms through their gradient flow version, i.e.~their limit as the stepsize converges to $0$. Going beyond the gradient flow is challenging in the case of diagonal linear networks \cite{even2023s}. 
+
+\paragraph{Notation.} In this section, we denote $\Argmin$ the set of minimizers of an optimization problem. If the minimizer is unique, we denote it as $\argmin$.
+
+\subsubsection{Linear parametrization}
+
+To illustrate the phenomenon of implicit regularization, we consider the simple gradient flow 
+\begin{equation}
+	\label{eq:gf-linear}
+	\frac{\diff \beta_t}{\diff t} = - \nabla f(\beta_t) \, , 
+\end{equation}
+which is the limit of the gradient descent 
+\begin{align}
+	\label{eq:gd-linear}
+	\beta_{k+1} = \beta_k - \gamma \nabla f(\beta_k) \, ,
+\end{align}
+as the stepsize $\gamma$ converges to $0$. For this gradient flow, the selected minimizer is described by the following proposition. 
+
+\begin{proposition}
+	\label{prop:implicit-reg-linear}
+	The gradient flow \eqref{eq:gf-linear}, initialized in some $\beta_0 \in \R^d$, converges to $\beta_\infty$ defined by 
+	\begin{equation*}
+		\beta_\infty = \argmin_{\beta_* \in \Argmin f} \left\{ \frac{1}{2} \Vert \beta_* - \beta_0 \Vert^2 \right\} \, . 
+	\end{equation*}
+\end{proposition}
+Note that $\beta_* \mapsto \frac{1}{2} \Vert \beta_* - \beta_0 \Vert^2$ is a strongly convex function and $\Argmin f$ is an affine space thus the minimizer $\beta_\infty$ is uniquely defined. In words, the gradient flow selects the minimizer of $f$ that is closest to the initialization. 
+
+This result is mostly used with a null initialization $\beta_0 = 0$ to show that the gradient flow selects the minimizer of $f$ with the smallest $\ell^2$ norm. This can be interpreted as an implicit $\ell^2$ regularization. Indeed, in this case, 
+\begin{equation}
+	\label{eq:implicit-reg-ridge}
+	\beta_\infty = \argmin_{\beta_* \in \Argmin f} \left\{ \frac{1}{2} \Vert \beta_* \Vert^2 \right\} = \lim_{\lambda\to 0} \argmin_{\beta \in \R^d} \left\{f(\beta) + \frac{\lambda}{2} \Vert \beta \Vert^2 \right\}\, . 
+\end{equation}	
+In words, $\beta_\infty$ is the minimizer of ridge regression with an infinitesimal regularization parameter. This infinitesimal regularization is sufficient to select one of the minimizers among the infinite number of them, and thus, in some cases, to ensure generalization. 
+
+\begin{proof}
+	We compute 
+	\begin{align*}
+		\frac{\diff f(\beta_t)}{\diff t} = \left\langle \nabla f(\beta_t), \frac{\diff \beta_t}{\diff t}\right\rangle = - \Vert \nabla f(\beta_t) \Vert^2 \leq 0 \, .
+	\end{align*}
+	As a consequence, $f(\beta_t)$ is non-increasing. Moreover, let $\beta_*$ be any minimizer of $f$. Then 
+	\begin{equation*}
+		\frac{\diff }{\diff t} \left(\frac{1}{2 } \Vert \beta_t - \beta_* \Vert^2\right) = - \left\langle \beta_t - \beta_*, \nabla f(\beta_t)\right\rangle \, . 
+	\end{equation*}
+	Denote $f_*$ the minimum of $f$. We have 
+	\begin{equation*}
+		f(\beta) - f_* = \frac{1}{2} \left\langle \beta - \beta_*, X^\top X (\beta - \beta_*)\right\rangle \, ,
+	\end{equation*}
+	and thus 
+	\begin{equation*}
+		\nabla f(\beta) = X^\top X (\beta - \beta_*) \, .
+	\end{equation*}
+	As a consequence, 
+	\begin{align}
+		\label{eq:decrease-squared-distance}
+		\begin{split}
+		\frac{\diff }{\diff t} \left(\frac{1}{2 } \Vert \beta_t - \beta_* \Vert^2\right) &= - \left\langle \beta_t - \beta_*, \nabla f(\beta_t)\right\rangle  \\
+		&= - \left\langle \beta_t - \beta_*, \nabla X^\top X(\beta_t - \beta_*)\right\rangle \\
+		&= -2 \left(f(\beta_t) - f_*\right)\, . 
+		\end{split}
+	\end{align}
+	This computation has several consequences. First, as $f(\beta_t)$ is non-increasing, we have 
+	\begin{align*}
+		t \left(f(\beta_t) - f_*\right) &\leq \int_{0}^{t} \diff s \left(f(\beta_s) - f_*\right) = - \int_{0}^{t} \diff s \frac{1}{2} \frac{\diff }{\diff s} \left(\frac{1}{2 } \Vert \beta_s - \beta_* \Vert^2\right)\\ 
+		&= \frac{1}{4} \Vert \beta_0 - \beta_* \Vert^2 - \frac{1}{4} \Vert \beta_t - \beta_* \Vert^2 \leq \frac{1}{4} \Vert \beta_0 - \beta_* \Vert^2 \, .
+	\end{align*}
+	This proves that $f(\beta_t)$ converges to $f_*$. Second, Eq.~\eqref{eq:decrease-squared-distance} shows that $\Vert \beta_t - \beta_* \Vert$ is non-increasing, and thus that the trajectory $\beta_t$ is contained in some compact set. As a consequence, to show that it converges to $\beta_\infty$, it is sufficient to show that $\beta_\infty$ is the only possible limit for a converging subsequence. Let $\beta_{t_k}$ be a subsequence converging to some limit $\beta \in \R^d$: $t_k \xrightarrow[k \to \infty]{} \infty$ and $\beta_{t_k} \xrightarrow[k \to \infty]{} \beta$. Then, as $f(\beta_{t_k})$ converges to $f_*$, we have that $\beta$ is a minimizer of $f$. 
+
+	The equality \eqref{eq:decrease-squared-distance} shows that the derivative $\frac{\diff }{\diff t} \left(\frac{1}{2 } \Vert \beta_t - \beta_* \Vert^2\right)$ does not depend on the minimizer $\beta_*$ of $f$. As a consequence, it is the same for the two minimizers $\beta_\infty$ and $\beta$. Integrating between $0$ and $t_k$, we obtain 
+	\begin{align*}
+		\frac{1}{2} \Vert \beta_{t_k} - \beta \Vert^2 - \frac{1}{2} \Vert \beta_0 - \beta \Vert^2 = \frac{1}{2} \Vert \beta_{t_k} - \beta_\infty \Vert^2 - \frac{1}{2} \Vert \beta_0 - \beta_\infty \Vert^2 \, ,
+	\end{align*}
+	and thus 
+	\begin{align*}
+		\frac{1}{2} \Vert \beta_0 - \beta \Vert^2 - \frac{1}{2} \Vert \beta_0 - \beta_\infty \Vert^2 = \frac{1}{2} \Vert \beta_{t_k} - \beta \Vert^2 - \frac{1}{2} \Vert \beta_{t_k} - \beta_\infty \Vert^2 \, .
+	\end{align*}
+	The first term of the right-hand side converges to $0$ as $k \to \infty$, and the second term is non-positive. As a consequence, 
+	\begin{align*}
+		\frac{1}{2} \Vert \beta_0 - \beta \Vert^2 - \frac{1}{2} \Vert \beta_0 - \beta_\infty \Vert^2 \leq 0 \, . 
+	\end{align*}
+	As $\beta_\infty$ is the unique minimizer of $\beta_* \mapsto \frac{1}{2} \Vert \beta_0 - \beta_* \Vert^2$ among the minimizers of $f$, this implies that $\beta = \beta_\infty$. This concludes the proof.
+\end{proof}
+
+\subsubsection{Mirror parametrization}
+
+In this section, we generalize the above reasoning to a different geometry than the Euclidean one. This is done through a mirror descent / a mirror flow. 
+
+Let $D \subset \R^d$ be a convex open set. We say that $\Phi: D \to \R$ is a \emph{mirror potential} if:
+\begin{itemize}
+	\item The map $\Phi$ is differentiable and strictly convex, i.e.~for all $\beta \neq \eta$, $\Phi(\beta) > \Phi(\eta) + \langle \nabla \Phi(\eta), \beta - \eta \rangle$. Equivalently, if $\Phi$ is twice differentiable, this is equivalent to the Hessian $\nabla^2 \Phi(\beta)$ being positive definite for all $\beta$.
+	\item We have $\nabla \Phi(D) = \R^d$. 
+\end{itemize}
+Given a mirror potential $\Phi$, we define the associated \emph{Bregman divergence} $\cD_\Phi$: for $\beta, \eta \in D$,
+\begin{align*}
+	\cD_\Phi(\beta, \eta) = \Phi(\beta) - \Phi(\eta) - \langle \nabla \Phi(\eta), \beta - \eta \rangle \, .
+\end{align*}
+As $\Phi$ is strictly convex, we have that 
+\begin{align*}
+	&\cD_\Phi(\beta, \eta) \geq 0 \, , &&\text{and} &&\cD_\Phi(\beta, \eta) = 0 \quad \Leftrightarrow \quad \beta = \eta \, .
+\end{align*}
+This suggests to think of $\cD_\Phi$ as a generalized notion of distance. However, note that we do not have the symmetry property $\cD_\Phi(\beta, \eta) = \cD_\Phi(\eta, \beta)$ a priori. 
+
+In order to understand how we can use this generalized notion of distance to define mirror descents, let us first reinterpret gradient descent. The iteration of gradient descent is 
+\begin{align*}
+	\beta_{k+1} &= \beta_k - \gamma \nabla f(\beta_k) \\
+	&= \argmin_{\beta \in \R^d} \left\{f(\beta_k) + \langle \beta - \beta_k , \nabla f(\beta_k) \rangle + \frac{1}{2\gamma} \Vert\beta - \beta_k \Vert^2 \right\} \, .
+\end{align*}
+The gradient step attempts to minimize the first-order approximation of $f$ around $\beta_k$, $f(\beta_k) + \langle \beta - \beta_k , \nabla f(\beta_k) \rangle$, but penalizing movements that are too far away from $\beta_k$, as the first order approximation might not be relevant there. This is the role of the quadratic term $\frac{1}{2\gamma} \Vert\beta - \beta_k \Vert^2$. For gradient descent, the distance to $\beta_k$ is measured with the Euclidean distance. However, it could be that other distances are more relevant to describe the deviation of $f$ from its first-order approximation. Mirror descent proposes to use instead a Bregman divergence. 
+\begin{align*}
+	\beta_{k+1} 
+	&= \argmin_{\beta \in \R^d} \left\{f(\beta_k) + \langle \beta - \beta_k , \nabla f(\beta_k) \rangle + \frac{1}{\gamma} \cD_\Phi(\beta, \beta_k) \right\} \, .
+\end{align*}
+Note that the above optimization problem is strictly convex, thus its unique minimizer is defined by the first-order optimality condition. As $\partial_\beta \cD(\beta, \eta) = \nabla \Phi(\beta) - \nabla \Phi(\eta)$, this gives 
+\begin{equation*}
+	\nabla \Phi(\beta_{k+1}) = \nabla \Phi(\beta_k) - \gamma \nabla f(\beta_k) \, .
+\end{equation*}
+This can be interpreted as taking the gradient step in the ``dual'' space to which $\nabla \Phi$ maps.
+Note that classical gradient descent is recovered when $\Phi(\beta) = \frac{1}{2} \Vert \beta \Vert^2$, and then $\nabla \Phi(x) = x$. 
+
+In this section, we analyze the implicit regularization of mirror flow, the continuous-time limit of mirror descent. It is defined by the ordinary differential equation 
+\begin{align}
+	\label{eq:mirror-flow}
+	\begin{split}
+	\frac{\diff}{\diff t} \left(\nabla \Phi(\beta_t)\right) &= - \nabla f(\beta_t) \, , \\
+	\nabla^2 \Phi(\beta_t) \frac{\diff \beta_t }{\diff t} &= - \nabla f(\beta_t) \, .
+	\end{split}
+\end{align}
+This can be interepreted as the gradient flow of $f$ on the Riemannian manifold $D \subset \R^d$ where the metric at $\beta$ is given by the Hessian $\nabla^2 \Phi(\beta)$.
+
+\begin{proposition}
+	\label{prop:implicit-reg-mirror}
+	Assume that there exists a minimizer of $f$ in $D$. Moreover, assume that for all $\beta \in D$, for all $C > 0$, the set $\{\eta \in D \, \vert \, \cD_\Phi(\beta, \eta) \leq C\}$ is relatively compact\footnote{The set $B = \{\eta \in D \, \vert \, \cD_\Phi(\beta, \eta) \leq C\}$ is relatively compact in $D$ means that for all sequence of points in $B$, there exists a subsequence that converges to a point in $D$. Note that here, $B$ is closed in $D$, as the preimage of a closed set by a continuous function. Thus $B$ being relatively compact in $D$ is equivalent to $B$ being compact. However, we do not need the compactness in the proof so we do not state the assumption as such.} in $D$. 
+
+	The mirror flow \eqref{eq:mirror-flow}, initialized in some $\beta_0 \in D$, converges to $\beta_\infty$ defined by 
+	\begin{equation*}
+		\beta_\infty = \argmin_{\beta_* \in D \cap \Argmin f} \cD_\Phi(\beta_*, \beta_0) \, . 
+	\end{equation*}
+\end{proposition}
+
+The function $\beta \mapsto \cD_\Phi(\beta, \beta_0)$ is strictly convex and $D \cap \Argmin f$ is convex thus the minimizer defined above, if it exists, is unique. However, it is not obvious that the minimizer exists as the set $D \cap \Argmin f$ might not be closed. The proof shows the existence of this minimizer. 
+
+\begin{proof}
+	The proof is a generalization of the proof of Proposition~\ref{prop:implicit-reg-linear}. We compute 
+	\begin{align*}
+		\frac{\diff f(\beta_t)}{\diff t} = \left\langle \nabla f(\beta_t), \frac{\diff \beta_t}{\diff t}\right\rangle = - \left\langle \nabla f(\beta_t), \nabla^2 \Phi(\beta_t)^{-1} \nabla f(\beta_t)\right\rangle  \leq 0 \, .
+	\end{align*}
+	As a consequence, $f(\beta_t)$ is non-increasing. 
+
+	Note that 
+	\begin{align*}
+		\partial_\eta \cD_\Phi(\beta, \eta) = - \nabla \Phi(\eta) - \nabla^2 \Phi(\eta)(\beta - \eta) + \nabla \Phi(\eta) = \nabla^2 \Phi(\eta)(\eta - \beta) \, .
+	\end{align*}
+	By assumption, there exists a minimizer of $f$ in $D$. Let $\beta_*$ be any such minimizer and denote $f_*$ the minimum of $f$. Then 
+	\begin{align}
+		\label{eq:decrease-bregman}
+		\begin{split}
+		\frac{\diff }{\diff t} \cD_\Phi(\beta_*, \beta_t) &= - \left\langle \nabla_\eta \cD_\Phi(\beta_*, \beta_t), \frac{\diff \beta_t}{\diff t}\right\rangle =  \left\langle  \nabla^2 \Phi(\beta_t)(\beta_t - \beta_*), \frac{\diff \beta_t}{\diff t}\right\rangle \\
+		&= \left\langle \beta_t - \beta_*, \nabla^2 \Phi(\beta_t) \frac{\diff \beta_t}{\diff t}\right\rangle = - \left\langle \beta_t - \beta_*, \nabla f(\beta_t)\right\rangle \\
+		&= -2(f(\beta_t) - f_*)\, . 
+		\end{split}
+	\end{align}
+	This computation has several consequences. First, as $f(\beta_t)$ is non-increasing, we have 
+	\begin{align*}
+		t \left(f(\beta_t) - f_*\right) &\leq \int_{0}^{t} \diff s \left(f(\beta_s) - f_*\right) = - \int_{0}^{t} \diff s \frac{1}{2} \frac{\diff }{\diff s} \cD_\Phi(\beta_*, \beta_s) \\ 
+		&= \frac{1}{2}\cD_\Phi(\beta_*, \beta_0) - \frac{1}{2} \cD_\Phi(\beta_*, \beta_t) \leq \frac{1}{2}\cD_\Phi(\beta_*, \beta_0) \, .
+	\end{align*}
+
+This proves that $f(\beta_t)$ converges to $f_*$. Second, Eq.~\eqref{eq:decrease-bregman} shows that $\cD_\Phi(\beta_*, \beta_t)$ is non-increasing, and thus that the trajectory $\beta_t$ is contained in some set relatively compact in $D$ (using the related assumption). To finish the proof, it is sufficient to show that the limit of any converging subsequence of $\beta_t$ minimizes $\cD_\Phi(\beta_*, \cdot)$ over $D\cap \Argmin f$. We know that this minimizer, if it exists, is unique, as $\Phi$ is strictly convex. 
+
+Let $\beta_{t_k}$ be a subsequence converging to some limit $\beta \in \R^d$: $t_k \xrightarrow[k \to \infty]{} \infty$ and $\beta_{t_k} \xrightarrow[k \to \infty]{} \beta$. Then, as $f(\beta_{t_k})$ converges to $f_*$, we have that $\beta$ is a minimizer of $f$. 
+
+The equality \eqref{eq:decrease-bregman} shows that the derivative $\frac{\diff }{\diff t} \cD_\Phi(\beta_*, \beta_t)$ does not depend on the minimizer $\beta_*$ of $f$ if $D$. As a consequence, it is the same for $\beta$ and a generic minimizer $\beta_*$ of $f$ in $D$. Integrating between $0$ and $t_k$, we obtain 
+	\begin{align*}
+		\cD_\Phi(\beta,\beta_{t_k}) - \cD_\Phi(\beta,\beta_0) = \cD_\Phi(\beta_*,\beta_{t_k}) - \cD_\Phi(\beta_*,\beta_0) \, ,
+	\end{align*}
+	and thus 
+	\begin{align*}
+		 \cD_\Phi(\beta,\beta_0)- \cD_\Phi(\beta_*,\beta_0) = \cD_\Phi(\beta,\beta_{t_k}) -  \cD_\Phi(\beta_*,\beta_{t_k}) \, .
+	\end{align*}
+	The first term of the right-hand side converges to $0$ as $k \to \infty$, and the second term is non-positive. As a consequence, 
+	\begin{align*}
+		\cD_\Phi(\beta,\beta_0)- \cD_\Phi(\beta_*,\beta_0) \leq 0 \, . 
+	\end{align*}
+	This proves that $\beta$ minimizes $\beta_* \mapsto \cD_\Phi(\beta_*,\beta_0)$ on $D \cap \Argmin f$. This concludes the proof.
+\end{proof}
+
+
+\subsubsection{Diagonal linear networks}
+
+\paragraph{The $u \circ u$ parametrization.} To start with, we consider the case of training parametrizing a space of linear functions as 
+\begin{align*}
+	\varphi(x,u) = (u \circ u)^\top x = \sum_{j=1}^{d} u(j)^2 x(j) \, .
+\end{align*}
+This corresponds to a diagonal linear network with two layers as in Section \ref{sec:equivalences-dln}, with the additional constraint that $u = v$. This is artificial a priori, but it is easier to analyze than $u \circ v$ parametrization; moreover, we will see that the $u \circ v$ parametrization can actually be reduced to this case. 
+
+In this section, we study how this parametrization $\beta = u \circ u$ of linear predictors influences the selected predictor. An obvious influence is that the selected predictor has nonnegative coordinates. However, we will set ourselves in the case where there are an infinite number of minimizers of $f$ with nonnegative coordinates, and we would like to understand which one is selected by the optimization algorithm.
+
+Our optimization algorithm is still the gradient flow of $f$, but this time in the variable $u$ instead of $\beta$. This writes 
+\begin{align}
+	\label{eq:gradient-flow-dln}
+	\frac{\diff u_t}{\diff t} = - \nabla_u \left[ f(u_t\circ u_t) \right]\, . 
+\end{align}
+To analyze this gradient flow, we will interpret $\beta_t = u_t\circ u_t$ as a mirror flow. This enables to use the results of the previous section.
+
+With $\beta_t(j) = u_t(j)^2$, we have
+\begin{align*}
+	\frac{\diff \beta_t(j)}{\diff t} &= 2 u_t(j) \frac{\diff u_t(j)}{\diff t} = - 2 u_t(j) \partial_{u(j)} \left( f(u_t\circ u_t) \right) = - 4 u_t(j)^2 \partial_{\beta(j)} f(\beta_t) \\
+	&= -4 \beta(j) \partial_{\beta(j)} f(\beta_t) \, ,
+\end{align*}
+or, said differently, 
+\begin{align}
+	\label{eq:mirror-flow-dln}
+	\frac{\diff \beta_t}{\diff t} = -4 \beta_t \circ \nabla_\beta f(\beta_t) \, .
+\end{align}
+We would like to interpret this equation as a mirror flow, as in Eq.~\eqref{eq:mirror-flow}. It turns out that this is possible using the entropy as a mirror potential: for $\beta \in D = \R^d_{>0}$,
+\begin{align*}
+	\Phi(\beta) &= \frac{1}{4}\sum_{j=1}^{d}\left( \beta(j) \log \beta(j) - \beta(j) \right) \, , \\
+\nabla \Phi(\beta) &=  \frac{1}{4} \begin{pmatrix}
+	\log \beta(1) \\ \vdots \\ \log \beta(d)
+\end{pmatrix} \, , \\
+\nabla^2 \Phi(\beta) &= \frac{1}{4} \diag(1/\beta(1), \dots, 1/\beta(d)) \, . 
+\end{align*}
+To apply Proposition \ref{prop:implicit-reg-mirror}, we need to check that sublevel balls of the Bregman divergence $\cD_\Phi$ are relatively compact in $D$. We compute for $\beta, \eta \in D = \R^d_{>0}$
+\begin{align*}
+	\cD_\Phi(\beta, \eta) &= \Phi(\beta) - \Phi(\eta) - \langle \nabla \Phi(\eta), \beta - \eta \rangle \\
+	&= \frac{1}{4}\sum_{j=1}^{d}\left( \beta(j) \log \frac{\beta(j)}{\eta(j)} - \beta(j) + \eta(j) \right) \\
+	&= \frac{1}{4}\sum_{j=1}^{d} \beta(j) \log \frac{\beta(j)}{\eta(j)} - \frac{1}{4 } \Vert \beta \Vert_1 + \frac{1}{4} \Vert \eta \Vert_1 \, .
+\end{align*}
+Fix $\beta \in D = \R^d_{>0}$. Then $\cD_\Phi(\beta, \eta) \xrightarrow[\eta \to \partial D]{} +\infty$ thus for all $C>0$, the set $\{\eta \in D \, \vert \, \cD_\Phi(\beta, \eta) \leq C\}$ is relatively compact in $D$. As a consequence, the application of Proposition \ref{prop:implicit-reg-mirror} gives the following result. 
+
+\begin{coro}
+	\label{coro:implicit-reg-dln}
+	Assume that there exists a minimizer of $f$ in $D = \R^d_{>0}$. We also assume that we initialize the mirror flow \eqref{eq:mirror-flow-dln} in some $\beta_0 \in D = \R^d_{>0}$, or equivalently, that we initialize the gradient flow \eqref{eq:gradient-flow-dln} in some $u_0 \in (\R \backslash \{0\})^d$. 
+
+	Then, $\beta_t = u_t \circ u_t$ converges to $\beta_\infty$ defined by 
+	\begin{equation*}
+		\beta_\infty = \argmin_{\beta_* \in D \cap \Argmin f} \cD_\Phi(\beta_*, \beta_0) \, .
+	\end{equation*}
+\end{coro}
+This result becomes interpretable in the limit of small initialization $\beta_0$. Assume that $\beta_0 = \varepsilon (\overline{\beta}(1), \dots, \overline{\beta}(d))$, where $\overline{\beta}(1), \dots, \overline{\beta}(d)$ are fixed positive constant and $\varepsilon \to 0^+$. Then 
+\begin{align*}
+	\cD_\Phi(\beta_*, \beta_0) &= \frac{1}{4}\sum_{j=1}^{d} \beta_*(j) \log \frac{\beta_*(j)}{\beta_0(j)} - \frac{1}{4 } \Vert \beta_* \Vert_1 + \frac{1}{4} \Vert \beta_0 \Vert_1 \\
+	&= \frac{1}{4}\left(\log \frac{1}{\varepsilon}\right) \Vert \beta_* \Vert_1  + O(1) \, .
+\end{align*}
+This shows\footnote{Actually, this is not obvious, as the convergence of objective functions does not necessarily imply the convergence of minimizers. A complete proof would require more arguments, see \cite{attouch1996viscosity} for instance. We do not complete the argument to insist on the qualitative picture.} that in the limit $\varepsilon \to 0^+$, $\beta_\infty$ minimises $ \Vert \beta_* \Vert_1$, i.e. 
+\begin{equation}
+	\label{eq:min-l1-u2}
+	\lim_{\varepsilon \to 0^+} \lim_{t \to \infty} \beta_t \in \Argmin_{\beta_* \in \overline{D} \cap \Argmin f} \Vert \beta_* \Vert_1 = \lim_{\lambda \to 0} \Argmin_{\beta \in \overline{D}} \left\{ f(\beta) + \lambda \Vert \beta \Vert_1 \right\} \, .
+\end{equation}
+Note that the objective $\Vert . \Vert_1$ is not strongly convex, thus the above minimizer might not be unique. Moreover, the minimization is now on $\overline{D} \cap \Argmin f = \R_{\geq 0}\cap \Argmin f$ as the limit $\varepsilon\to 0$ has potentially sent the minimizer to the boundary of $D$. 
+
+In words, the $u \circ u$ parametrization enforces a sparse implicit regularization when coupled with a small initialization. 
+
+\paragraph{The $u \circ v$ parametrization.} We now consider diagonal linear networks of depth $L = 2$, i.e. the parametrization of linear functions as 
+\begin{align*}
+	\varphi(x,\theta) = (u \circ v)^\top x = \sum_{j=1}^{d} u(j) v(j) x(j) \, ,  \qquad \theta = (u,v) \in \R^{d} \times \R^{d} \, .
+\end{align*} 
+We study the gradient flow of $f$ in the variable $(u,v)$ instead of $\beta$. This writes
+\begin{align}
+	\label{eq:gradient-flow-dln-uv}
+	\begin{split}
+	\frac{\diff u_t}{\diff t} &= - \nabla_u \left( f(u_t\circ v_t) \right) \, , \\
+	\frac{\diff v_t}{\diff t} &= - \nabla_v \left( f(u_t\circ v_t) \right) \, .
+	\end{split}
+\end{align}
+Our first steps are a reduction to the $u \circ u$ above. Note that a gradient flow is still a gradient flow in any orthogonal transformation of the variables. We consider the variables 
+\begin{align*}
+	&\begin{pmatrix}
+		w \\ z
+	\end{pmatrix} = U \begin{pmatrix}
+		u \\ v
+	\end{pmatrix} \, , &&U = \begin{pmatrix}
+		\frac{1}{\sqrt{2}} I_d & \frac{1}{\sqrt{2}} I_d \\
+		\frac{1}{\sqrt{2}} I_d & -\frac{1}{\sqrt{2}} I_d 
+	\end{pmatrix} \, .
+\end{align*}
+Note that $U$ is orthogonal, that 
+\begin{align*}
+	\begin{pmatrix}
+		u \\ v
+	\end{pmatrix} = U^\top \begin{pmatrix}
+		w \\ z
+	\end{pmatrix} = \begin{pmatrix}
+		\frac{1}{\sqrt{2}} I_d & \frac{1}{\sqrt{2}} I_d \\
+		\frac{1}{\sqrt{2}} I_d & -\frac{1}{\sqrt{2}} I_d 
+	\end{pmatrix} \begin{pmatrix}
+		w \\ z
+	\end{pmatrix} \, ,
+\end{align*}
+and thus that 
+\begin{align*}
+	u \circ v = \left(\frac{1}{\sqrt{2}}w + \frac{1}{\sqrt{2}}z\right) \circ \left(\frac{1}{\sqrt{2}}w - \frac{1}{\sqrt{2}}z\right) = \frac{1}{2} w \circ w - \frac{1}{2} z \circ z \, .
+\end{align*}
+Thus the gradient flow \eqref{eq:gradient-flow-dln-uv} writes
+\begin{align}
+	\label{eq:gradient-flow-dln-wz}
+	\begin{split}
+	\frac{\diff w_t}{\diff t} &= - \nabla_w \left( f\left(\frac{1}{2} w_t \circ w_t - \frac{1}{2} z_t \circ z_t\right) \right) \, , \\
+	\frac{\diff z_t}{\diff t} &= - \nabla_z \left( f\left(\frac{1}{2} w_t \circ w_t - \frac{1}{2} z_t \circ z_t\right) \right) \, .
+	\end{split}
+\end{align}
+Define $\overline{f}(\beta^+, \beta^-) = f\left(\frac{1}{2}\beta^+ - \frac{1}{2}\beta^-\right)$. Then 
+\begin{align*}
+	\frac{\diff }{\diff t} \begin{pmatrix}
+		w_t \\ z_t
+	\end{pmatrix} = - \nabla_{(w,z)} \left[ \overline{f}\left(\begin{pmatrix}
+		w_t \\ z_t
+	\end{pmatrix}\circ \begin{pmatrix}
+		w_t \\ z_t
+	\end{pmatrix}\right) \right] \, . 
+\end{align*}
+This shows $(w_t, z_t)$ is the gradient flow of the quadratic function $\overline{f}$ parametrized as a square, as in Eq.~\eqref{eq:gradient-flow-dln}. As a consequence, we can apply Corollary \ref{coro:implicit-reg-dln}. Note that there exists a minimizer of $\overline{f}$ in $D = \R_{>0}^{2d}$: indeed, the minimum of $f$ and $\overline{f}$ are the same, and for each minimizer of $f$ we can find a minimizer of $\overline{f}$ in $D = \R_{>0}^{2d}$. We obtain the following result. 
+
+\begin{coro}
+Assume that we initialize Eq.~\eqref{eq:gradient-flow-dln-wz} in some $(w_0,z_0) \in (\R\backslash\{0\})^{2d}$, or equivalently, that we initialize Eq.~\eqref{eq:gradient-flow-dln-uv} in some $(u_0,v_0) \in \R^{2d}$ such that for all $j \in \{1,\dots, d\}$, $u_0(j) \neq \pm v_0(j)$. 
+
+Denote $\eta_t = (w_t, z_t) \circ (w_t, z_t)$. Then, $\eta_t$ converges to $\eta_\infty$ defined by
+\begin{equation*}
+	\eta_\infty = \argmin_{\eta_* \in D \cap \Argmin \overline{f}} \cD_\Phi(\eta_*, \eta_0) \, .
+\end{equation*}
+\end{coro}
+
+Moreover, if $\eta_0 = \varepsilon (\overline{\eta}(1), \dots, \overline{\eta}(d))$, where $\overline{\eta}(1), \dots, \overline{\eta}(d)$ are fixed positive constant and $\varepsilon \to 0^+$. Then\footnote{Again, we do not have a complete proof of this.}
+\begin{equation*}
+	\lim_{\varepsilon \to 0^+} \lim_{t \to \infty} \eta_t \in  \Argmin_{\eta_* \in \overline{D} \cap \Argmin \overline{f}} \Vert \eta_* \Vert_1 \, .
+\end{equation*}
+Note that we are not interested in understanding the limit of $\eta_t = (w_t, z_t) \circ (w_t, z_t)$ but in the limit of the linear regressor $\beta_t = u_t \circ v_t = \frac{1}{2} w_t \circ w_t - \frac{1}{2} z_t \circ z_t = \frac{1}{2} \eta_t^+ - \frac{1}{2} \eta_t^-$ where we decompose $\eta_t = (\eta_t^+, \eta_t^-)$. Consider a minimizer $\beta_* \in \R^d$ of $f$. This minimizer is the limit of the gradient flow if it corresponds to an $\eta_*$ with minimal $\ell^1$-norm. To the minimizer $\beta_*$ corresponds an infinite number of minimizers $\eta_*= (\eta_*^+, \eta_*^-)$ of $\overline{f}$ in $\overline{D} = \R_{\geq 0}^{2d}$: $\eta_*^+ = \max(2\beta_*, 0) + \alpha$, $\eta_*^- = \min(-2\beta_*, 0) + \alpha$, for any $\alpha \in \R_{\geq 0}^d$. The one with minimum $\ell^1$-norm is $\eta_* = (\eta_*^+, \eta_*^-) = (\max(2\beta_*, 0), \min(-2\beta_*, 0))$ and has $\ell^1$-norm $\Vert \eta_* \Vert_1 = 2 \Vert \beta_* \Vert_1$. Minimizing this quantity, we obtain that 
+\begin{equation*}
+	\lim_{\varepsilon \to 0^+} \lim_{t \to \infty} \beta_t \in  \Argmin_{\beta_* \in \Argmin f} \Vert \beta_* \Vert_1 = \lim_{\lambda \to 0} \Argmin_{\beta \in \R^d} \left\{ f(\beta) + \lambda \Vert \beta \Vert_1 \right\} \, .
+\end{equation*} 
+Compare with Eq.~\eqref{eq:min-l1-u2}. The only difference is that thanks to the $u\circ v$ parametrization, there is no sign constraint. The $\ell^1$-norm is minimized over the full set of minimizers of $f$.
+
+Finally, compare with the result \eqref{eq:implicit-reg-ridge} obtained with the linear parametrization. The parametrization of diagonal linear networks changes the implicit regularization from an $\ell^2$-norm to an $\ell^1$-norm. This is a strong sparsity-inducing regularization, that might explain the good performance of such networks in practice.
+
+\subsection{Incremental learning}
+
+Presentation based on \cite{berthier2023incremental,berthier2025diagonal}.
+
+\subsection{Exercises}
+
+\begin{exercice}
+	\label{exer:linear-networks}
+	We consider the following generalization of Section~\ref{sec:linear-networks}. 
+	
+	We now consider regression problems from $\cX = \R^d$ to $\cY = \R^p$, thus with an output dimension different from the input dimension. We thus have $n$ input-output pairs $(x_1, y_1), \dots, (x_n, y_n) \in \R^d \times \R^p$. 
+
+Further, we consider a linear network with $k$ neurons in the intermediate layer. This gives a regression function of the form
+\begin{align*}
+	&\varphi(x, \theta) = VU x \, , &&\theta = (U,V) \in \R^{k \times d} \times \R^{p \times k} \, .
+\end{align*}
+Show that the optimization problem associated with training the neural network with weight decay
+\begin{align*}
+	\underset{U \in \R^{k \times d},V \in \R^{p \times k}}{\min.} \left\{\frac{1}{2} \sum_{i=1}^{n} \Vert y_i - VU x_i \Vert^2 + \frac{\lambda}{2} \left(\Vert U \Vert_{\Fro}^2 + \Vert V \Vert_{\Fro}^2\right) \right\} \, ,
+\end{align*}
+is equivalent to the following rank-constrained optimization problem with nuclear norm regularization:
+\begin{align*}
+	\underset{B\in \R^{p\times d}, \, \rank B \leq k}{\min.} \left\{\frac{1}{2} \sum_{i=1}^{n} \Vert y_i - B x_i \Vert^2 + \lambda \Vert B \Vert_* \right\} \, . 
+\end{align*}
+\end{exercice}
+
+\begin{proof}[Solution]
+	We first show the following result: fix $B \in \R^{p \times d}$. Denote $r = \rank B$. Then 
+	\begin{align}
+		\underset{U \in \R^{k \times d},V \in \R^{p \times k} \, : \, VU = B}{\min.} \left\{ \frac{1}{2} \left(\Vert U \Vert_{\Fro}^2 + \Vert V \Vert_{\Fro}^2\right) \right\} = \begin{cases}
+			\Vert B \Vert_* &\text{if } r \leq k \, , \\
+			+\infty &\text{otherwise} \, .
+		\end{cases} 
+		\label{eq:lemma-linear-gen}
+	\end{align}
+	Indeed, if $r>k$, it is impossible to write $B$ as $VU$ with $U \in \R^{k \times d}$ and $V \in \R^{p \times k}$. We now assume that $r \leq k$. By the singular value decomposition, we can decompose $B = EDF^\top$ where $E \in \R^{p\times r}$ is an isometry between $\R^r$ and $\Span B$, $F \in \R^{d \times r}$ is an isometry between $\R^r$ and $(\ker B)^\perp$ and $D \in \R^{r \times r}$ is a diagonal matrix whose diagonal entries are the non-zero singular values of $B$. Then 
+\begin{align*}
+	\Vert B \Vert_{*} &= \Tr D = \Tr(E^\top B F) =\Tr(E^\top VU F) = \left\langle V^\top E, U F \right\rangle \leq \Vert V^\top E \Vert_{\Fro} \Vert U F \Vert_{\Fro} \, .
+\end{align*}
+Moreover, $EE^\top$ is the projection onto $\Span B$ thus $EE^\top \preccurlyeq I_p$ and thus 
+\begin{align*}
+	\Vert V^\top E \Vert_{\Fro}^2 &= \Tr(V^\top E E^\top V) \leq \Tr(V^\top V) = \Vert V \Vert_{\Fro}^2 \, .
+\end{align*}
+Similarly, $FF^\top$ is the projection onto $(\ker B)^\perp$ thus $FF^\top \preccurlyeq I_d$ and thus
+\begin{align*}
+	\Vert U F \Vert_{\Fro}^2 &= \Tr(U F F^\top U^\top) \leq \Tr(U U^\top) = \Vert U \Vert_{\Fro}^2 \, .
+\end{align*}
+As a consequence, we have
+\begin{align*}
+	\Vert B \Vert_{*} \leq \Vert V \Vert_{\Fro} \Vert U \Vert_{\Fro} \leq \frac{1}{2} \left(\Vert U \Vert_{\Fro}^2 + \Vert V \Vert_{\Fro}^2\right) \, . 
+\end{align*}
+To show that the inequality can be reached, consider the block matrix $A = \begin{pmatrix}
+	I_r & 0
+\end{pmatrix} \in \R^{r \times k}$. Then we consider $V = E D^{1/2} A$ and $U = A^\top D^{1/2} F^\top$.
+
+We thus have proved Eq.~\eqref{eq:lemma-linear-gen}. The exercise follows immediately.
+
+\begin{remark}
+	Note that the proof of the lower bound provided in Remark~\ref{rmk:bhatia} generalizes directly to this exercise. 
+\end{remark}
+\end{proof}
+
+
+
+
+
+\newpage
+\bibliographystyle{apalike}
+\bibliography{bibliography}
+
+
+
+
+
+\end{document}
