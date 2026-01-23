@@ -1,14 +1,14 @@
 # Fdb version 4
-["bibtex notes"] 1766427724.84918 "notes.aux" "notes.bbl" "notes" 1768397330.80926 0
+["bibtex notes"] 1766427724.84918 "notes.aux" "notes.bbl" "notes" 1769182403.37862 0
   "./bibliography.bib" 1765192694.41282 6548 2afb1d94951d74e0bc52ddaef70d02d8 ""
   "/usr/local/texlive/2024/texmf-dist/bibtex/bst/base/apalike.bst" 1292289607 24635 604dafcc79f521a11ea73e506e1fbd98 ""
-  "notes.aux" 1768397330.49403 16160 66b8f49ba3cc80c07a1da49259566d0e "pdflatex"
+  "notes.aux" 1769182403.08859 16160 66b8f49ba3cc80c07a1da49259566d0e "pdflatex"
   (generated)
   "notes.bbl"
   "notes.blg"
   (rewritten before read)
-["pdflatex"] 1768397329.55549 "/Users/rberthie/Documents/2512-optim-notes/notes.tex" "notes.pdf" "notes" 1768397330.80965 0
-  "/Users/rberthie/Documents/2512-optim-notes/notes.tex" 1768397329.12991 162034 15c1a7bdab9fe029a181e8565842e0fe ""
+["pdflatex"] 1769182402.20391 "/Users/rberthie/Documents/2512-optim-notes/optim-notes/notes.tex" "notes.pdf" "notes" 1769182403.37906 0
+  "/Users/rberthie/Documents/2512-optim-notes/optim-notes/notes.tex" 1768397329.12991 162034 15c1a7bdab9fe029a181e8565842e0fe ""
   "/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/tfm/jknappen/ec/tcrm1095.tfm" 1136768653 1536 02c06700a42be0f5a28664c7273f82e7 ""
@@ -217,11 +217,11 @@
   "importance_large_ss.pdf" 1733751613.70331 350356 1f704dac9d8620722ee3d9da8a7ca122 ""
   "linear.pdf" 1734024470.29298 51623 4839fc4664fa234639048ab873efedd5 ""
   "nn.pdf" 1734023774.58096 76119 8f7631db06b37b9b722cc8f4ead15ab6 ""
-  "notes.aux" 1768397330.49403 16160 66b8f49ba3cc80c07a1da49259566d0e "pdflatex"
+  "notes.aux" 1769182403.08859 16160 66b8f49ba3cc80c07a1da49259566d0e "pdflatex"
   "notes.bbl" 1766427724.93262 3074 f83c9a22e753fb8f2481a4b81dc1c2bb "bibtex notes"
-  "notes.out" 1768397330.49562 9714 482e6e80e21c7b90cad12a1fdb8d66d8 "pdflatex"
+  "notes.out" 1769182403.09002 9714 482e6e80e21c7b90cad12a1fdb8d66d8 "pdflatex"
   "notes.tex" 1768397329.12991 162034 15c1a7bdab9fe029a181e8565842e0fe ""
-  "notes.toc" 1768397330.49605 5266 0435298ac125d3c0bf58e62b2e8e04e9 "pdflatex"
+  "notes.toc" 1769182403.09045 5266 0435298ac125d3c0bf58e62b2e8e04e9 "pdflatex"
   "relu-nn.pdf" 1734013313.25892 51461 8af0b8d985418a38c297a58aecaa1ea8 ""
   (generated)
   "notes.aux"
